@@ -24,7 +24,7 @@ namespace PicoBricks {
         ws2812b.sendBuffer(hex`ff0000 ff0000 ff0000`, DigitalPin.P8)
     }
 
-    //% block="Red All Leds"
+    //% block="Red All Leds ssssssss"
     //% subcategory="RGB-WS2812B"
     export function all_red(): void {
         ws2812b.sendBuffer(hex`00ff00 00ff00 00ff00`, DigitalPin.P8)
