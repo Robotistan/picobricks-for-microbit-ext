@@ -14,7 +14,7 @@ namespace PicoBricks {
 
     const MOTOR_DRIVER_ADDRESS = 0x22;
 
-    //% block="Servo Motor %servo_motor_type and angle %angle"
+    //% blockId="Servomotor" block="Servo Motor %servo_motor_type and angle %angle"
     //% angle.min=0 angle.max=180
     //% subcategory="Motor Driver"
     export function Servomotor(Servo_type: servo_motor_type, angle: number): void {

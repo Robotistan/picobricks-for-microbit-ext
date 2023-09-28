@@ -1,8 +1,6 @@
 namespace PicoBricks {
     const CHIP_ADDRESS = 0x37;
     const PROX_STAT = 0xAE;
-    const REGMAP_ORIGIN = 0x00;
-    const CONFIG_CRC = 0x7E;
     const CTRL_CMD = 0x86;
     const BUTTON_STATUS	= 0xAA;
     const SAVE_CHECK_CRC = 0x02;
@@ -237,7 +235,7 @@ namespace PicoBricks {
         }
     }
 
-    //% block="Play piano"
+    //% blockId="kitronik_set_key_sensitivity" block="Play piano"
     //% subcategory="Touch Sensor-Piano"
     export function Play(): void {
         configureMB()
