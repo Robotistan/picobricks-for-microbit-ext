@@ -69,7 +69,7 @@ namespace PicoBricks {
 
     //% block="APDS9960 Init"
     //% weight=100
-    //% subcategory="GESTURE-APDS9960"
+    //% subcategory="Gesture-APDS9960"
     export function Init(): void {
         enableMode(7, 0)
         i2cwrite(ADDR, APDS9960_ATIME, 219) // 103ms
@@ -101,7 +101,7 @@ namespace PicoBricks {
      * It should return 0xAB or 171
      */
     //% block="APDS9960 ID"
-    //% subcategory="GESTURE-APDS9960"
+    //% subcategory="Gesture-APDS9960"
     export function id(): number {
         let chipid = i2cread(ADDR, APDS9960_ID);
         return chipid;
@@ -189,7 +189,7 @@ namespace PicoBricks {
     }
 
     //% block="APDS9960 Proximity"
-    //% subcategory="GESTURE-APDS9960"
+    //% subcategory="Gesture-APDS9960"
     export function proximity(): number {
         let prox = i2cread(ADDR, APDS9960_PDATA)
         return prox;
