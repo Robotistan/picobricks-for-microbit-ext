@@ -1,171 +1,248 @@
-enum PianoKeyAddresses {
-    //% block="K0"
-    PIANO_ID_KEY_K0 = 0x100,
-    //% block="K1"
-    PIANO_ID_KEY_K1 = 0x200,
-    //% block="K2"
-    PIANO_ID_KEY_K2 = 0x400,
-    //% block="K3"
-    PIANO_ID_KEY_K3 = 0x800,
-    //% block="K4"
-    PIANO_ID_KEY_K4 = 0x1000,
-    //% block="K5"
-    PIANO_ID_KEY_K5 = 0x2000,
-    //% block="K6"
-    PIANO_ID_KEY_K6 = 0x4000,
-    //% block="K7"
-    PIANO_ID_KEY_K7 = 0x8000,
-    //% block="K8"
-    PIANO_ID_KEY_K8 = 0x01,
-    //% block="K9"
-    PIANO_ID_KEY_K9 = 0x02,
-    //% block="K10"
-    PIANO_ID_KEY_K10 = 0x04,
-    //% block="K11"
-    PIANO_ID_KEY_K11 = 0x08,
-    //% block="K12"
-    PIANO_ID_KEY_K12 = 0x10,
-    //% block="K13"
-    PIANO_ID_KEY_K13 = 0x20,
-    //% block="K14"
-    PIANO_ID_KEY_K14 = 0x40
-}
-
 namespace PicoBricks {
     const CHIP_ADDRESS = 0x37;
     const PROX_STAT = 0xAE;
+    const REGMAP_ORIGIN = 0x00;
+    const CONFIG_CRC = 0x7E;
+    const CTRL_CMD = 0x86;
+    const BUTTON_STATUS	= 0xAA;
+    const SAVE_CHECK_CRC = 0x02;
+    const SW_RESET = 0xFF;
+
+    const CY8CMBR3xxx_CONFIG_DATA_LENGTH = 126;
+    const CY8CMBR3xxx_CRC_BIT4_MASK = 0x0F;
+    const CY8CMBR3xxx_CRC_BIT4_SHIFT = 0x04;
     const CY8CMBR3xxx_CCITT16_DEFAULT_SEED = 0xffff;
+    const CY8CMBR3xxx_CCITT16_POLYNOM = 0x1021;
+    const CY8CMBR3xxx_CRC_BIT_WIDTH = 32;
 
-    let buff = pins.createBuffer(1);
-    let buff2 = pins.createBuffer(2);
-    let buff3 = pins.createBuffer(5);
-    let buff4 = pins.createBuffer(1);
-    let buff5 = pins.createBuffer(16);
-    let buff6 = pins.createBuffer(15);
-    let keySensitivity = 8;
-    let keyNoiseThreshold = 5;
-    let keyRegValue = 0x0000;
-    let initialisedFlag = 0;
-    let octaveFlag = 0;
-    let noteLength = 500;
+    const configData = [
+        0xFF, 0x7F, // ENABLE SENSORS
+        0xFE, 0x7F, 0x00, 0x00, 0x00, 0x00,
+        0x00, 0x00, 0x00, 0x00, // SENSITIVITY
+        0x0E, 0x84, 0x84, 0x84, 0x84, 0x84, 0x84, 0x84, 0x84, 0x84, 0x84, 0x84, 0x84, 0x84, 0x84, 0x84, // FINGER THRESHOLDS 27
+        0x03, // Debounce  
+        0x00, // HYSTERESIS  
+        0x00,
+        0x00, // LBR
+        0x00, 0x00, 0x00, 0x00, // RESERVED
+        0x00, // NEGATIVE NOISE TH
+        0x00, // NOISE TH
+        0x01, // PROX_EN  38 
+        0x81, 0x06,  // PROX CFG1-2
+        0x00,
+        0x00, 0xFF, // PS0 TH
+        0xF0, 0x02,  // PS1 TH
+        0x00, 0x00, // PROX_RESOLUTION0-1
+        0x00, // PROX HYS
+        0x00,  // RESERVED
+        0x00,  // PROX LBR
+        0x00, // PROX NNT
+        0x00, // PROX NT
+        0x00, 0x00, // PROX POS TH 0 -1
+        0x00, 0x00, // RESERVED
+        0x00, 0x00,// PROX NEGATIVE TH0 -1
+        0x00, 0x00,// RESERVED
+        0x00,  // 61
+        0x00, // BUZZER
+        0x00, // BUZZER ONT //63
+        0x00, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF,
+        0x00, 0x00, 0x00, // RESERVED
+        0x00, // SPO CFG, NExt time might be 0x20
+        0x03,  // D_CFG0
+        0x01, // D_CFG1
+        0x58,
+        0x00, // DEVICE CFG 3 
+        0x37, // 81 I2C address
+        0x06, // REFRSH CTRL
+        0x00, 0x00,  // RESERVED
+        0x0A, // STT TIMEOUT
+        0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, // RESERVED
+        0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, // SLIDERS 115
+        0x00, 0x00, 0x00, 0x00, 0x00, 0x00, // RESERVED
+        0x00, 0x00, // SCRATCHPAD0-1 123
+        0x00, 0x00, // RESERVED
+        0x87, 0x04
+    ];
 
-    function initPiano(): void {
-        pins.setPull(DigitalPin.P1, PinPullMode.PullUp)
-        //Startup procedure
-        //Test /change pin is low, then test basic communication
-        if (pins.digitalReadPin(DigitalPin.P1) == 0) {
-            //Reads the chip ID, should be 0x11 (chip ID addr = 0)
-            buff[0] = 0
-            pins.i2cWriteBuffer(CHIP_ADDRESS, buff, true)
-            buff = pins.i2cReadBuffer(CHIP_ADDRESS, 1, false)
-            while (buff[0] != 0x11) {
-                buff = pins.i2cReadBuffer(CHIP_ADDRESS, 1, false)
-            }
+    let rec_buf = pins.createBuffer(2);
+    let send_buf = pins.createBuffer(31);
 
-            //Change sensitivity (burst length) of keys 0-14 to 8
-            buff2[0] = 54
-            buff2[1] = keySensitivity
-            pins.i2cWriteBuffer(CHIP_ADDRESS, buff2, true)
-            buff2[0] = 55
-            pins.i2cWriteBuffer(CHIP_ADDRESS, buff2, true)
-            buff2[0] = 56
-            pins.i2cWriteBuffer(CHIP_ADDRESS, buff2, true)
-            buff2[0] = 57
-            pins.i2cWriteBuffer(CHIP_ADDRESS, buff2, true)
-            buff2[0] = 58
-            pins.i2cWriteBuffer(CHIP_ADDRESS, buff2, true)
-            buff2[0] = 59
-            pins.i2cWriteBuffer(CHIP_ADDRESS, buff2, true)
-            buff2[0] = 60
-            pins.i2cWriteBuffer(CHIP_ADDRESS, buff2, true)
-            buff2[0] = 61
-            pins.i2cWriteBuffer(CHIP_ADDRESS, buff2, true)
-            buff2[0] = 62
-            pins.i2cWriteBuffer(CHIP_ADDRESS, buff2, true)
-            buff2[0] = 63
-            pins.i2cWriteBuffer(CHIP_ADDRESS, buff2, true)
-            buff2[0] = 64
-            pins.i2cWriteBuffer(CHIP_ADDRESS, buff2, true)
-            buff2[0] = 65
-            pins.i2cWriteBuffer(CHIP_ADDRESS, buff2, true)
-            buff2[0] = 66
-            pins.i2cWriteBuffer(CHIP_ADDRESS, buff2, true)
-            buff2[0] = 67
-            pins.i2cWriteBuffer(CHIP_ADDRESS, buff2, true)
-            buff2[0] = 68
-            pins.i2cWriteBuffer(CHIP_ADDRESS, buff2, false)
 
-            //Disable key 15 as it is not used
-            buff2[0] = 69
-            buff2[1] = 0
-            pins.i2cWriteBuffer(CHIP_ADDRESS, buff2, false)
-
-            //Set Burst Repetition to 5
-            buff2[0] = 13
-            buff2[1] = keyNoiseThreshold
-            pins.i2cWriteBuffer(CHIP_ADDRESS, buff2, false)
-
-            //Configure Adjacent Key Suppression (AKS) Groups
-            //AKS Group 1: ALL KEYS
-            buff2[0] = 22
-            buff2[1] = 1
-            pins.i2cWriteBuffer(CHIP_ADDRESS, buff2, true)
-            buff2[0] = 23
-            pins.i2cWriteBuffer(CHIP_ADDRESS, buff2, true)
-            buff2[0] = 24
-            pins.i2cWriteBuffer(CHIP_ADDRESS, buff2, true)
-            buff2[0] = 25
-            pins.i2cWriteBuffer(CHIP_ADDRESS, buff2, true)
-            buff2[0] = 26
-            pins.i2cWriteBuffer(CHIP_ADDRESS, buff2, true)
-            buff2[0] = 27
-            pins.i2cWriteBuffer(CHIP_ADDRESS, buff2, true)
-            buff2[0] = 28
-            pins.i2cWriteBuffer(CHIP_ADDRESS, buff2, true)
-            buff2[0] = 29
-            pins.i2cWriteBuffer(CHIP_ADDRESS, buff2, true)
-            buff2[0] = 30
-            pins.i2cWriteBuffer(CHIP_ADDRESS, buff2, true)
-            buff2[0] = 31
-            pins.i2cWriteBuffer(CHIP_ADDRESS, buff2, true)
-            buff2[0] = 32
-            pins.i2cWriteBuffer(CHIP_ADDRESS, buff2, true)
-            buff2[0] = 33
-            pins.i2cWriteBuffer(CHIP_ADDRESS, buff2, true)
-            buff2[0] = 34
-            pins.i2cWriteBuffer(CHIP_ADDRESS, buff2, true)
-            buff2[0] = 35
-            pins.i2cWriteBuffer(CHIP_ADDRESS, buff2, true)
-            buff2[0] = 36
-            pins.i2cWriteBuffer(CHIP_ADDRESS, buff2, false)
-
-            //Send calibration command
-            buff2[0] = 10
-            buff2[1] = 1
-            pins.i2cWriteBuffer(CHIP_ADDRESS, buff2, false)
-        }
-
-        //Read all change status address (General Status addr = 2)
-        buff[0] = 2
-        pins.i2cWriteBuffer(CHIP_ADDRESS, buff, true)
-        buff3 = pins.i2cReadBuffer(CHIP_ADDRESS, 5, false)
-        //Continue reading change status address until /change pin goes high
-        while (pins.digitalReadPin(DigitalPin.P1) == 0) {
-            buff[0] = 2
-            pins.i2cWriteBuffer(CHIP_ADDRESS, buff, true)
-            buff3 = pins.i2cReadBuffer(CHIP_ADDRESS, 5, false)
-        }
-        //Uncomment setSilence command when it becomes available in live MakeCode - fixes V2 micro:but humming noise
-        music.setSilenceLevel(0)
-        initialisedFlag = 1
-    }
-
-    function CY8CMBR3xxx_CalculateCrc(): number {
+    function CY8CMBR3xxx_CalculateCrc(configuration: any[]): number {
         let messageIndex;
         let byteValue;
         let seed = CY8CMBR3xxx_CCITT16_DEFAULT_SEED;
 
-        return 0;
+        for (messageIndex = 0; messageIndex < CY8CMBR3xxx_CONFIG_DATA_LENGTH; messageIndex++) {
+            byteValue = configuration[messageIndex];
+            seed = CY8CMBR3xxx_Calc4BitsCRC(byteValue >> CY8CMBR3xxx_CRC_BIT4_SHIFT, seed);
+            seed = CY8CMBR3xxx_Calc4BitsCRC(byteValue, seed);
+        }
+
+        return seed;
     }
+
+    function CY8CMBR3xxx_Calc4BitsCRC(value: number, remainder:number): number {
+        let tableIndex;
+
+        /* Divide the value by polynomial, via the CRC polynomial */
+        tableIndex = (value & CY8CMBR3xxx_CRC_BIT4_MASK) ^
+            ((remainder) >> (CY8CMBR3xxx_CRC_BIT_WIDTH - CY8CMBR3xxx_CRC_BIT4_SHIFT));
+        remainder = (CY8CMBR3xxx_CCITT16_POLYNOM * tableIndex) ^ (remainder << CY8CMBR3xxx_CRC_BIT4_SHIFT);
+        return remainder;
+    }
+
+    function configureMB(): void {
+        let i = 0;
+        let crc16 = 0;
+        //let crc16 = CY8CMBR3xxx_CalculateCrc(& configData[0]);
+        configData[126] = (crc16 & 0x00FF)
+        configData[127] = ((crc16 >> 8) & 0x00FF)
+        send_buf[0] = 0    // sends Offset byte
+        pins.i2cWriteBuffer(CHIP_ADDRESS, send_buf, true)
+        send_buf[0] = 0
+        pins.i2cWriteBuffer(CHIP_ADDRESS, send_buf, false)
+        send_buf[0] = 0    // sends Offset byte
+        pins.i2cWriteBuffer(CHIP_ADDRESS, send_buf, true)
+        send_buf[0] = 0
+        pins.i2cWriteBuffer(CHIP_ADDRESS, send_buf, false)
+        /////////////////////////////////////////part 1
+        send_buf[0] = 0    // sends Offset byte
+        pins.i2cWriteBuffer(CHIP_ADDRESS, send_buf, true)
+        for(i=0;i<30;i++){
+            send_buf[i] = configData[i]
+        }
+        pins.i2cWriteBuffer(CHIP_ADDRESS, send_buf, true)
+        send_buf[0] = configData[31]
+        pins.i2cWriteBuffer(CHIP_ADDRESS, send_buf, false)
+        //////////////////////////////////////////part 2
+        send_buf[0] = 31   //Offset byte
+        pins.i2cWriteBuffer(CHIP_ADDRESS, send_buf, true)
+        for (i = 0; i < 30; i++) {
+            send_buf[i] = configData[i+31]
+        }
+        pins.i2cWriteBuffer(CHIP_ADDRESS, send_buf, true)
+        send_buf[0] = configData[61]
+        pins.i2cWriteBuffer(CHIP_ADDRESS, send_buf, false)
+        //////////////////////////////////////////part 3
+        send_buf[0] = 62   //Offset byte
+        pins.i2cWriteBuffer(CHIP_ADDRESS, send_buf, true)
+        for (i = 0; i < 30; i++) {
+            send_buf[i] = configData[i + 62]
+        }
+        pins.i2cWriteBuffer(CHIP_ADDRESS, send_buf, true)
+        send_buf[0] = configData[92]
+        pins.i2cWriteBuffer(CHIP_ADDRESS, send_buf, false)
+        //////////////////////////////////////////part 4
+        send_buf[0] = 93   //Offset byte
+        pins.i2cWriteBuffer(CHIP_ADDRESS, send_buf, true)
+        for (i = 0; i < 30; i++) {
+            send_buf[i] = configData[i + 93]
+        }
+        pins.i2cWriteBuffer(CHIP_ADDRESS, send_buf, true)
+        send_buf[0] = configData[123]
+        pins.i2cWriteBuffer(CHIP_ADDRESS, send_buf, false)
+        //////////////////////////////////////////part 5
+        send_buf[0] = 124   //Offset byte
+        pins.i2cWriteBuffer(CHIP_ADDRESS, send_buf, true)
+        send_buf[0] = configData[125]
+        pins.i2cWriteBuffer(CHIP_ADDRESS, send_buf, true)
+        send_buf[0] = configData[126]
+        pins.i2cWriteBuffer(CHIP_ADDRESS, send_buf, true)
+        send_buf[0] = configData[127]
+        pins.i2cWriteBuffer(CHIP_ADDRESS, send_buf, true)
+        send_buf[0] = configData[128]
+        pins.i2cWriteBuffer(CHIP_ADDRESS, send_buf, false)
+        ///////////////////////////////////////////////
+        send_buf[0] = CTRL_CMD
+        pins.i2cWriteBuffer(CHIP_ADDRESS, send_buf, true)
+        send_buf[0] = SAVE_CHECK_CRC
+        pins.i2cWriteBuffer(CHIP_ADDRESS, send_buf, false)
+        ///////////////////////////////////////////////
+        send_buf[0] = CTRL_CMD
+        pins.i2cWriteBuffer(CHIP_ADDRESS, send_buf, true)
+        send_buf[0] = SW_RESET
+        pins.i2cWriteBuffer(CHIP_ADDRESS, send_buf, false)
+    }
+
+    function ReadandDisplaySensorStatus(): void {
+        let prox = 0;
+        let proximityCounter = 0;
+        let proximityStatus = 0;
+        let noteDuration = 10;
+
+        send_buf[0] = PROX_STAT
+        pins.i2cWriteBuffer(CHIP_ADDRESS, send_buf, false)
+        rec_buf = pins.i2cReadBuffer(CHIP_ADDRESS, 1, false)
+        send_buf[0] = BUTTON_STATUS
+        pins.i2cWriteBuffer(CHIP_ADDRESS, send_buf, false)
+        rec_buf = pins.i2cReadBuffer(CHIP_ADDRESS, 3, false)
+        ////////////////////DisplaySensorStatus
+        if ((rec_buf[0] & 0x01) != 0){
+            if (++proximityCounter > 30) {
+                proximityStatus = 1
+                proximityCounter = 0
+            }
+        }
+        else{
+            proximityCounter = 0;
+            proximityStatus = 0;
+        }
+
+        if ((rec_buf[1] & 0x02) != 0) {
+            // A button
+        }
+        if ((rec_buf[1] & 0x04) != 0) {
+            // B button
+        }
+        if ((rec_buf[1] & 0x80) != 0) {
+            // left button
+        }
+        if ((rec_buf[1] & 0x40) != 0) {
+            // down button
+        }
+        if ((rec_buf[1] & 0x20) != 0) {
+            // right button
+        }
+        if ((rec_buf[1] & 0x10) != 0) {
+            // top button
+        }
+
+        if ((rec_buf[1] & 0x08) != 0) {
+            music.playTone(262, noteDuration)
+        }
+        if ((rec_buf[2] & 0x40) != 0) {
+            music.playTone(294, noteDuration)
+        }
+        if ((rec_buf[2] & 0x20) != 0) {
+            music.playTone(330, noteDuration)
+        }
+        if ((rec_buf[2] & 0x10) != 0) {
+            music.playTone(349, noteDuration)
+        }
+        if ((rec_buf[2] & 0x08) != 0) {
+            music.playTone(392, noteDuration)
+        }
+        if ((rec_buf[2] & 0x04) != 0) {
+            music.playTone(440, noteDuration)
+        }
+        if ((rec_buf[2] & 0x02) != 0) {
+            music.playTone(494, noteDuration)
+        }
+        if ((rec_buf[2] & 0x01) != 0) {
+            music.playTone(523, noteDuration)
+        }
+        if (((rec_buf[2] & 0x08) == 0) && ((rec_buf[2] & 0xFF) == 0)){
+            music.playTone(0, noteDuration)
+        }
+    }
+
+    //% block="Play piano"
+    //% subcategory="Touch Sensor-Piano"
+    export function Play(): void {
+        configureMB()
+        ReadandDisplaySensorStatus()
+    }
+
 
 }
