@@ -9,7 +9,16 @@
     "files": [
         "main.blocks",
         "main.ts",
-        "README.md"
+        "README.md",
+        "RGB-WS2812B.ts",
+        "Gesture.ts",
+        "Others.ts",
+        "MotorDriver.ts",
+        "TouchSensor.ts",
+        "Esp01.ts",
+        "IR.ts",
+        "TempAndHum.ts",
+        "Oled.ts"
     ],
     "testFiles": [
         "test.ts"
