@@ -62,7 +62,7 @@ namespace PicoBricks {
         0x87, 0x04
     ];
 
-    let rec_buf = pins.createBuffer(2);
+    let rec_buf = pins.createBuffer(3);
     let send_buf = pins.createBuffer(31);
 
 
