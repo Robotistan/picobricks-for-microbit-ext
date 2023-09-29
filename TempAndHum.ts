@@ -42,6 +42,11 @@ namespace PicoBricks {
         value = ((read_buf[0] << 8) | read_buf[1])
         value = ((4375 * value) >> 14) - 4500;
         let temperature = value / 100.0
+        send_buf[0] = SHTC3_SLEEP1
+        pins.i2cWriteBuffer(SHTC3_DEFAULT_ADDR, send_buf, true)
+        send_buf[0] = SHTC3_SLEEP2
+        pins.i2cWriteBuffer(SHTC3_DEFAULT_ADDR, send_buf, false)
+        basic.pause(1)
         return temperature;
     }
 
@@ -63,6 +68,11 @@ namespace PicoBricks {
         value = ((read_buf[3] << 8) | read_buf[4])
         value = ((625 * value) >> 12);
         let humidity = value / 100.0
+        send_buf[0] = SHTC3_SLEEP1
+        pins.i2cWriteBuffer(SHTC3_DEFAULT_ADDR, send_buf, true)
+        send_buf[0] = SHTC3_SLEEP2
+        pins.i2cWriteBuffer(SHTC3_DEFAULT_ADDR, send_buf, false)
+        basic.pause(1)
         return humidity;
     }
 

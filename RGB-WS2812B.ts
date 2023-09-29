@@ -11,43 +11,50 @@ enum NeoPixelColors {
     Black = 0x000000
 }
 enum neo_pin {
-    P1 = 0,
-    P2 = 1,
-    P3 = 2
+    L1 = 0,
+    L2 = 1,
+    L3 = 2
 }
 
 namespace PicoBricks {
     let neobuf = pins.createBuffer(3);
+
+    //% blockId=all_red
     //% block="Green All Leds"
     //% subcategory="RGB-WS2812B"
     export function all_green(): void {
         ws2812b.sendBuffer(hex`ff0000 ff0000 ff0000`, DigitalPin.P8)
     }
 
+    //% blockId=all_red
     //% block="Red All Leds"
     //% subcategory="RGB-WS2812B"
     export function all_red(): void {
         ws2812b.sendBuffer(hex`00ff00 00ff00 00ff00`, DigitalPin.P8)
     }
 
+    //% blockId=all_blue
     //% block="Blue All Leds"
     //% subcategory="RGB-WS2812B"
     export function all_blue(): void {
         ws2812b.sendBuffer(hex`0000ff 0000ff 0000ff`, DigitalPin.P8)
     }
 
+    //% blockId=rainbow
     //% block="Rainbow"
     //% subcategory="RGB-WS2812B"
     export function rainbow(): void {
         ws2812b.sendBuffer(hex`ff0000 00ff00 0000ff`, DigitalPin.P8)
     }
 
+    //% blockId=clear_neo
     //% block="Clear"
     //% subcategory="RGB-WS2812B"
     export function clear_neo(): void {
         ws2812b.sendBuffer(hex`000000 000000 000000`, DigitalPin.P8)
     }
 
+    //% blockId=FillColor
     //% block="Show color at all pixel %NeoPixelColors"
     //% subcategory="RGB-WS2812B"
     export function FillColor(color: NeoPixelColors): void {
@@ -59,6 +66,7 @@ namespace PicoBricks {
         ws2812b.sendBuffer(neobuf, DigitalPin.P8)
     }
 
+    //% blockId=SinglePixel
     //% block="Show color at %neo_pin to %NeoPixelColors"
     //% subcategory="RGB-WS2812B"
     export function SinglePixel(pixeloffset: neo_pin, color: NeoPixelColors): void {
