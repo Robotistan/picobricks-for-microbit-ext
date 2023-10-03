@@ -59,7 +59,7 @@ namespace PicoBricks {
         return read_value
     }
 
-    //% block="Init"
+    //% block=" SHTC3 Init"
     //% subcategory="TempAndHum"
     export function shtcinit(): void {
         pins.i2cWriteNumber(SHTC3_DEFAULT_ADDR, SHTC3_SOFTRESET, NumberFormat.UInt16BE, false)

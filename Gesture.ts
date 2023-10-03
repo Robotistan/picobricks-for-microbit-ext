@@ -1,5 +1,5 @@
 namespace PicoBricks {
-    const ADDR = 0x39
+    const APDS9960_ADDR = 0x39
     const APDS9960_RAM = 0x00
     const APDS9960_ENABLE = 0x80
     const APDS9960_ATIME = 0x81
@@ -55,15 +55,15 @@ namespace PicoBricks {
     const DEFAULT_LDRIVE = 0
     
     function i2cwrite(addr: number, reg: number, value: number) {
-        let buf2 = pins.createBuffer(2)
-        buf2[0] = reg
-        buf2[1] = value
-        pins.i2cWriteBuffer(addr, buf2)
+        let buf = pins.createBuffer(2)
+        buf[0] = reg
+        buf[1] = value
+        pins.i2cWriteBuffer(addr, buf)
     }
 
     function i2cread(addr: number, reg: number) {
-        pins.i2cWriteNumber(addr, reg, NumberFormat.UInt16BE);
-        let val = pins.i2cReadNumber(addr, NumberFormat.UInt16BE);
+        pins.i2cWriteNumber(addr, reg, NumberFormat.UInt8BE, false);
+        let val = pins.i2cReadNumber(addr, NumberFormat.UInt8BE, false);
         return val;
     }
 
@@ -72,24 +72,24 @@ namespace PicoBricks {
     //% subcategory="Gesture-APDS9960"
     export function Init(): void {
         enableMode(7, 0)
-        i2cwrite(ADDR, APDS9960_ATIME, 219) // 103ms
-        i2cwrite(ADDR, APDS9960_WTIME, 246) // 27ms
-        i2cwrite(ADDR, APDS9960_PPULSE, 0x87) // 16us, 8 pulses
-        i2cwrite(ADDR, APDS9960_POFFSET_UR, 0) // 0 offset
-        i2cwrite(ADDR, APDS9960_POFFSET_DL, 0) // 0 offset
-        i2cwrite(ADDR, APDS9960_CONFIG1, 0x60) // No 12x wait (WTIME) factor
+        i2cwrite(APDS9960_ADDR, APDS9960_ATIME, 219) // 103ms
+        i2cwrite(APDS9960_ADDR, APDS9960_WTIME, 246) // 27ms
+        i2cwrite(APDS9960_ADDR, APDS9960_PPULSE, 0x87) // 16us, 8 pulses
+        i2cwrite(APDS9960_ADDR, APDS9960_POFFSET_UR, 0) // 0 offset
+        i2cwrite(APDS9960_ADDR, APDS9960_POFFSET_DL, 0) // 0 offset
+        i2cwrite(APDS9960_ADDR, APDS9960_CONFIG1, 0x60) // No 12x wait (WTIME) factor
 
 
         setLEDDrive(DEFAULT_LDRIVE)
         setProximityGain(DEFAULT_PGAIN)
         setAmbientLightGain(1)
-        i2cwrite(ADDR, APDS9960_PILT, 0) // Low proximity threshold
-        i2cwrite(ADDR, APDS9960_PIHT, 50) // High proximity threshold
+        i2cwrite(APDS9960_ADDR, APDS9960_PILT, 0) // Low proximity threshold
+        i2cwrite(APDS9960_ADDR, APDS9960_PIHT, 50) // High proximity threshold
         setLightIntLowThreshold(0xFFFF) // Force interrupt for calibration
         setLightIntHighThreshold(0)
-        i2cwrite(ADDR, APDS9960_PERS, 0x11) // 2 consecutive prox or ALS for int.
-        i2cwrite(ADDR, APDS9960_CONFIG2, 0x01) // No saturation interrupts or LED boost
-        i2cwrite(ADDR, APDS9960_CONFIG3, 0)
+        i2cwrite(APDS9960_ADDR, APDS9960_PERS, 0x11) // 2 consecutive prox or ALS for int.
+        i2cwrite(APDS9960_ADDR, APDS9960_CONFIG2, 0x01) // No saturation interrupts or LED boost
+        i2cwrite(APDS9960_ADDR, APDS9960_CONFIG3, 0)
 
         setProximityGain(PGAIN_2X)
         setProximityIntEnable(0)
@@ -103,7 +103,7 @@ namespace PicoBricks {
     //% block="APDS9960 ID"
     //% subcategory="Gesture-APDS9960"
     export function id(): number {
-        let chipid = i2cread(ADDR, APDS9960_ID);
+        let chipid = i2cread(APDS9960_ADDR, APDS9960_ID);
         return chipid;
     }
 
@@ -115,7 +115,7 @@ namespace PicoBricks {
         val2 &= 0b11110011;
         val2 |= drive;
 
-        i2cwrite(ADDR, APDS9960_CONTROL, val2)
+        i2cwrite(APDS9960_ADDR, APDS9960_CONTROL, val2)
     }
 
     function setLEDDrive(drive: number) {
@@ -126,7 +126,7 @@ namespace PicoBricks {
         val3 &= 0b00111111;
         val3 |= drive;
 
-        i2cwrite(ADDR, APDS9960_CONTROL, val3)
+        i2cwrite(APDS9960_ADDR, APDS9960_CONTROL, val3)
     }
 
     function setProximityIntEnable(enable: number) {
@@ -137,7 +137,7 @@ namespace PicoBricks {
         val4 &= 0b11011111;
         val4 |= enable;
 
-        i2cwrite(ADDR, APDS9960_ENABLE, val4)
+        i2cwrite(APDS9960_ADDR, APDS9960_ENABLE, val4)
     }
 
     function enableMode(mode: number, enable: number) {
@@ -156,7 +156,7 @@ namespace PicoBricks {
                 reg_val = 0x00;
             }
         }
-        i2cwrite(ADDR, APDS9960_ENABLE, reg_val)
+        i2cwrite(APDS9960_ADDR, APDS9960_ENABLE, reg_val)
     }
 
     function setAmbientLightGain(drive: number) {
@@ -165,7 +165,7 @@ namespace PicoBricks {
         val5 &= 0b11111100;
         val5 |= drive;
 
-        i2cwrite(ADDR, APDS9960_CONTROL, val5)
+        i2cwrite(APDS9960_ADDR, APDS9960_CONTROL, val5)
     }
 
     function setLightIntLowThreshold(threshold: number) {
@@ -174,8 +174,8 @@ namespace PicoBricks {
         val_low = threshold & 0x00FF;
         val_high = (threshold & 0xFF00) >> 8;
 
-        i2cwrite(ADDR, APDS9960_AILTL, val_low)
-        i2cwrite(ADDR, APDS9960_AILTH, val_high)
+        i2cwrite(APDS9960_ADDR, APDS9960_AILTL, val_low)
+        i2cwrite(APDS9960_ADDR, APDS9960_AILTH, val_high)
     }
 
     function setLightIntHighThreshold(threshold: number) {
@@ -184,14 +184,14 @@ namespace PicoBricks {
         val_low2 = threshold & 0x00FF;
         val_high2 = (threshold & 0xFF00) >> 8;
 
-        i2cwrite(ADDR, APDS9960_AIHTL, val_low2)
-        i2cwrite(ADDR, APDS9960_AIHTH, val_high2)
+        i2cwrite(APDS9960_ADDR, APDS9960_AIHTL, val_low2)
+        i2cwrite(APDS9960_ADDR, APDS9960_AIHTH, val_high2)
     }
 
     //% block="APDS9960 Proximity"
     //% subcategory="Gesture-APDS9960"
     export function proximity(): number {
-        let prox = i2cread(ADDR, APDS9960_PDATA)
+        let prox = i2cread(APDS9960_ADDR, APDS9960_PDATA)
         return prox;
     }
 
