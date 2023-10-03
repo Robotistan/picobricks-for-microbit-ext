@@ -28,10 +28,10 @@ namespace PicoBricks {
         return result;
     }
 
-    //% block="set digital pin %x to %set_relay"
+    //% block="Set Relay to %set_relay"
     //% subcategory="Others"
-    export function relay(x: number, state: set_relay): boolean {
-        return (state == set_relay.high);
+    export function relay(state: set_relay): void {
+        pins.digitalWritePin(DigitalPin.P16, state)
     }
 
     //% block="PIR read"
