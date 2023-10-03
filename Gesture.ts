@@ -206,7 +206,6 @@ namespace PicoBricks {
 
     //% blockId=APDS9960_getid block="ID"
     //% weight=99
-    //% advanced=true
     //% subcategory="Gesture-APDS9960"
     export function ReadId(): number {
         let chipid = i2cread(ADDR, APDS9960_ID);
