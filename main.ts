@@ -2,6 +2,8 @@ namespace PicoBricks {
 
 
 }
+PicoBricks.shtcinit()
 basic.forever(function () {
-    basic.pause(100)
+    basic.showString("" + (PicoBricks.Temprature()))
+    basic.pause(2000)
 })

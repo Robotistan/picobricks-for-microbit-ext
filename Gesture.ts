@@ -62,8 +62,8 @@ namespace PicoBricks {
     }
 
     function i2cread(addr: number, reg: number) {
-        pins.i2cWriteNumber(addr, reg, NumberFormat.UInt8BE);
-        let val = pins.i2cReadNumber(addr, NumberFormat.UInt8BE);
+        pins.i2cWriteNumber(addr, reg, NumberFormat.UInt16BE);
+        let val = pins.i2cReadNumber(addr, NumberFormat.UInt16BE);
         return val;
     }
 

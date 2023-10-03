@@ -1,124 +1,72 @@
 namespace PicoBricks {
     const SHTC3_DEFAULT_ADDR = 0x70;
-    const SHTC3_NORMAL_MEAS_TFIRST_STRETCH1 = 0x7C;
-    const SHTC3_NORMAL_MEAS_TFIRST_STRETCH2 = 0xA2;
-    const SHTC3_LOWPOW_MEAS_TFIRST_STRETCH1 = 0x64; 
-    const SHTC3_LOWPOW_MEAS_TFIRST_STRETCH2 = 0x58;
-    const SHTC3_NORMAL_MEAS_HFIRST_STRETCH1 = 0x5C;
-    const SHTC3_NORMAL_MEAS_HFIRST_STRETCH2 = 0x24;
-    const SHTC3_LOWPOW_MEAS_HFIRST_STRETCH1 = 0x44;
-    const SHTC3_LOWPOW_MEAS_HFIRST_STRETCH2 = 0xDE;
-    const SHTC3_NORMAL_MEAS_TFIRST1 = 0x78;
-    const SHTC3_NORMAL_MEAS_TFIRST2 = 0x66;
-    const SHTC3_LOWPOW_MEAS_TFIRST1 = 0x60;
-    const SHTC3_LOWPOW_MEAS_TFIRST2 = 0x9C;
-    const SHTC3_NORMAL_MEAS_HFIRST1 = 0x58;
-    const SHTC3_NORMAL_MEAS_HFIRST2 = 0xE0;
-    const SHTC3_LOWPOW_MEAS_HFIRST1 = 0x40;
-    const SHTC3_LOWPOW_MEAS_HFIRST2 = 0x1A;
-    const SHTC3_READID1 = 0xEF; 
-    const SHTC3_READID2 = 0xC8;
-    const SHTC3_SOFTRESET1 = 0x80;
-    const SHTC3_SOFTRESET2 = 0x5D;
-    const SHTC3_SLEEP1 = 0xB0; 
-    const SHTC3_SLEEP2 = 0x98;
-    const SHTC3_WAKEUP1 = 0x35; 
-    const SHTC3_WAKEUP2 = 0x17;
+    const SHTC3_NORMAL_MEAS_TFIRST_STRETCH = 0x7CA2;
+    const SHTC3_LOWPOW_MEAS_TFIRST_STRETCH = 0x6458; 
+    const SHTC3_NORMAL_MEAS_HFIRST_STRETCH = 0x5C24;
+    const SHTC3_LOWPOW_MEAS_HFIRST_STRETCH = 0x44DE;
+    const SHTC3_NORMAL_MEAS_TFIRST = 0x7866;
+    const SHTC3_LOWPOW_MEAS_TFIRST = 0x609C;
+    const SHTC3_NORMAL_MEAS_HFIRST = 0x58E0;
+    const SHTC3_LOWPOW_MEAS_HFIRST = 0x401A;
+    const SHTC3_READID = 0xEFC8; 
+    const SHTC3_SOFTRESET = 0x805D;
+    const SHTC3_SLEEP = 0xB098; 
+    const SHTC3_WAKEUP = 0x3517; 
 
-    let read_buf = pins.createBuffer(5);
-    let send_buf = pins.createBuffer(2);
-    let value = 0;
+    let read_buf = pins.createBuffer(2);
+    let val = 0;
+
+
+    function i2cread16(addr: number, reg: number) {
+        pins.i2cWriteNumber(addr, reg, NumberFormat.UInt16BE);
+        let rval = pins.i2cReadNumber(addr, NumberFormat.UInt16BE);
+        return rval;
+    }
 
     //% block="Read Temprature"
     //% subcategory="TempAndHum"
     export function Temprature(): number {
-        send_buf[0] = SHTC3_NORMAL_MEAS_TFIRST1
-        pins.i2cWriteBuffer(SHTC3_DEFAULT_ADDR, send_buf, true)
-        send_buf[0] = SHTC3_NORMAL_MEAS_TFIRST2
-        pins.i2cWriteBuffer(SHTC3_DEFAULT_ADDR, send_buf, false)
+        pins.i2cWriteNumber(SHTC3_DEFAULT_ADDR, SHTC3_NORMAL_MEAS_TFIRST, NumberFormat.UInt16BE, false)
         basic.pause(13)
-        read_buf = pins.i2cReadBuffer(SHTC3_DEFAULT_ADDR, 5, false)
+        read_buf = pins.i2cReadBuffer(SHTC3_DEFAULT_ADDR, 2, false)
         basic.pause(1)
-        value = ((read_buf[0] << 8) | read_buf[1])
-        value = ((4375 * value) >> 14) - 4500;
-        let temperature = value / 100.0
-        send_buf[0] = SHTC3_SLEEP1
-        pins.i2cWriteBuffer(SHTC3_DEFAULT_ADDR, send_buf, true)
-        send_buf[0] = SHTC3_SLEEP2
-        pins.i2cWriteBuffer(SHTC3_DEFAULT_ADDR, send_buf, false)
-        basic.pause(1)
-        return temperature;
+        val = ((read_buf[0] << 8) | read_buf[1])
+        val = ((4375 * val) >> 14) - 4500;
+        let temperature = val / 100.0
+        
+        return temperature
     }
 
     //% block="Read Humidity"
     //% subcategory="TempAndHum"
     export function Humidity(): number {
-        send_buf[0] = SHTC3_NORMAL_MEAS_TFIRST1
-        pins.i2cWriteBuffer(SHTC3_DEFAULT_ADDR, send_buf, true)
-        send_buf[0] = SHTC3_NORMAL_MEAS_TFIRST2
-        pins.i2cWriteBuffer(SHTC3_DEFAULT_ADDR, send_buf, false)
+        pins.i2cWriteNumber(SHTC3_DEFAULT_ADDR, SHTC3_NORMAL_MEAS_TFIRST, NumberFormat.UInt16BE, false)
         basic.pause(13)
         read_buf = pins.i2cReadBuffer(SHTC3_DEFAULT_ADDR, 5, false)
         basic.pause(1)
 
-        if (read_buf[2] != crc8(read_buf[0], read_buf[1]) ||
-            read_buf[5] != crc8(read_buf[3], read_buf[4]))
-            return 0;
+        val = ((read_buf[3] << 8) | read_buf[4])
+        val = ((625 * val) >> 12);
+        let humidity = val / 100.0
 
-        value = ((read_buf[3] << 8) | read_buf[4])
-        value = ((625 * value) >> 12);
-        let humidity = value / 100.0
-        send_buf[0] = SHTC3_SLEEP1
-        pins.i2cWriteBuffer(SHTC3_DEFAULT_ADDR, send_buf, true)
-        send_buf[0] = SHTC3_SLEEP2
-        pins.i2cWriteBuffer(SHTC3_DEFAULT_ADDR, send_buf, false)
-        basic.pause(1)
         return humidity;
     }
 
     //% block="Read ID"
     //% subcategory="TempAndHum"
     export function read_id(): number {
-        let id = 0;
-        read_buf = pins.i2cReadBuffer(SHTC3_DEFAULT_ADDR, 3, false)
-        id = read_buf[0]
-        id <<= 8
-        id |= read_buf[1]
-        return id;
+        let read_value = i2cread16(SHTC3_DEFAULT_ADDR, SHTC3_READID)
+        return read_value
     }
 
     //% block="Init"
     //% subcategory="TempAndHum"
     export function shtcinit(): void {
-        send_buf[0] = SHTC3_SOFTRESET1
-        pins.i2cWriteBuffer(SHTC3_DEFAULT_ADDR, send_buf, true)
-        send_buf[0] = SHTC3_SOFTRESET2
-        pins.i2cWriteBuffer(SHTC3_DEFAULT_ADDR, send_buf, false)
+        pins.i2cWriteNumber(SHTC3_DEFAULT_ADDR, SHTC3_SOFTRESET, NumberFormat.UInt16BE, false)
         basic.pause(100)
 
-        send_buf[0] = SHTC3_WAKEUP1
-        pins.i2cWriteBuffer(SHTC3_DEFAULT_ADDR, send_buf, true)
-        send_buf[0] = SHTC3_WAKEUP2
-        pins.i2cWriteBuffer(SHTC3_DEFAULT_ADDR, send_buf, false)
+        pins.i2cWriteNumber(SHTC3_DEFAULT_ADDR, SHTC3_WAKEUP, NumberFormat.UInt16BE, false)
         basic.pause(1)
-    }
-
-    function crc8(data1:number, data2:number): number {
-        let x = 0x31;
-        let crc = 0xFF;
-        let i = 0;
-        let j = 0;
-
-        crc ^= data1;
-        for (i = 8; i; --i) {
-            crc = (crc & 0x80) ? (crc << 1) ^ x : (crc << 1);
-        }
-        crc ^= data2;
-        for (i = 8; i; --i) {
-            crc = (crc & 0x80) ? (crc << 1) ^ x : (crc << 1);
-        }
-
-        return crc
     }
 
 }
