@@ -2,7 +2,7 @@ namespace PicoBricks {
 
 
 }
-PicoBricks.Init(SENSORINIT.Color)
+PicoBricks.TouchInit()
 basic.forever(function () {
-    basic.pause(500)
+    PicoBricks.Play()
 })
