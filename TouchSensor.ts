@@ -249,7 +249,7 @@ namespace PicoBricks {
         }
 
         if ((rec_buf[1] & 0x08) != 0) {
-            music.playTone(262, 500)
+            music.playTone(262, 400)
         }
         if ((rec_buf[2] & 0x40) != 0) {
             music.playTone(294, noteDuration)
