@@ -1,14 +1,14 @@
 enum servo_motor_type {
-    Servo1 = 0,
-    Servo2 = 1,
-    Servo3 = 2,
-    Servo4 = 3
+    Servo1 = 3,
+    Servo2 = 4,
+    Servo3 = 5,
+    Servo4 = 6
 }
 enum dc_motor_type {
-    DC1 = 0,
-    DC2 = 1
+    DC1 = 1,
+    DC2 = 2
 }
-
+//% weight=10 color=#067565 block="PicoBricks" icon="\uf135"
 namespace PicoBricks {
     let MotorBuffer = pins.createBuffer(5);
 
