@@ -105,6 +105,9 @@ namespace PicoBricks {
 
     let rec_buf = pins.createBuffer(3);
     let buff = pins.createBuffer(3);
+    let tone = 0;
+    let volume = 0;
+    let noteDuration = 0;
 
     function configureMB(): void {
         // OFFSET
@@ -291,13 +294,9 @@ namespace PicoBricks {
     }
 
     function ReadSensorStatus(): void {
-        let prox = 0;
         let proximityCounter = 0;
         let proximityStatus = 0;
         let val = 0;
-        let tone = 0;
-        let volume = 0;
-        let noteDuration = 0;
 
         pins.i2cWriteNumber(CHIP_ADDRESS, PROX_STAT, NumberFormat.UInt8BE)
         val = pins.i2cReadNumber(CHIP_ADDRESS, NumberFormat.UInt8BE)
@@ -324,7 +323,7 @@ namespace PicoBricks {
             music.play(music.stringPlayable("B4 A4 G4 A4 C5 0 D5 C5 B4 C5 E5 0 F5 E5 D5 E5 B5 A5 G5 A5 B5 A5 G5 A5 C6 0 A5 C6 GS5 AS5 B5 A5 G5 A5 GS5 AS5 B5 A5 G5 A5 GS5 AS5 B5 A5 G5 F5 E5 0", 400), music.PlaybackMode.UntilDone)
         }
         if ((rec_buf[1] & 0x04) != 0) { // B button
-            music.playTone(NOTE_D4, noteDuration)
+            music.play(music.stringPlayable("B4 A4 G4 A4 C5 0 D5 C5 B4 C5 E5 0 F5 E5 D5 E5 B5 A5 G5 A5 B5 A5 G5 A5 C6 0 A5 C6 GS5 AS5 B5 A5 G5 A5 GS5 AS5 B5 A5 G5 A5 GS5 AS5 B5 A5 G5 F5 E5 0", 350), music.PlaybackMode.InBackground)
         }
         if ((rec_buf[1] & 0x80) != 0) { // left button
             music.playTone(NOTE_D4, noteDuration)
@@ -348,14 +347,15 @@ namespace PicoBricks {
         if(tone >= 2)
             tone =2
 
-        if(volume == 0)
-            noteDuration = 0
-        else if (volume == 1)
-            noteDuration = 10
-        else if (volume == 2)
-            noteDuration = 30
-        else if (volume == 3)
-            noteDuration = 100
+        if (volume <= 0)
+            volume = 0
+        if (volume >= 1)
+            volume = 1
+
+        if(volume == 1)
+            music.setVolume(100)
+        if (volume == 0)
+            music.setVolume(255)
 
 
         if ((rec_buf[1] & 0x08) != 0) {
@@ -461,31 +461,6 @@ namespace PicoBricks {
     //% subcategory="Touch Sensor-Piano"
     export function Play(): void {
         ReadSensorStatus()
-    }
-
-    //% blockId="piano_id" block="piano id"
-    //% subcategory="Touch Sensor-Piano"
-    export function piano_id(): number {
-        pins.i2cWriteNumber(CHIP_ADDRESS, PROX_STAT, NumberFormat.UInt8BE)
-        let val = pins.i2cReadNumber(CHIP_ADDRESS, NumberFormat.UInt8BE)
-
-        pins.i2cWriteNumber(CHIP_ADDRESS, BUTTON_STATUS, NumberFormat.UInt8BE)
-        buff = pins.i2cReadBuffer(CHIP_ADDRESS, 2, false)
-
-        rec_buf[0] = val
-        rec_buf[1] = buff[0]
-        rec_buf[2] = buff[1]
-
-
-        if ((rec_buf[1] & 0x02) != 0){ // A button
-            music.playTone(NOTE_E4, 0)
-        }
-
-        if (((rec_buf[2] & 0x08) == 0) && ((rec_buf[2] & 0xFF) == 0) && ((rec_buf[1] & 0x08) == 0) && ((rec_buf[1] & 0xFF) == 0)) {
-            music.playTone(0, 0)
-        }
-
-        return rec_buf[1]
     }
 
 
