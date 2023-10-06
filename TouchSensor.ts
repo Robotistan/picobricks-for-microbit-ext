@@ -323,7 +323,7 @@ namespace PicoBricks {
             music.play(music.stringPlayable("B4 A4 G4 A4 C5 0 D5 C5 B4 C5 E5 0 F5 E5 D5 E5 B5 A5 G5 A5 B5 A5 G5 A5 C6 0 A5 C6 GS5 AS5 B5 A5 G5 A5 GS5 AS5 B5 A5 G5 A5 GS5 AS5 B5 A5 G5 F5 E5 0", 400), music.PlaybackMode.UntilDone)
         }
         if ((rec_buf[1] & 0x04) != 0) { // B button
-            music.play(music.stringPlayable("B4 A4 G4 A4 C5 0 D5 C5 B4 C5 E5 0 F5 E5 D5 E5 B5 A5 G5 A5 B5 A5 G5 A5 C6 0 A5 C6 GS5 AS5 B5 A5 G5 A5 GS5 AS5 B5 A5 G5 A5 GS5 AS5 B5 A5 G5 F5 E5 0", 350), music.PlaybackMode.InBackground)
+            music.play(music.stringPlayable("B4 A4 G4 A4 C5 0 D5 C5 B4 C5 E5 0 F5 E5 D5 E5 B5 A5 G5 A5 B5 A5 G5 A5 C6 0 A5 C6 GS5 AS5 B5 A5 G5 A5 GS5 AS5 B5 A5 G5 A5 GS5 AS5 B5 A5 G5 F5 E5 0", 400), music.PlaybackMode.InBackground)
         }
         if ((rec_buf[1] & 0x80) != 0) { // left button
             music.playTone(NOTE_D4, noteDuration)
@@ -344,106 +344,82 @@ namespace PicoBricks {
 
         if(tone <= 0)
             tone = 0
-        if(tone >= 2)
-            tone =2
+        if(tone >= 1)
+            tone =1
 
         if (volume <= 0)
             volume = 0
         if (volume >= 1)
             volume = 1
 
-        if(volume == 1)
+        if(volume == 0)
             music.setVolume(100)
-        if (volume == 0)
+        if (volume == 1)
             music.setVolume(255)
 
 
-        if ((rec_buf[1] & 0x08) != 0) {
+        if ((rec_buf[1] & 0x08) != 0) { //C
             if (tone == 0){
                 music.playTone(NOTE_C4, noteDuration)
             }
             else if (tone == 1){
-                music.playTone(NOTE_D5, noteDuration)
-            }
-            else if (tone == 2) {
-                music.playTone(NOTE_E6, noteDuration)
+                music.playTone(NOTE_C5, noteDuration)
             }
         }
-        if ((rec_buf[2] & 0x40) != 0) {
+        if ((rec_buf[2] & 0x40) != 0) { //D
             if (tone == 0) {
                 music.playTone(NOTE_D4, noteDuration)
             }
             else if (tone == 1) {
-                music.playTone(NOTE_E5, noteDuration)
-            }
-            else if (tone == 2) {
-                music.playTone(NOTE_F6, noteDuration)
+                music.playTone(NOTE_D5, noteDuration)
             }
         }
-        if ((rec_buf[2] & 0x20) != 0) {
+        if ((rec_buf[2] & 0x20) != 0) { //E
             if (tone == 0) {
                 music.playTone(NOTE_E4, noteDuration)
             } 
             else if (tone == 1) {
-                music.playTone(NOTE_F5, noteDuration)
-            }
-            else if (tone == 2) {
-                music.playTone(NOTE_G6, noteDuration)
+                music.playTone(NOTE_E5, noteDuration)
             }
         }
-        if ((rec_buf[2] & 0x10) != 0) {
+        if ((rec_buf[2] & 0x10) != 0) { //F
             if (tone == 0) {
                 music.playTone(NOTE_F4, noteDuration)   
             }
             else if (tone == 1) {
-                music.playTone(NOTE_G5, noteDuration)
-            }
-            else if (tone == 2) {
-                music.playTone(NOTE_A7, noteDuration)
+                music.playTone(NOTE_F5, noteDuration)
             }
         }
-        if ((rec_buf[2] & 0x08) != 0) {
+        if ((rec_buf[2] & 0x08) != 0) { //G
             if (tone == 0) {
                 music.playTone(NOTE_G4, noteDuration) 
             } 
             else if (tone == 1) {
-                music.playTone(NOTE_A5, noteDuration)
-            }
-            else if (tone == 2) {
-                music.playTone(NOTE_B7, noteDuration)
+                music.playTone(NOTE_G5, noteDuration)
             }
         }
-        if ((rec_buf[2] & 0x04) != 0) {
+        if ((rec_buf[2] & 0x04) != 0) { //A
             if (tone == 0) {
                 music.playTone(NOTE_A4, noteDuration) 
             }  
             else if (tone == 1) {
-                music.playTone(NOTE_B5, noteDuration)
-            }
-            else if (tone == 2) {
-                music.playTone(NOTE_C7, noteDuration)
+                music.playTone(NOTE_A5, noteDuration)
             }
         }
-        if ((rec_buf[2] & 0x02) != 0) {
+        if ((rec_buf[2] & 0x02) != 0) { //B
             if (tone == 0) {
                 music.playTone(NOTE_B4, noteDuration)   
             }
             else if (tone == 1) {
-                music.playTone(NOTE_C6, noteDuration)
-            }
-            else if (tone == 2) {
-                music.playTone(NOTE_D7, noteDuration)
+                music.playTone(NOTE_B5, noteDuration)
             }
         }
-        if ((rec_buf[2] & 0x01) != 0) {
+        if ((rec_buf[2] & 0x01) != 0) { //C
             if (tone == 0) {
                 music.playTone(NOTE_C5, noteDuration)  
             }
             else if (tone == 1) {
-                music.playTone(NOTE_D6, noteDuration)
-            }
-            else if (tone == 2) {
-                music.playTone(NOTE_E7, noteDuration)
+                music.playTone(NOTE_C6, noteDuration)
             }
         }
         if (((rec_buf[2] & 0x08) == 0) && ((rec_buf[2] & 0xFF) == 0) && ((rec_buf[1] & 0x08) == 0) && ((rec_buf[1] & 0xFF) == 0)) {

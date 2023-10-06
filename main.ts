@@ -4,8 +4,8 @@ namespace PicoBricks {
 }
 PicoBricks.TouchInit()
 PicoBricks.init(128, 64)
-PicoBricks.writeStringNewLine("Hello")
-PicoBricks.Servomotor(servo_motor_type.Servo1, 90)
+PicoBricks.shtcinit()
+PicoBricks.connectIrReceiver(DigitalPin.P14, IrProtocol.NEC)
 basic.forever(function () {
     PicoBricks.Play()
 })

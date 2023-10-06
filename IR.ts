@@ -271,7 +271,42 @@ namespace PicoBricks {
         if (!irState) {
             return IrButton.Any;
         }
-        return irState.commandSectionBits >> 8;
+        if ((irState.commandSectionBits >> 8) == 162)
+            return 1;
+        else if ((irState.commandSectionBits >> 8) == 98)
+            return 2;
+        else if ((irState.commandSectionBits >> 8) == 226)
+            return 3;
+        else if ((irState.commandSectionBits >> 8) == 34)
+            return 4;
+        else if ((irState.commandSectionBits >> 8) == 2)
+            return 5;
+        else if ((irState.commandSectionBits >> 8) == 194)
+            return 6;
+        else if ((irState.commandSectionBits >> 8) == 224)
+            return 7;
+        else if ((irState.commandSectionBits >> 8) == 168)
+            return 8;
+        else if ((irState.commandSectionBits >> 8) == 144)
+            return 9;
+        else if ((irState.commandSectionBits >> 8) == 152)
+            return 0;
+        else if ((irState.commandSectionBits >> 8) == 104)  //*
+            return 10;
+        else if ((irState.commandSectionBits >> 8) == 176)  //#
+            return 11;
+        else if ((irState.commandSectionBits >> 8) == 24)   //Up
+            return 12;
+        else if ((irState.commandSectionBits >> 8) == 74)   //Down
+            return 13;
+        else if ((irState.commandSectionBits >> 8) == 16)   //Left
+            return 14;
+        else if ((irState.commandSectionBits >> 8) == 90)  //Right
+            return 15;
+        else if ((irState.commandSectionBits >> 8) == 56)  //Ok
+            return 16;
+        else
+            return 0;
     }
 
     //% subcategory="IR Receiver"
