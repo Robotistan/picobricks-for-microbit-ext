@@ -13,7 +13,95 @@ namespace PicoBricks {
     const CY8CMBR3xxx_CCITT16_POLYNOM = 0x1021;
     const CY8CMBR3xxx_CRC_BIT_WIDTH = 32;
 
-    const noteDuration = 0;
+    const NOTE_B0 = 31
+    const NOTE_C1 = 33
+    const NOTE_CS1 = 35
+    const NOTE_D1 = 37
+    const NOTE_DS1 = 39
+    const NOTE_E1 = 41
+    const NOTE_F1 = 44
+    const NOTE_FS1 = 46
+    const NOTE_G1 = 49
+    const NOTE_GS1 = 52
+    const NOTE_A1 = 55
+    const NOTE_AS1 = 58
+    const NOTE_B1 = 62
+    const NOTE_C2 = 65
+    const NOTE_CS2 = 69
+    const NOTE_D2 = 73
+    const NOTE_DS2 = 78
+    const NOTE_E2 = 82
+    const NOTE_F2 = 87
+    const NOTE_FS2 = 93
+    const NOTE_G2 = 98
+    const NOTE_GS2 = 104
+    const NOTE_A2 = 110
+    const NOTE_AS2 = 117
+    const NOTE_B2 = 123
+    const NOTE_C3 = 131
+    const NOTE_CS3 = 139
+    const NOTE_D3 = 147
+    const NOTE_DS3 = 156
+    const NOTE_E3 = 165
+    const NOTE_F3 = 175
+    const NOTE_FS3 = 185
+    const NOTE_G3 = 196
+    const NOTE_GS3 = 208
+    const NOTE_A3 = 220
+    const NOTE_AS3 = 233
+    const NOTE_B3 = 247
+    const NOTE_C4 = 262
+    const NOTE_CS4 = 277
+    const NOTE_D4 = 294
+    const NOTE_DS4 = 311
+    const NOTE_E4 = 330
+    const NOTE_F4 = 349
+    const NOTE_FS4 = 370
+    const NOTE_G4 = 392
+    const NOTE_GS4 = 415
+    const NOTE_A4 = 440
+    const NOTE_AS4 = 466
+    const NOTE_B4 = 494
+    const NOTE_C5 = 523
+    const NOTE_CS5 = 554
+    const NOTE_D5 = 587
+    const NOTE_DS5 = 622
+    const NOTE_E5 = 659
+    const NOTE_F5 = 698
+    const NOTE_FS5 = 740
+    const NOTE_G5 = 784
+    const NOTE_GS5 = 831
+    const NOTE_A5 = 880
+    const NOTE_AS5 = 932
+    const NOTE_B5 = 988
+    const NOTE_C6 = 1047
+    const NOTE_CS6 = 1109
+    const NOTE_D6 = 1175
+    const NOTE_DS6 = 1245
+    const NOTE_E6 = 1319
+    const NOTE_F6 = 1397
+    const NOTE_FS6 = 1480
+    const NOTE_G6 = 1568
+    const NOTE_GS6 = 1661
+    const NOTE_A6 = 1760
+    const NOTE_AS6 = 1865
+    const NOTE_B6 = 1976
+    const NOTE_C7 = 2093
+    const NOTE_CS7 = 2217
+    const NOTE_D7 = 2349
+    const NOTE_DS7 = 2489
+    const NOTE_E7 = 2637
+    const NOTE_F7 = 2794
+    const NOTE_FS7 = 2960
+    const NOTE_G7 = 3136
+    const NOTE_GS7 = 3322
+    const NOTE_A7 = 3520
+    const NOTE_AS7 = 3729
+    const NOTE_B7 = 3951
+    const NOTE_C8 = 4186
+    const NOTE_CS8 = 4435
+    const NOTE_D8 = 4699
+    const NOTE_DS8 = 4978
 
     let rec_buf = pins.createBuffer(3);
     let buff = pins.createBuffer(3);
@@ -207,6 +295,9 @@ namespace PicoBricks {
         let proximityCounter = 0;
         let proximityStatus = 0;
         let val = 0;
+        let tone = 0;
+        let volume = 0;
+        let noteDuration = 0;
 
         pins.i2cWriteNumber(CHIP_ADDRESS, PROX_STAT, NumberFormat.UInt8BE)
         val = pins.i2cReadNumber(CHIP_ADDRESS, NumberFormat.UInt8BE)
@@ -229,50 +320,133 @@ namespace PicoBricks {
             proximityStatus = 0;
         }
 
-        if ((rec_buf[1] & 0x02) != 0) {
-            // A button
+        if ((rec_buf[1] & 0x02) != 0) { // A button
+            music.play(music.stringPlayable("B4 A4 G4 A4 C5 0 D5 C5 B4 C5 E5 0 F5 E5 D5 E5 B5 A5 G5 A5 B5 A5 G5 A5 C6 0 A5 C6 GS5 AS5 B5 A5 G5 A5 GS5 AS5 B5 A5 G5 A5 GS5 AS5 B5 A5 G5 F5 E5 0", 400), music.PlaybackMode.UntilDone)
         }
-        if ((rec_buf[1] & 0x04) != 0) {
-            // B button
+        if ((rec_buf[1] & 0x04) != 0) { // B button
+            music.playTone(NOTE_D4, noteDuration)
         }
-        if ((rec_buf[1] & 0x80) != 0) {
-            // left button
+        if ((rec_buf[1] & 0x80) != 0) { // left button
+            music.playTone(NOTE_D4, noteDuration)
+            tone -= 1
         }
-        if ((rec_buf[1] & 0x40) != 0) {
-            // down button
+        if ((rec_buf[1] & 0x20) != 0) { // right button
+            music.playTone(NOTE_D4, noteDuration)
+            tone += 1
         }
-        if ((rec_buf[1] & 0x20) != 0) {
-            // right button
+        if ((rec_buf[1] & 0x10) != 0) { // top button
+            music.playTone(NOTE_D4, noteDuration)
+            volume += 1
         }
-        if ((rec_buf[1] & 0x10) != 0) {
-            // top button
+        if ((rec_buf[1] & 0x40) != 0) { // down button
+            music.playTone(NOTE_D4, noteDuration)
+            volume -= 1
         }
 
+        if(tone <= 0)
+            tone = 0
+        if(tone >= 2)
+            tone =2
+
+        if(volume == 0)
+            noteDuration = 0
+        else if (volume == 1)
+            noteDuration = 10
+        else if (volume == 2)
+            noteDuration = 30
+        else if (volume == 3)
+            noteDuration = 100
+
+
         if ((rec_buf[1] & 0x08) != 0) {
-            music.playTone(262, 400)
+            if (tone == 0){
+                music.playTone(NOTE_C4, noteDuration)
+            }
+            else if (tone == 1){
+                music.playTone(NOTE_D5, noteDuration)
+            }
+            else if (tone == 2) {
+                music.playTone(NOTE_E6, noteDuration)
+            }
         }
         if ((rec_buf[2] & 0x40) != 0) {
-            music.playTone(294, noteDuration)
+            if (tone == 0) {
+                music.playTone(NOTE_D4, noteDuration)
+            }
+            else if (tone == 1) {
+                music.playTone(NOTE_E5, noteDuration)
+            }
+            else if (tone == 2) {
+                music.playTone(NOTE_F6, noteDuration)
+            }
         }
         if ((rec_buf[2] & 0x20) != 0) {
-            music.playTone(330, noteDuration)
+            if (tone == 0) {
+                music.playTone(NOTE_E4, noteDuration)
+            } 
+            else if (tone == 1) {
+                music.playTone(NOTE_F5, noteDuration)
+            }
+            else if (tone == 2) {
+                music.playTone(NOTE_G6, noteDuration)
+            }
         }
         if ((rec_buf[2] & 0x10) != 0) {
-            music.playTone(349, noteDuration)
+            if (tone == 0) {
+                music.playTone(NOTE_F4, noteDuration)   
+            }
+            else if (tone == 1) {
+                music.playTone(NOTE_G5, noteDuration)
+            }
+            else if (tone == 2) {
+                music.playTone(NOTE_A7, noteDuration)
+            }
         }
         if ((rec_buf[2] & 0x08) != 0) {
-            music.playTone(392, noteDuration)
+            if (tone == 0) {
+                music.playTone(NOTE_G4, noteDuration) 
+            } 
+            else if (tone == 1) {
+                music.playTone(NOTE_A5, noteDuration)
+            }
+            else if (tone == 2) {
+                music.playTone(NOTE_B7, noteDuration)
+            }
         }
         if ((rec_buf[2] & 0x04) != 0) {
-            music.playTone(440, noteDuration)
+            if (tone == 0) {
+                music.playTone(NOTE_A4, noteDuration) 
+            }  
+            else if (tone == 1) {
+                music.playTone(NOTE_B5, noteDuration)
+            }
+            else if (tone == 2) {
+                music.playTone(NOTE_C7, noteDuration)
+            }
         }
         if ((rec_buf[2] & 0x02) != 0) {
-            music.playTone(494, noteDuration)
+            if (tone == 0) {
+                music.playTone(NOTE_B4, noteDuration)   
+            }
+            else if (tone == 1) {
+                music.playTone(NOTE_C6, noteDuration)
+            }
+            else if (tone == 2) {
+                music.playTone(NOTE_D7, noteDuration)
+            }
         }
         if ((rec_buf[2] & 0x01) != 0) {
-            music.playTone(523, noteDuration)
+            if (tone == 0) {
+                music.playTone(NOTE_C5, noteDuration)  
+            }
+            else if (tone == 1) {
+                music.playTone(NOTE_D6, noteDuration)
+            }
+            else if (tone == 2) {
+                music.playTone(NOTE_E7, noteDuration)
+            }
         }
-        if (((rec_buf[2] & 0x08) == 0) && ((rec_buf[2] & 0xFF) == 0)) {
+        if (((rec_buf[2] & 0x08) == 0) && ((rec_buf[2] & 0xFF) == 0) && ((rec_buf[1] & 0x08) == 0) && ((rec_buf[1] & 0xFF) == 0)) {
             music.playTone(0, noteDuration)
         }
     }
@@ -287,6 +461,31 @@ namespace PicoBricks {
     //% subcategory="Touch Sensor-Piano"
     export function Play(): void {
         ReadSensorStatus()
+    }
+
+    //% blockId="piano_id" block="piano id"
+    //% subcategory="Touch Sensor-Piano"
+    export function piano_id(): number {
+        pins.i2cWriteNumber(CHIP_ADDRESS, PROX_STAT, NumberFormat.UInt8BE)
+        let val = pins.i2cReadNumber(CHIP_ADDRESS, NumberFormat.UInt8BE)
+
+        pins.i2cWriteNumber(CHIP_ADDRESS, BUTTON_STATUS, NumberFormat.UInt8BE)
+        buff = pins.i2cReadBuffer(CHIP_ADDRESS, 2, false)
+
+        rec_buf[0] = val
+        rec_buf[1] = buff[0]
+        rec_buf[2] = buff[1]
+
+
+        if ((rec_buf[1] & 0x02) != 0){ // A button
+            music.playTone(NOTE_E4, 0)
+        }
+
+        if (((rec_buf[2] & 0x08) == 0) && ((rec_buf[2] & 0xFF) == 0) && ((rec_buf[1] & 0x08) == 0) && ((rec_buf[1] & 0xFF) == 0)) {
+            music.playTone(0, 0)
+        }
+
+        return rec_buf[1]
     }
 
 
