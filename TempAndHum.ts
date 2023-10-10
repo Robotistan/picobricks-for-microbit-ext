@@ -13,7 +13,7 @@ namespace PicoBricks {
     const SHTC3_SLEEP = 0xB098; 
     const SHTC3_WAKEUP = 0x3517; 
 
-    let read_buf = pins.createBuffer(2);
+    let read_buf = pins.createBuffer(5);
     let val = 0;
 
 

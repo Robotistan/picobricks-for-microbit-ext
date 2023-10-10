@@ -12,18 +12,18 @@ enum dc_motor_type {
 namespace PicoBricks {
     let MotorBuffer = pins.createBuffer(5);
 
-    const MOTOR_DRIVER_ADDRESS = 0x22;
+    const MOTOR_DRIVER_ADDRESS = 0x11;
 
     //% blockId="Servomotor" block="Servo Motor %servo_motor_type and angle %angle"
     //% angle.min=0 angle.max=180
     //% subcategory="Motor Driver"
     export function Servomotor(Servo_type: servo_motor_type, angle: number): void {
-        MotorBuffer[0] = 0x26;
-        MotorBuffer[1] = Servo_type;
-        MotorBuffer[2] = 0;
-        MotorBuffer[3] = angle;
-        MotorBuffer[4] = MotorBuffer[1] ^ MotorBuffer[2] ^ MotorBuffer[3];
-        pins.i2cWriteBuffer(MOTOR_DRIVER_ADDRESS, MotorBuffer);
+        pins.i2cWriteNumber(MOTOR_DRIVER_ADDRESS, 0x26, NumberFormat.UInt8BE, false)
+        pins.i2cWriteNumber(MOTOR_DRIVER_ADDRESS, Servo_type, NumberFormat.UInt8BE, false)
+        pins.i2cWriteNumber(MOTOR_DRIVER_ADDRESS, 0x00, NumberFormat.UInt8BE, false)
+        pins.i2cWriteNumber(MOTOR_DRIVER_ADDRESS, angle, NumberFormat.UInt8BE, false)
+        let cal = Servo_type ^ angle
+        pins.i2cWriteNumber(MOTOR_DRIVER_ADDRESS, cal, NumberFormat.UInt8BE, false)
     }
 
     //% block="Dc Motor %dc_motor_type and speed %speed"
@@ -36,6 +36,14 @@ namespace PicoBricks {
         MotorBuffer[3] = 0;
         MotorBuffer[4] = MotorBuffer[1] ^ MotorBuffer[2] ^ MotorBuffer[3];
         pins.i2cWriteBuffer(MOTOR_DRIVER_ADDRESS, MotorBuffer);
+    }
+
+    //% block="Dc Motor Read"
+    //% subcategory="Motor Driver"
+    export function DcmotorRead(): number {
+        let read_buf = pins.createBuffer(4);
+        read_buf = pins.i2cReadBuffer(MOTOR_DRIVER_ADDRESS, 4, false)
+        return read_buf[1];
     }
 
 }
