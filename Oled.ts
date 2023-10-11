@@ -45,7 +45,7 @@ namespace PicoBricks {
     }
     //% block="clear OLED display"
     //% weight=3
-    //% subcategory="Oled"
+    //% subcategory="OLED"
     export function clear() {
         loadStarted = false
         loadPercent = 0
@@ -131,7 +131,7 @@ namespace PicoBricks {
     //% block="draw loading bar at $percent percent"
     //% percent.min=0 percent.max=100
     //% weight=2
-    //% subcategory="Oled"
+    //% subcategory="OLED"
     export function drawLoading(percent: number) {
         if (loadStarted) {
             drawLoadingBar(percent)
@@ -145,7 +145,7 @@ namespace PicoBricks {
 
     //% block="show (without newline) string $str"
     //% weight=6
-    //% subcategory="Oled"
+    //% subcategory="OLED"
     export function writeString(str: string) {
         for (let m = 0; m < str.length; m++) {
             if (charX > displayWidth - 6) {
@@ -157,28 +157,28 @@ namespace PicoBricks {
     }
     //% block="show (without newline) number $n"
     //% weight=5
-    //% subcategory="Oled"
+    //% subcategory="OLED"
     export function writeNum(n: number) {
         let numString = n.toString()
         writeString(numString)
     }
     //% block="show string $str"
     //% weight=8
-    //% subcategory="Oled"
+    //% subcategory="OLED"
     export function writeStringNewLine(str: string) {
         writeString(str)
         newLine()
     }
     //% block="show number $n"
     //% weight=7
-    //% subcategory="Oled"
+    //% subcategory="OLED"
     export function writeNumNewLine(n: number) {
         writeNum(n)
         newLine()
     }
     //% block="insert newline"
     //% weight=4
-    //% subcategory="Oled"
+    //% subcategory="OLED"
     export function newLine() {
         charY++
         charX = xOffset
@@ -258,7 +258,7 @@ namespace PicoBricks {
     //% x1.defl=20
     //% y1.defl=20
     //% weight=1
-    //% subcategory="Oled"
+    //% subcategory="OLED"
     export function drawLine(x0: number, y0: number, x1: number, y1: number) {
         let pixels: Array<Array<number>> = []
         let kx: number, ky: number, c: number, q: number, xx: number, yy: number, dx: number, dy: number;
@@ -300,7 +300,7 @@ namespace PicoBricks {
     //% x1.defl=20
     //% y1.defl=20
     //% weight=0
-    //% subcategory="Oled"
+    //% subcategory="OLED"
     export function drawRectangle(x0: number, y0: number, x1: number, y1: number) {
         drawLine(x0, y0, x1, y0)
         drawLine(x0, y1, x1, y1)
@@ -311,7 +311,7 @@ namespace PicoBricks {
     //% width.defl=128
     //% height.defl=64
     //% weight=9
-    //% subcategory="Oled"
+    //% subcategory="OLED"
     export function init(width: number, height: number) {
         command(SSD1306_DISPLAYOFF);
         command(SSD1306_SETDISPLAYCLOCKDIV);

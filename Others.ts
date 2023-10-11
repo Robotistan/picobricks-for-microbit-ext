@@ -6,14 +6,27 @@ enum set_relay {
 namespace PicoBricks {
     let result = 0;
 
-    //% block="LDR read"
+    //% block="Light Sensor Read"
     //% subcategory="Others"
     export function ldrread(): number {
         result = pins.analogReadPin(AnalogPin.P0);
         return result;
     }
 
-    //% block="Pot read"
+    //% block="Button Read"
+    //% subcategory="Others"
+    export function buttonread(): number {
+        result = pins.digitalReadPin(DigitalPin.P2);
+        return result;
+    }
+    
+    //% block="Set Relay To %set_relay"
+    //% subcategory="Others"
+    export function relay(state: set_relay): void {
+        pins.digitalWritePin(DigitalPin.P16, state)
+    }
+
+    //% block="Pot Read"
     //% subcategory="Others"
     export function potread(): number {
 
@@ -21,24 +34,11 @@ namespace PicoBricks {
         return result;
     }
 
-    //% block="Button read"
-    //% subcategory="Others"
-    export function buttonread(): number {
-        result = pins.digitalReadPin(DigitalPin.P2);
-        return result;
-    }
-
-    //% block="Set Relay to %set_relay"
-    //% subcategory="Others"
-    export function relay(state: set_relay): void {
-        pins.digitalWritePin(DigitalPin.P16, state)
-    }
-
-    //% block="PIR read"
+    //% block="Motion Sensor Read"
     //% subcategory="Others"
     export function pirread(): number {
         result = pins.digitalReadPin(DigitalPin.P13);
         return result;
     }
-
+    
 }

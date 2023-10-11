@@ -167,7 +167,7 @@ namespace PicoBricks {
 
     //% blockId=APDS9960_init block="APDS9960 Init |%sensor"
     //% weight=100
-    //% subcategory="Gesture-APDS9960"
+    //% subcategory="Action"
     export function Init(sensor: SENSORINIT): void {
         i2cwrite(ADDR, APDS9960_ATIME, 252) // default inte time 4x2.78ms
         i2cwrite(ADDR, APDS9960_CONTROL, 0x03) // todo: make gain adjustable
@@ -206,7 +206,7 @@ namespace PicoBricks {
 
     //% blockId=APDS9960_getid block="ID"
     //% weight=99
-    //% subcategory="Gesture-APDS9960"
+    //% subcategory="Action"
     export function ReadId(): number {
         let chipid = i2cread(ADDR, APDS9960_ID);
         return chipid;
@@ -214,7 +214,7 @@ namespace PicoBricks {
 
     //% blockId=APDS9960_readhue block="APDS9960 Get Hue"
     //% weight=98
-    //% subcategory="Gesture-APDS9960"
+    //% subcategory="Action"
     export function ReadHue(): number {
         if (!(currentMode == SENSORINIT.Color)) {
             return 0
@@ -238,7 +238,7 @@ namespace PicoBricks {
     }
     //% blockId=APDS9960_readred block="APDS9960 Get red Color"
     //% weight=98
-    //% subcategory="Gesture-APDS9960"
+    //% subcategory="Action"
     export function ReadRedColor(): number {
         if (!(currentMode == SENSORINIT.Color)) {
             return 0
@@ -253,7 +253,7 @@ namespace PicoBricks {
     }
     //% blockId=APDS9960_readgreen block="APDS9960 Get green Color"
     //% weight=98
-    //% subcategory="Gesture-APDS9960"
+    //% subcategory="Action"
     export function ReadGreenColor(): number {
         if (!(currentMode == SENSORINIT.Color)) {
             return 0
@@ -268,7 +268,7 @@ namespace PicoBricks {
     }
     //% blockId=APDS9960_readblue block="APDS9960 Get blue Color"
     //% weight=98
-    //% subcategory="Gesture-APDS9960"
+    //% subcategory="Action"
     export function ReadBlueColor(): number {
         if (!(currentMode == SENSORINIT.Color)) {
             return 0
@@ -284,7 +284,7 @@ namespace PicoBricks {
     
     //% blockId=APDS9960_readclear block="APDS9960 Get Clear"
     //% weight=98
-    //% subcategory="Gesture-APDS9960"
+    //% subcategory="Action"
     export function ReadClear(): number {
         if (!(currentMode == SENSORINIT.Color)) {
             return 0
@@ -300,7 +300,7 @@ namespace PicoBricks {
 
     //% blockId=APDS9960_readproximity block="APDS9960 Get Proximity"
     //% weight=98
-    //% subcategory="Gesture-APDS9960"
+    //% subcategory="Action"
     export function ReadProximity(): number {
         if (!(currentMode == SENSORINIT.Proximity)) {
             return 0
@@ -865,7 +865,7 @@ namespace PicoBricks {
     }
 
     //% blockId="gesture_listener_block" block="onGesture |%gesture"
-    //% subcategory="Gesture-APDS9960"
+    //% subcategory="Action"
     export function onGesture(gesture: GESTURE_TYPE, handler: () => void) {
         control.onEvent(3100, gesture, handler);
     }

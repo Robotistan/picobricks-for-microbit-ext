@@ -1,18 +1,18 @@
 enum Touch_Button_List {
-    Button_A = 1,
-    Button_B = 2,
+    Touch_A = 1,
+    Touch_B = 2,
     Up = 3,
     Down = 4,
     Left = 5,
     Right = 6,
-    Left_C = 7,
+    C1 = 7,
     D = 8,
     E = 9,
     F = 10,
     G = 11,
     A = 12,
     B = 13,
-    Right_C = 14
+    C2 = 14
 }
 
 enum Notes {
@@ -474,6 +474,7 @@ namespace PicoBricks {
         configureMB()
         
     }
+    
     //% blockId="PlayPiano" block="Play piano"
     //% subcategory="Touch Sensor-Piano"
     export function Play(): void {
@@ -483,8 +484,6 @@ namespace PicoBricks {
     //% block="Play %Touch_Button_List and %Notes"
     //% subcategory="Touch Sensor-Piano"
     export function User_Piano(button: Touch_Button_List, tone: Notes): void {
-        let proximityCounter = 0;
-        let proximityStatus = 0;
         let val = 0;
 
         pins.i2cWriteNumber(CHIP_ADDRESS, PROX_STAT, NumberFormat.UInt8BE)
@@ -542,6 +541,97 @@ namespace PicoBricks {
         if (((rec_buf[2] & 0x08) == 0) && ((rec_buf[2] & 0xFF) == 0) && ((rec_buf[1] & 0x08) == 0) && ((rec_buf[1] & 0xFF) == 0)) {
             music.playTone(0, noteDuration)
         }
+    }
+
+    //% block="Key %key|is pressed"
+    //% subcategory="Touch Sensor-Piano"
+    export function keyIsPressed(key: PianoKeyAddresses): boolean {
+        let val = 0;
+
+        pins.i2cWriteNumber(CHIP_ADDRESS, PROX_STAT, NumberFormat.UInt8BE)
+        val = pins.i2cReadNumber(CHIP_ADDRESS, NumberFormat.UInt8BE)
+
+        pins.i2cWriteNumber(CHIP_ADDRESS, BUTTON_STATUS, NumberFormat.UInt8BE)
+        buff = pins.i2cReadBuffer(CHIP_ADDRESS, 2, false)
+
+        rec_buf[0] = val
+        rec_buf[1] = buff[0]
+        rec_buf[2] = buff[1]
+
+        if (((rec_buf[1] & 0x02) != 0) && (key == 1)) { // A button
+            return true;
+        }
+        if (((rec_buf[1] & 0x04) != 0) && (key == 2)) { // B button
+            return true;
+        }
+        if (((rec_buf[1] & 0x80) != 0) && (key == 5)) { // left button
+            return true;
+        }
+        if (((rec_buf[1] & 0x20) != 0) && (key == 6)) { // right button
+            return true;
+        }
+        if (((rec_buf[1] & 0x10) != 0) && (key == 3)) { // top button
+            return true;
+        }
+        if (((rec_buf[1] & 0x40) != 0) && (key == 4)) { // down button
+            return true;
+        }
+        if (((rec_buf[1] & 0x08) != 0) && (key == 7)) { //Left C
+            return true;
+        }
+        if (((rec_buf[2] & 0x40) != 0) && (key == 8)) { //D
+            return true;
+        }
+        if (((rec_buf[2] & 0x20) != 0) && (key == 9)) { //E
+            return true;
+        }
+        if (((rec_buf[2] & 0x10) != 0) && (key == 10)) { //F
+            return true;
+        }
+        if (((rec_buf[2] & 0x08) != 0) && (key == 11)) { //G
+            return true;
+        }
+        if (((rec_buf[2] & 0x04) != 0) && (key == 12)) { //A
+            return true;
+        }
+        if (((rec_buf[2] & 0x02) != 0) && (key == 13)) { //B
+            return true;
+        }
+        if (((rec_buf[2] & 0x01) != 0) && (key == 14)) { //Right C
+            return true;
+        }
+
+        return false;
+    }
+    export enum PianoKeyAddresses {
+        //% block="Touch_A"
+        Touch_A = 1,
+        //% block="Touch_B"
+        Touch_B = 2,
+        //% block="Up"
+        Up = 3,
+        //% block="Down"
+        Down = 4,
+        //% block="Left"
+        Left = 5,
+        //% block="Right"
+        Right = 6,
+        //% block="C1"
+        C1 = 7,
+        //% block="D"
+        D = 8,
+        //% block="E"
+        E = 9,
+        //% block="F"
+        F = 10,
+        //% block="G"
+        G = 11,
+        //% block="A"
+        A = 12,
+        //% block="B"
+        B = 13,
+        //% block="C2"
+        C2 = 14
     }
 
 }

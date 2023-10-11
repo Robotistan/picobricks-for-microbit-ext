@@ -1,18 +1,18 @@
+enum dc_motor_type {
+    DC1 = 1,
+    DC2 = 2
+}
+
 enum servo_motor_type {
     Servo1 = 3,
     Servo2 = 4,
     Servo3 = 5,
     Servo4 = 6
 }
-enum dc_motor_type {
-    DC1 = 1,
-    DC2 = 2
-}
+
 //% weight=10 color=#067565 block="PicoBricks" icon="\uf135"
 namespace PicoBricks {
-    let MotorBuffer = pins.createBuffer(5);
-
-    const MOTOR_DRIVER_ADDRESS = 0x11;
+    const MOTOR_DRIVER_ADDRESS = 0x22;
 
     //% blockId="Servomotor" block="Servo Motor %servo_motor_type and angle %angle"
     //% angle.min=0 angle.max=180

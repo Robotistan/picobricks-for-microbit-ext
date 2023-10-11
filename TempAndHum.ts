@@ -24,7 +24,7 @@ namespace PicoBricks {
     }
 
     //% block="Read Temprature"
-    //% subcategory="TempAndHum"
+    //% subcategory="Temp & Hum"
     export function Temprature(): number {
         pins.i2cWriteNumber(SHTC3_DEFAULT_ADDR, SHTC3_NORMAL_MEAS_TFIRST, NumberFormat.UInt16BE, false)
         basic.pause(13)
@@ -38,7 +38,7 @@ namespace PicoBricks {
     }
 
     //% block="Read Humidity"
-    //% subcategory="TempAndHum"
+    //% subcategory="Temp & Hum"
     export function Humidity(): number {
         pins.i2cWriteNumber(SHTC3_DEFAULT_ADDR, SHTC3_NORMAL_MEAS_TFIRST, NumberFormat.UInt16BE, false)
         basic.pause(13)
@@ -52,15 +52,15 @@ namespace PicoBricks {
         return humidity;
     }
 
-    //% block="Read ID"
-    //% subcategory="TempAndHum"
+    //% block="Temp & Hum Read ID"
+    //% subcategory="Temp & Hum"
     export function read_id(): number {
         let read_value = i2cread16(SHTC3_DEFAULT_ADDR, SHTC3_READID)
         return read_value
     }
 
-    //% block=" SHTC3 Init"
-    //% subcategory="TempAndHum"
+    //% block="Temp & Hum Init"
+    //% subcategory="Temp & Hum"
     export function shtcinit(): void {
         pins.i2cWriteNumber(SHTC3_DEFAULT_ADDR, SHTC3_SOFTRESET, NumberFormat.UInt16BE, false)
         basic.pause(100)

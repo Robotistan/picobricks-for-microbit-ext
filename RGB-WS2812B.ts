@@ -45,7 +45,7 @@ namespace PicoBricks {
         //% strip.defl=strip
         //% weight=85 blockGap=8
         //% parts="neopixel"
-        //% subcategory="RGB-WS2812B"
+        //% subcategory="RGB Leds"
         showColor(rgb: number) {
             rgb = rgb >> 0;
             this.setAllRGB(rgb);
@@ -56,7 +56,7 @@ namespace PicoBricks {
         //% strip.defl=strip
         //% weight=85 blockGap=8
         //% parts="neopixel"
-        //% subcategory="RGB-WS2812B"
+        //% subcategory="RGB Leds"
         showRainbow(startHue: number = 1, endHue: number = 360) {
             if (this._length <= 0) return;
 
@@ -119,7 +119,7 @@ namespace PicoBricks {
         //% strip.defl=strip
         //% icon="\uf080"
         //% parts="neopixel"
-        //% subcategory="RGB-WS2812B"
+        //% subcategory="RGB Leds"
         showBarGraph(value: number, high: number): void {
             if (high <= 0) {
                 this.clear();
@@ -153,7 +153,7 @@ namespace PicoBricks {
         //% blockGap=8
         //% weight=80
         //% parts="neopixel"
-        //% subcategory="RGB-WS2812B"
+        //% subcategory="RGB Leds"
         setPixelColor(pixeloffset: number, rgb: number): void {
             this.setPixelRGB(pixeloffset >> 0, rgb >> 0);
         }
@@ -163,7 +163,7 @@ namespace PicoBricks {
         //% blockGap=8
         //% weight=5
         //% parts="neopixel" 
-        //% subcategory="RGB-WS2812B"
+        //% subcategory="RGB Leds"
         setMatrixWidth(width: number) {
             this._matrixWidth = Math.min(this._length, width >> 0);
         }
@@ -172,7 +172,7 @@ namespace PicoBricks {
         //% strip.defl=strip
         //% weight=4
         //% parts="neopixel"
-        //% subcategory="RGB-WS2812B"
+        //% subcategory="RGB Leds"
         setMatrixColor(x: number, y: number, rgb: number) {
             if (this._matrixWidth <= 0) return; // not a matrix, ignore
             x = x >> 0;
@@ -189,7 +189,7 @@ namespace PicoBricks {
         //% blockGap=8
         //% weight=80
         //% parts="neopixel"
-        //% subcategory="RGB-WS2812B"
+        //% subcategory="RGB Leds"
         setPixelWhiteLED(pixeloffset: number, white: number): void {
             if (this._mode === NeoPixelMode.RGBW) {
                 this.setPixelW(pixeloffset >> 0, white >> 0);
@@ -200,7 +200,7 @@ namespace PicoBricks {
         //% strip.defl=strip
         //% weight=79
         //% parts="neopixel"
-        //% subcategory="RGB-WS2812B"
+        //% subcategory="RGB Leds"
         show() {
             // only supported in beta
             // ws2812b.setBufferMode(this.pin, this._mode);
@@ -211,19 +211,16 @@ namespace PicoBricks {
         //% strip.defl=strip
         //% weight=76
         //% parts="neopixel"
-        //% subcategory="RGB-WS2812B"
+        //% subcategory="RGB Leds"
         clear(): void {
             const stride = this._mode === NeoPixelMode.RGBW ? 4 : 3;
             this.buf.fill(0, this.start * stride, this._length * stride);
         }
 
-        /**
-         * Gets the number of pixels declared on the strip
-         */
         //% blockId="neopixel_length" block="%strip|length" blockGap=8
         //% strip.defl=strip
         //% weight=60
-        //% subcategory="RGB-WS2812B"
+        //% subcategory="RGB Leds"
         length() {
             return this._length;
         }
@@ -232,7 +229,7 @@ namespace PicoBricks {
         //% strip.defl=strip
         //% weight=59
         //% parts="neopixel" 
-        //% subcategory="RGB-WS2812B"
+        //% subcategory="RGB Leds"
         setBrightness(brightness: number): void {
             this.brightness = brightness & 0xff;
         }
@@ -241,7 +238,7 @@ namespace PicoBricks {
         //% strip.defl=strip
         //% weight=58
         //% parts="neopixel" 
-        //% subcategory="RGB-WS2812B"
+        //% subcategory="RGB Leds"
         easeBrightness(): void {
             const stride = this._mode === NeoPixelMode.RGBW ? 4 : 3;
             const br = this.brightness;
@@ -268,7 +265,7 @@ namespace PicoBricks {
         //% strip.defl=strip
         //% parts="neopixel"
         //% blockSetVariable=range
-        //% subcategory="RGB-WS2812B"
+        //% subcategory="RGB Leds"
         range(start: number, length: number): Strip {
             start = start >> 0;
             length = length >> 0;
@@ -287,7 +284,7 @@ namespace PicoBricks {
         //% strip.defl=strip
         //% weight=40
         //% parts="neopixel"
-        //% subcategory="RGB-WS2812B"
+        //% subcategory="RGB Leds"
         shift(offset: number = 1): void {
             offset = offset >> 0;
             const stride = this._mode === NeoPixelMode.RGBW ? 4 : 3;
@@ -298,7 +295,7 @@ namespace PicoBricks {
         //% strip.defl=strip
         //% weight=39
         //% parts="neopixel"
-        //% subcategory="RGB-WS2812B"
+        //% subcategory="RGB Leds"
         rotate(offset: number = 1): void {
             offset = offset >> 0;
             const stride = this._mode === NeoPixelMode.RGBW ? 4 : 3;
@@ -307,7 +304,7 @@ namespace PicoBricks {
 
         //% weight=10
         //% parts="neopixel" 
-        //% subcategory="RGB-WS2812B"
+        //% subcategory="RGB Leds"
         setPin(pin: DigitalPin): void {
             this.pin = pin;
             pins.digitalWritePin(this.pin, 0);
@@ -317,7 +314,7 @@ namespace PicoBricks {
         //% weight=9 blockId=neopixel_power block="%strip|power (mA)"
         //% strip.defl=strip
 
-        //% subcategory="RGB-WS2812B"
+        //% subcategory="RGB Leds"
         power(): number {
             const stride = this._mode === NeoPixelMode.RGBW ? 4 : 3;
             const end = this.start + this._length;
@@ -419,7 +416,7 @@ namespace PicoBricks {
     //% parts="neopixel"
     //% trackArgs=0,2
     //% blockSetVariable=strip
-    //% subcategory="RGB-WS2812B"
+    //% subcategory="RGB Leds"
     export function create(pin: DigitalPin, numleds: number, mode: NeoPixelMode): Strip {
         let strip = new Strip();
         let stride = mode === NeoPixelMode.RGBW ? 4 : 3;
@@ -437,7 +434,7 @@ namespace PicoBricks {
     //% weight=1
     //% blockId="neopixel_rgb" block="red %red|green %green|blue %blue"
 
-    //% subcategory="RGB-WS2812B"
+    //% subcategory="RGB Leds"
     export function rgb(red: number, green: number, blue: number): number {
         return packRGB(red, green, blue);
     }
@@ -445,7 +442,7 @@ namespace PicoBricks {
     //% weight=2 blockGap=8
     //% blockId="neopixel_colors" block="%color"
 
-    //% subcategory="RGB-WS2812B"
+    //% subcategory="RGB Leds"
     export function colors(color: NeoPixelColors): number {
         return color;
     }
@@ -467,7 +464,7 @@ namespace PicoBricks {
     }
 
     //% blockId=neopixelHSL block="hue %h|saturation %s|luminosity %l"
-    //% subcategory="RGB-WS2812B"
+    //% subcategory="RGB Leds"
     export function hsl(h: number, s: number, l: number): number {
         h = Math.round(h);
         s = Math.round(s);
