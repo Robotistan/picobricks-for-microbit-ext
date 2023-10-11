@@ -1,20 +1,3 @@
-enum Touch_Button_List {
-    Touch_A = 1,
-    Touch_B = 2,
-    Up = 3,
-    Down = 4,
-    Left = 5,
-    Right = 6,
-    C1 = 7,
-    D = 8,
-    E = 9,
-    F = 10,
-    G = 11,
-    A = 12,
-    B = 13,
-    C2 = 14
-}
-
 enum Notes {
     Low_Do = 131,
     Low_Re = 147,
@@ -481,9 +464,9 @@ namespace PicoBricks {
         ReadSensorStatus()
     }
 
-    //% block="Play %Touch_Button_List and %Notes"
+    //% block="Play %PianoKeyAddresses and %Notes"
     //% subcategory="Touch Sensor-Piano"
-    export function User_Piano(button: Touch_Button_List, tone: Notes): void {
+    export function User_Piano(button: PianoKeyAddresses, tone: Notes): void {
         let val = 0;
 
         pins.i2cWriteNumber(CHIP_ADDRESS, PROX_STAT, NumberFormat.UInt8BE)
