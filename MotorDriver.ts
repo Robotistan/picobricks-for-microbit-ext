@@ -22,28 +22,20 @@ namespace PicoBricks {
         pins.i2cWriteNumber(MOTOR_DRIVER_ADDRESS, Servo_type, NumberFormat.UInt8BE, false)
         pins.i2cWriteNumber(MOTOR_DRIVER_ADDRESS, 0x00, NumberFormat.UInt8BE, false)
         pins.i2cWriteNumber(MOTOR_DRIVER_ADDRESS, angle, NumberFormat.UInt8BE, false)
-        let cal = Servo_type ^ angle
-        pins.i2cWriteNumber(MOTOR_DRIVER_ADDRESS, cal, NumberFormat.UInt8BE, false)
+        let cs = Servo_type ^ angle
+        pins.i2cWriteNumber(MOTOR_DRIVER_ADDRESS, cs, NumberFormat.UInt8BE, false)
     }
 
     //% block="Dc Motor %dc_motor_type and speed %speed"
     //% speed.min=0 speed.max=255
     //% subcategory="Motor Driver"
     export function Dcmotor(dc_type: dc_motor_type, speed: number): void {
-        MotorBuffer[0] = 0x26;
-        MotorBuffer[1] = dc_type;
-        MotorBuffer[2] = speed;
-        MotorBuffer[3] = 0;
-        MotorBuffer[4] = MotorBuffer[1] ^ MotorBuffer[2] ^ MotorBuffer[3];
-        pins.i2cWriteBuffer(MOTOR_DRIVER_ADDRESS, MotorBuffer);
-    }
-
-    //% block="Dc Motor Read"
-    //% subcategory="Motor Driver"
-    export function DcmotorRead(): number {
-        let read_buf = pins.createBuffer(4);
-        read_buf = pins.i2cReadBuffer(MOTOR_DRIVER_ADDRESS, 4, false)
-        return read_buf[1];
+        pins.i2cWriteNumber(MOTOR_DRIVER_ADDRESS, 0x26, NumberFormat.UInt8BE, false)
+        pins.i2cWriteNumber(MOTOR_DRIVER_ADDRESS, dc_type, NumberFormat.UInt8BE, false)
+        pins.i2cWriteNumber(MOTOR_DRIVER_ADDRESS, speed, NumberFormat.UInt8BE, false)
+        pins.i2cWriteNumber(MOTOR_DRIVER_ADDRESS, 0x00, NumberFormat.UInt8BE, false)
+        let cs = dc_type ^ speed
+        pins.i2cWriteNumber(MOTOR_DRIVER_ADDRESS, cs, NumberFormat.UInt8BE, false)
     }
 
 }

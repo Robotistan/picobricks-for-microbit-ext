@@ -436,7 +436,7 @@ namespace PicoBricks {
 
     //% weight=1
     //% blockId="neopixel_rgb" block="red %red|green %green|blue %blue"
-    
+
     //% subcategory="RGB-WS2812B"
     export function rgb(red: number, green: number, blue: number): number {
         return packRGB(red, green, blue);
@@ -444,7 +444,7 @@ namespace PicoBricks {
 
     //% weight=2 blockGap=8
     //% blockId="neopixel_colors" block="%color"
-    
+
     //% subcategory="RGB-WS2812B"
     export function colors(color: NeoPixelColors): number {
         return color;

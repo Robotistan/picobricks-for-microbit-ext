@@ -1,3 +1,44 @@
+enum Touch_Button_List {
+    Button_A = 1,
+    Button_B = 2,
+    Up = 3,
+    Down = 4,
+    Left = 5,
+    Right = 6,
+    Left_C = 7,
+    D = 8,
+    E = 9,
+    F = 10,
+    G = 11,
+    A = 12,
+    B = 13,
+    Right_C = 14
+}
+
+enum Notes {
+    Low_Do = 131,
+    Low_Re = 147,
+    Low_Mi = 165,
+    Low_Fa = 175,
+    Low_Sol = 196,
+    Low_La = 220,
+    Low_Si = 247,
+    Middle_Do = 262,
+    Middle_Re = 294,
+    Middle_Mi = 330,
+    Middle_Fa = 349,
+    Middle_Sol = 392,
+    Middle_La = 440,
+    Middle_Si = 494,
+    High_Do = 523,
+    High_Re = 587,
+    High_Mi = 659,
+    High_Fa = 698,
+    High_Sol = 784,
+    High_La = 880,
+    High_Si = 988
+}
+
 namespace PicoBricks {
     const CHIP_ADDRESS = 0x37;
     const PROX_STAT = 0xAE;
@@ -439,5 +480,68 @@ namespace PicoBricks {
         ReadSensorStatus()
     }
 
+    //% block="Play %Touch_Button_List and %Notes"
+    //% subcategory="Touch Sensor-Piano"
+    export function User_Piano(button: Touch_Button_List, tone: Notes): void {
+        let proximityCounter = 0;
+        let proximityStatus = 0;
+        let val = 0;
+
+        pins.i2cWriteNumber(CHIP_ADDRESS, PROX_STAT, NumberFormat.UInt8BE)
+        val = pins.i2cReadNumber(CHIP_ADDRESS, NumberFormat.UInt8BE)
+
+        pins.i2cWriteNumber(CHIP_ADDRESS, BUTTON_STATUS, NumberFormat.UInt8BE)
+        buff = pins.i2cReadBuffer(CHIP_ADDRESS, 2, false)
+
+        rec_buf[0] = val
+        rec_buf[1] = buff[0]
+        rec_buf[2] = buff[1]
+
+        if (((rec_buf[1] & 0x02) != 0) && (button == 1)) { // A button
+            music.playTone(tone, noteDuration)
+        }
+        if (((rec_buf[1] & 0x04) != 0) && (button == 2)) { // B button
+            music.playTone(tone, noteDuration)
+        }
+        if (((rec_buf[1] & 0x80) != 0) && (button == 5)) { // left button
+            music.playTone(tone, noteDuration)
+        }
+        if (((rec_buf[1] & 0x20) != 0) && (button == 6)) { // right button
+            music.playTone(tone, noteDuration)
+        }
+        if (((rec_buf[1] & 0x10) != 0) && (button == 3)){ // top button
+            music.playTone(tone, noteDuration)
+        }
+        if (((rec_buf[1] & 0x40) != 0) && (button == 4)) { // down button
+            music.playTone(tone, noteDuration)
+        }
+        if (((rec_buf[1] & 0x08) != 0) && (button == 7)) { //Left C
+            music.playTone(tone, noteDuration)
+        }
+        if (((rec_buf[2] & 0x40) != 0) && (button == 8)) { //D
+            music.playTone(tone, noteDuration)
+        }
+        if (((rec_buf[2] & 0x20) != 0) && (button == 9)) { //E
+            music.playTone(tone, noteDuration)
+        }
+        if (((rec_buf[2] & 0x10) != 0) && (button == 10)) { //F
+            music.playTone(tone, noteDuration)
+        }
+        if (((rec_buf[2] & 0x08) != 0) && (button == 11)) { //G
+            music.playTone(tone, noteDuration)
+        }
+        if (((rec_buf[2] & 0x04) != 0) && (button == 12)) { //A
+            music.playTone(tone, noteDuration)
+        }
+        if (((rec_buf[2] & 0x02) != 0) && (button == 13)) { //B
+            music.playTone(tone, noteDuration)
+        }
+        if (((rec_buf[2] & 0x01) != 0) && (button == 14)) { //Right C
+            music.playTone(tone, noteDuration)
+        }
+        if (((rec_buf[2] & 0x08) == 0) && ((rec_buf[2] & 0xFF) == 0) && ((rec_buf[1] & 0x08) == 0) && ((rec_buf[1] & 0xFF) == 0)) {
+            music.playTone(0, noteDuration)
+        }
+    }
 
 }
