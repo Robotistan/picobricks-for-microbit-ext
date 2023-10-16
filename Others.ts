@@ -5,8 +5,6 @@ enum set_relay {
 
 namespace PicoBricks {
     let result = 0;
-    let trigpin = 0;
-    let echopin = 0;
 
     //% block="Light Sensor Read"
     //% subcategory="Others"
@@ -43,16 +41,12 @@ namespace PicoBricks {
         return result;
     }
 
-    //% block="Ultrasonic Distance Sensor With Trig Pin At %pin1 And Echo Pin At %pin2"
-    //% subcategory="Others"
-    export function hcsr_init(pin1: DigitalPin, pin2: DigitalPin): void {
-        trigpin = pin1
-        echopin = pin2
-    }
-
-    //% block="Read Ultrasonic Distance"
+    //% block="Read Ultrasonic Distance Sensor With Trig Pin At %pin1 And Echo Pin At %pin2"
     //% subcategory="Others"
     export function hcsr_read(pin1: DigitalPin, pin2: DigitalPin): number {
+        let trigpin = pin1
+        let echopin = pin2
+
         pins.digitalWritePin(trigpin, 0)
         control.waitMicros(5);
         pins.digitalWritePin(trigpin, 1)
@@ -64,5 +58,7 @@ namespace PicoBricks {
 
         return cm
     }
+
+
     
 }
