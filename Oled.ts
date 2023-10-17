@@ -32,7 +32,6 @@ namespace PicoBricks {
     const SSD1306_SEGREMAP = 0xA0
     const SSD1306_CHARGEPUMP = 0x8D
     const chipAdress = 0x3C
-    const SSD1306_ADR = 0x3C
     const xOffset = 0
     const yOffset = 0
 

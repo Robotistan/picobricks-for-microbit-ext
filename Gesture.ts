@@ -165,8 +165,7 @@ namespace PicoBricks {
 
     let currentMode = SENSORINIT.None
 
-    //% blockId=APDS9960_init block="APDS9960 Init |%sensor"
-    //% weight=100
+    //% block="APDS9960 Init |%sensor"
     //% subcategory="Action"
     export function Init(sensor: SENSORINIT): void {
         i2cwrite(ADDR, APDS9960_ATIME, 252) // default inte time 4x2.78ms
@@ -204,16 +203,14 @@ namespace PicoBricks {
         i2cwrite(ADDR, APDS9960_ENABLE, 0x05) // enable ALS,PROX,GESTURE
     }
 
-    //% blockId=APDS9960_getid block="ID"
-    //% weight=99
+    //% block="APDS9960 ID"
     //% subcategory="Action"
     export function ReadId(): number {
         let chipid = i2cread(ADDR, APDS9960_ID);
         return chipid;
     }
 
-    //% blockId=APDS9960_readhue block="APDS9960 Get Hue"
-    //% weight=98
+    //% block="APDS9960 Get Hue"
     //% subcategory="Action"
     export function ReadHue(): number {
         if (!(currentMode == SENSORINIT.Color)) {
@@ -236,8 +233,30 @@ namespace PicoBricks {
         let hue = rgb2hue(r, g, b);
         return hue
     }
-    //% blockId=APDS9960_readred block="APDS9960 Get red Color"
-    //% weight=98
+
+    //% block="APDS9960 Get Color"
+    //% subcategory="Action"
+    export function ReadColor(): string {
+        let tmp = i2cread(ADDR, APDS9960_STATUS) & 0x1;
+        while (!tmp) {
+            basic.pause(5);
+            tmp = i2cread(ADDR, APDS9960_STATUS) & 0x1;
+        }
+        let r = i2cread(ADDR, APDS9960_RDATAL) + i2cread(ADDR, APDS9960_RDATAH) * 256;
+        let g = i2cread(ADDR, APDS9960_GDATAL) + i2cread(ADDR, APDS9960_GDATAH) * 256;
+        let b = i2cread(ADDR, APDS9960_BDATAL) + i2cread(ADDR, APDS9960_BDATAH) * 256;
+
+        if((r > g) && (r > b))  
+            return "RED"
+        else if ((g > r) && (g > b))   
+            return "GREEN"
+        else if ((b > r) && (b > g))    
+            return "BLUE"
+        else
+            return "NO COLOR"
+    }
+
+    //% block="APDS9960 Get Red Color"
     //% subcategory="Action"
     export function ReadRedColor(): number {
         if (!(currentMode == SENSORINIT.Color)) {
@@ -251,8 +270,8 @@ namespace PicoBricks {
         let r = i2cread(ADDR, APDS9960_RDATAL) + i2cread(ADDR, APDS9960_RDATAH) * 256;
         return r
     }
-    //% blockId=APDS9960_readgreen block="APDS9960 Get green Color"
-    //% weight=98
+
+    //% block="APDS9960 Get Green Color"
     //% subcategory="Action"
     export function ReadGreenColor(): number {
         if (!(currentMode == SENSORINIT.Color)) {
@@ -266,8 +285,8 @@ namespace PicoBricks {
         let g = i2cread(ADDR, APDS9960_GDATAL) + i2cread(ADDR, APDS9960_GDATAH) * 256;
         return g
     }
-    //% blockId=APDS9960_readblue block="APDS9960 Get blue Color"
-    //% weight=98
+    
+    //% block="APDS9960 Get Blue Color"
     //% subcategory="Action"
     export function ReadBlueColor(): number {
         if (!(currentMode == SENSORINIT.Color)) {
@@ -282,8 +301,7 @@ namespace PicoBricks {
         return b
     }
     
-    //% blockId=APDS9960_readclear block="APDS9960 Get Clear"
-    //% weight=98
+    //% block="APDS9960 Get Clear"
     //% subcategory="Action"
     export function ReadClear(): number {
         if (!(currentMode == SENSORINIT.Color)) {
@@ -298,8 +316,7 @@ namespace PicoBricks {
         return c
     }
 
-    //% blockId=APDS9960_readproximity block="APDS9960 Get Proximity"
-    //% weight=98
+    //% block="APDS9960 Get Proximity"
     //% subcategory="Action"
     export function ReadProximity(): number {
         if (!(currentMode == SENSORINIT.Proximity)) {

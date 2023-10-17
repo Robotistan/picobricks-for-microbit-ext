@@ -19,7 +19,8 @@
         "Esp01.ts",
         "IR.ts",
         "TempAndHum.ts",
-        "Oled.ts"
+        "Oled.ts",
+        "main.py"
     ],
     "testFiles": [
         "test.ts"
@@ -31,5 +32,5 @@
     "supportedTargets": [
         "microbit"
     ],
-    "preferredEditor": "blocksprj"
+    "preferredEditor": "tsprj"
 }
