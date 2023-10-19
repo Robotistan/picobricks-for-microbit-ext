@@ -2,7 +2,10 @@ namespace PicoBricks {
 
 
 }
-PicoBricks.Init(SENSORINIT.Color)
+PicoBricks.TouchInit()
+PicoBricks.init(128, 64)
+PicoBricks.shtcinit()
 basic.forever(function () {
-    serial.writeLine(PicoBricks.ReadColor())
+    PicoBricks.Play()
+    PicoBricks.writeNumNewLine(PicoBricks.Temprature())
 })
