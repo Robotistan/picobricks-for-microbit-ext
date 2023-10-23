@@ -128,194 +128,224 @@ namespace PicoBricks {
     const NOTE_DS8 = 4978
 
     let rec_buf = pins.createBuffer(3);
-    let buff = pins.createBuffer(3);
+    let buff = pins.createBuffer(128);
+    let buff1 = pins.createBuffer(1);
+    let buff2 = pins.createBuffer(2);
+    let buff4 = pins.createBuffer(4);
     let tone = 0;
     let volume = 0;
     let noteDuration = 0;
 
     function configureMB(): void {
-        // OFFSET
-        pins.i2cWriteNumber(CHIP_ADDRESS, 0x00, NumberFormat.UInt8BE, false) 
-        pins.i2cWriteNumber(CHIP_ADDRESS, 0x00, NumberFormat.UInt8BE, false)
-        pins.i2cWriteNumber(CHIP_ADDRESS, 0x00, NumberFormat.UInt8BE, false)
-        pins.i2cWriteNumber(CHIP_ADDRESS, 0x00, NumberFormat.UInt8BE, false)
+       // pins.i2cWriteNumber(CHIP_ADDRESS, 0x8F, NumberFormat.UInt8BE, false)
+        //let val = pins.i2cReadNumber(CHIP_ADDRESS, NumberFormat.UInt8BE)
+        //control.waitMicros(2000);
+        // WAKE UP
+
+        buff2[0] = 0
+        buff2[1] = 0
+        pins.i2cWriteBuffer(CHIP_ADDRESS, buff2, false)
+        pins.i2cWriteBuffer(CHIP_ADDRESS, buff2, false)
+        //ADRESS
+        buff1[0] = 0	//0
+        pins.i2cWriteBuffer(CHIP_ADDRESS, buff1, true)
         // ENABLE SENSORS
-        pins.i2cWriteNumber(CHIP_ADDRESS, 0xFF, NumberFormat.UInt8BE, false)
-        pins.i2cWriteNumber(CHIP_ADDRESS, 0x7F, NumberFormat.UInt8BE, false)
-        // SENSITIVITY
-        pins.i2cWriteNumber(CHIP_ADDRESS, 0xFE, NumberFormat.UInt8BE, false)
-        pins.i2cWriteNumber(CHIP_ADDRESS, 0x7F, NumberFormat.UInt8BE, false)
-        pins.i2cWriteNumber(CHIP_ADDRESS, 0x00, NumberFormat.UInt8BE, false)
-        pins.i2cWriteNumber(CHIP_ADDRESS, 0x00, NumberFormat.UInt8BE, false)
-        pins.i2cWriteNumber(CHIP_ADDRESS, 0x00, NumberFormat.UInt8BE, false)
-        pins.i2cWriteNumber(CHIP_ADDRESS, 0x00, NumberFormat.UInt8BE, false)
-        pins.i2cWriteNumber(CHIP_ADDRESS, 0x00, NumberFormat.UInt8BE, false)
-        pins.i2cWriteNumber(CHIP_ADDRESS, 0x00, NumberFormat.UInt8BE, false)
-        pins.i2cWriteNumber(CHIP_ADDRESS, 0x00, NumberFormat.UInt8BE, false)
-        pins.i2cWriteNumber(CHIP_ADDRESS, 0x00, NumberFormat.UInt8BE, false)
+        buff[0] = 0xFF
+        buff[1] = 0x7F
+        buff[2] = 0xFE
+        buff[3] = 0x7F
+        buff[4] = 0x00
+        buff[5] = 0x00
+        buff[6] = 0x00
+        buff[7] = 0x00
+        buff[8] = 0x00
+        buff[9] = 0x00
+        buff[10] = 0x00
+        buff[11] = 0x00
         // FINGER THRESHOLDS 27
-        pins.i2cWriteNumber(CHIP_ADDRESS, 0x0E, NumberFormat.UInt8BE, false)
-        pins.i2cWriteNumber(CHIP_ADDRESS, 0x84, NumberFormat.UInt8BE, false)
-        pins.i2cWriteNumber(CHIP_ADDRESS, 0x84, NumberFormat.UInt8BE, false)
-        pins.i2cWriteNumber(CHIP_ADDRESS, 0x84, NumberFormat.UInt8BE, false)
-        pins.i2cWriteNumber(CHIP_ADDRESS, 0x84, NumberFormat.UInt8BE, false)
-        pins.i2cWriteNumber(CHIP_ADDRESS, 0x84, NumberFormat.UInt8BE, false)
-        pins.i2cWriteNumber(CHIP_ADDRESS, 0x84, NumberFormat.UInt8BE, false)
-        pins.i2cWriteNumber(CHIP_ADDRESS, 0x84, NumberFormat.UInt8BE, false)
-        pins.i2cWriteNumber(CHIP_ADDRESS, 0x84, NumberFormat.UInt8BE, false)
-        pins.i2cWriteNumber(CHIP_ADDRESS, 0x84, NumberFormat.UInt8BE, false)
-        pins.i2cWriteNumber(CHIP_ADDRESS, 0x84, NumberFormat.UInt8BE, false)
-        pins.i2cWriteNumber(CHIP_ADDRESS, 0x84, NumberFormat.UInt8BE, false)
-        pins.i2cWriteNumber(CHIP_ADDRESS, 0x84, NumberFormat.UInt8BE, false)
-        pins.i2cWriteNumber(CHIP_ADDRESS, 0x84, NumberFormat.UInt8BE, false)
-        pins.i2cWriteNumber(CHIP_ADDRESS, 0x84, NumberFormat.UInt8BE, false)
-        pins.i2cWriteNumber(CHIP_ADDRESS, 0x84, NumberFormat.UInt8BE, false)
+        buff[12] = 0x0E
+        buff[13] = 0x84
+        buff[14] = 0x84
+        buff[15] = 0x84
+        buff[16] = 0x84
+        buff[17] = 0x84
+        buff[18] = 0x84
+        buff[19] = 0x84
+        buff[20] = 0x84
+        buff[21] = 0x84
+        buff[22] = 0x84
+        buff[23] = 0x84
+        buff[24] = 0x84
+        buff[25] = 0x84
+        buff[26] = 0x84
+        buff[27] = 0x84
         // Debounce 
-        pins.i2cWriteNumber(CHIP_ADDRESS, 0x03, NumberFormat.UInt8BE, false)
+        buff[28] = 0x03
         // HYSTERESIS 
-        pins.i2cWriteNumber(CHIP_ADDRESS, 0x00, NumberFormat.UInt8BE, false)
-        pins.i2cWriteNumber(CHIP_ADDRESS, 0x00, NumberFormat.UInt8BE, false)
+        buff[29] = 0x00
+        buff[30] = 0x00
+        pins.i2cWriteBuffer(CHIP_ADDRESS, buff, true)
+        //ADRESS
+        buff1[0] = 0x1F //31
+        pins.i2cWriteBuffer(CHIP_ADDRESS, buff1, true)
         // LBR
-        pins.i2cWriteNumber(CHIP_ADDRESS, 0x00, NumberFormat.UInt8BE, false)
-        pins.i2cWriteNumber(CHIP_ADDRESS, 0x00, NumberFormat.UInt8BE, false)
-        pins.i2cWriteNumber(CHIP_ADDRESS, 0x00, NumberFormat.UInt8BE, false)
-        pins.i2cWriteNumber(CHIP_ADDRESS, 0x00, NumberFormat.UInt8BE, false)
+        buff[0] = 0x00
         // RESERVED
-        pins.i2cWriteNumber(CHIP_ADDRESS, 0x00, NumberFormat.UInt8BE, false)
+        buff[1] = 0x00
+        buff[2] = 0x00
+        buff[3] = 0x00
+        buff[4] = 0x00
         // NEGATIVE NOISE TH
-        pins.i2cWriteNumber(CHIP_ADDRESS, 0x00, NumberFormat.UInt8BE, false)
+        buff[5] = 0x00
         // NOISE TH
-        pins.i2cWriteNumber(CHIP_ADDRESS, 0x00, NumberFormat.UInt8BE, false)
+        buff[6] = 0x00
         // PROX_EN  38 
-        pins.i2cWriteNumber(CHIP_ADDRESS, 0x01, NumberFormat.UInt8BE, false)
-        pins.i2cWriteNumber(CHIP_ADDRESS, 0x81, NumberFormat.UInt8BE, false)
+        buff[7] = 0x01
         // PROX CFG1-2
-        pins.i2cWriteNumber(CHIP_ADDRESS, 0x06, NumberFormat.UInt8BE, false)
-        pins.i2cWriteNumber(CHIP_ADDRESS, 0x00, NumberFormat.UInt8BE, false)
-        pins.i2cWriteNumber(CHIP_ADDRESS, 0x00, NumberFormat.UInt8BE, false)
+        buff[8] = 0x81
+        buff[9] = 0x06
         // PS0 TH
-        pins.i2cWriteNumber(CHIP_ADDRESS, 0xFF, NumberFormat.UInt8BE, false)
-        pins.i2cWriteNumber(CHIP_ADDRESS, 0xF0, NumberFormat.UInt8BE, false)
+        buff[10] = 0x00
+        buff[11] = 0x00
+        buff[12] = 0xFF
         // PS1 TH
-        pins.i2cWriteNumber(CHIP_ADDRESS, 0x02, NumberFormat.UInt8BE, false)
-        pins.i2cWriteNumber(CHIP_ADDRESS, 0x00, NumberFormat.UInt8BE, false)
+        buff[13] = 0xF0
+        buff[14] = 0x02
         // PROX_RESOLUTION0-1
-        pins.i2cWriteNumber(CHIP_ADDRESS, 0x00, NumberFormat.UInt8BE, false)
+        buff[15] = 0x00
+        buff[16] = 0x00
         // PROX HYS
-        pins.i2cWriteNumber(CHIP_ADDRESS, 0x00, NumberFormat.UInt8BE, false)
+        buff[17] = 0x00
         // RESERVED
-        pins.i2cWriteNumber(CHIP_ADDRESS, 0x00, NumberFormat.UInt8BE, false)
+        buff[18] = 0x00
         // PROX LBR
-        pins.i2cWriteNumber(CHIP_ADDRESS, 0x00, NumberFormat.UInt8BE, false)
+        buff[19] = 0x00
         // PROX NNT
-        pins.i2cWriteNumber(CHIP_ADDRESS, 0x00, NumberFormat.UInt8BE, false)
+        buff[20] = 0x00
         // PROX NT
-        pins.i2cWriteNumber(CHIP_ADDRESS, 0x00, NumberFormat.UInt8BE, false)
-        pins.i2cWriteNumber(CHIP_ADDRESS, 0x00, NumberFormat.UInt8BE, false)
+        buff[21] = 0x00
         // PROX POS TH 0 -1
-        pins.i2cWriteNumber(CHIP_ADDRESS, 0x00, NumberFormat.UInt8BE, false)
-        pins.i2cWriteNumber(CHIP_ADDRESS, 0x00, NumberFormat.UInt8BE, false)
+        buff[22] = 0x00
+        buff[23] = 0x00
         // RESERVED
-        pins.i2cWriteNumber(CHIP_ADDRESS, 0x00, NumberFormat.UInt8BE, false)
-        pins.i2cWriteNumber(CHIP_ADDRESS, 0x00, NumberFormat.UInt8BE, false)
+        buff[24] = 0x00
+        buff[25] = 0x00
         // PROX NEGATIVE TH0 -1
-        pins.i2cWriteNumber(CHIP_ADDRESS, 0x00, NumberFormat.UInt8BE, false)
-        pins.i2cWriteNumber(CHIP_ADDRESS, 0x00, NumberFormat.UInt8BE, false)
+        buff[26] = 0x00
+        buff[27] = 0x00
         // RESERVED
-        pins.i2cWriteNumber(CHIP_ADDRESS, 0x00, NumberFormat.UInt8BE, false)
+        buff[28] = 0x00
+        buff[29] = 0x00
         // 61
-        pins.i2cWriteNumber(CHIP_ADDRESS, 0x00, NumberFormat.UInt8BE, false)
+        buff[30] = 0x00
+        pins.i2cWriteBuffer(CHIP_ADDRESS, buff, true)
+        //ADRESS
+        buff1[0] = 0x3E //62
+        pins.i2cWriteBuffer(CHIP_ADDRESS, buff1, true)
         // BUZZER
-        pins.i2cWriteNumber(CHIP_ADDRESS, 0x00, NumberFormat.UInt8BE, false)
-        // BUZZER ONT 
-        pins.i2cWriteNumber(CHIP_ADDRESS, 0x00, NumberFormat.UInt8BE, false)
-        //63
-        pins.i2cWriteNumber(CHIP_ADDRESS, 0x00, NumberFormat.UInt8BE, false)
-        pins.i2cWriteNumber(CHIP_ADDRESS, 0xFF, NumberFormat.UInt8BE, false)
-        pins.i2cWriteNumber(CHIP_ADDRESS, 0xFF, NumberFormat.UInt8BE, false)
-        pins.i2cWriteNumber(CHIP_ADDRESS, 0xFF, NumberFormat.UInt8BE, false)
-        pins.i2cWriteNumber(CHIP_ADDRESS, 0xFF, NumberFormat.UInt8BE, false)
-        pins.i2cWriteNumber(CHIP_ADDRESS, 0xFF, NumberFormat.UInt8BE, false)
-        pins.i2cWriteNumber(CHIP_ADDRESS, 0xFF, NumberFormat.UInt8BE, false)
-        pins.i2cWriteNumber(CHIP_ADDRESS, 0xFF, NumberFormat.UInt8BE, false)
-        pins.i2cWriteNumber(CHIP_ADDRESS, 0xFF, NumberFormat.UInt8BE, false)
+        buff[0] = 0x00
+        // BUZZER ONT  //63
+        buff[1] = 0x00
         // RESERVED
-        pins.i2cWriteNumber(CHIP_ADDRESS, 0x00, NumberFormat.UInt8BE, false)
-        pins.i2cWriteNumber(CHIP_ADDRESS, 0x00, NumberFormat.UInt8BE, false)
-        pins.i2cWriteNumber(CHIP_ADDRESS, 0x00, NumberFormat.UInt8BE, false)
+        buff[2] = 0x00
+        buff[3] = 0xFF
+        buff[4] = 0xFF
+        buff[5] = 0xFF
+        buff[6] = 0xFF
+        buff[7] = 0xFF
+        buff[8] = 0xFF
+        buff[9] = 0xFF
+        buff[10] = 0xFF
+        buff[11] = 0x00
+        buff[12] = 0x00
+        buff[13] = 0x00
         // SPO CFG, NExt time might be 0x20
-        pins.i2cWriteNumber(CHIP_ADDRESS, 0x00, NumberFormat.UInt8BE, false)
+        buff[14] = 0x00
         // D_CFG0
-        pins.i2cWriteNumber(CHIP_ADDRESS, 0x03, NumberFormat.UInt8BE, false)
+        buff[15] = 0x03
         // D_CFG1
-        pins.i2cWriteNumber(CHIP_ADDRESS, 0x01, NumberFormat.UInt8BE, false)
+        buff[16] = 0x01
         // DEVICE CFG 3 
-        pins.i2cWriteNumber(CHIP_ADDRESS, 0x58, NumberFormat.UInt8BE, false)
-        pins.i2cWriteNumber(CHIP_ADDRESS, 0x00, NumberFormat.UInt8BE, false)
+        buff[17] = 0x58
+        buff[18] = 0x00
         // 81 I2C address
-        pins.i2cWriteNumber(CHIP_ADDRESS, 0x37, NumberFormat.UInt8BE, false)
+        buff[19] = 0x37
         // REFRSH CTRL
-        pins.i2cWriteNumber(CHIP_ADDRESS, 0x06, NumberFormat.UInt8BE, false)
+        buff[20] = 0x06
         // RESERVED
-        pins.i2cWriteNumber(CHIP_ADDRESS, 0x00, NumberFormat.UInt8BE, false)
-        pins.i2cWriteNumber(CHIP_ADDRESS, 0x00, NumberFormat.UInt8BE, false)
+        buff[21] = 0x00
+        buff[22] = 0x00
         // STT TIMEOUT
-        pins.i2cWriteNumber(CHIP_ADDRESS, 0x0A, NumberFormat.UInt8BE, false)
+        buff[23] = 0x0A
         // RESERVED
-        pins.i2cWriteNumber(CHIP_ADDRESS, 0x00, NumberFormat.UInt8BE, false)
-        pins.i2cWriteNumber(CHIP_ADDRESS, 0x00, NumberFormat.UInt8BE, false)
-        pins.i2cWriteNumber(CHIP_ADDRESS, 0x00, NumberFormat.UInt8BE, false)
-        pins.i2cWriteNumber(CHIP_ADDRESS, 0x00, NumberFormat.UInt8BE, false)
-        pins.i2cWriteNumber(CHIP_ADDRESS, 0x00, NumberFormat.UInt8BE, false)
-        pins.i2cWriteNumber(CHIP_ADDRESS, 0x00, NumberFormat.UInt8BE, false)
-        pins.i2cWriteNumber(CHIP_ADDRESS, 0x00, NumberFormat.UInt8BE, false)
+        buff[24] = 0x00
+        buff[25] = 0x00
+        buff[26] = 0x00
+        buff[27] = 0x00
+        buff[28] = 0x00
+        buff[29] = 0x00
+        buff[30] = 0x00
+        pins.i2cWriteBuffer(CHIP_ADDRESS, buff, true)
+        //ADRESS
+        buff1[0] = 0x5D //93
+        pins.i2cWriteBuffer(CHIP_ADDRESS, buff1, true)
         // SLIDERS 115
-        pins.i2cWriteNumber(CHIP_ADDRESS, 0x00, NumberFormat.UInt8BE, false)
-        pins.i2cWriteNumber(CHIP_ADDRESS, 0x00, NumberFormat.UInt8BE, false)
-        pins.i2cWriteNumber(CHIP_ADDRESS, 0x00, NumberFormat.UInt8BE, false)
-        pins.i2cWriteNumber(CHIP_ADDRESS, 0x00, NumberFormat.UInt8BE, false)
-        pins.i2cWriteNumber(CHIP_ADDRESS, 0x00, NumberFormat.UInt8BE, false)
-        pins.i2cWriteNumber(CHIP_ADDRESS, 0x00, NumberFormat.UInt8BE, false)
-        pins.i2cWriteNumber(CHIP_ADDRESS, 0x00, NumberFormat.UInt8BE, false)
-        pins.i2cWriteNumber(CHIP_ADDRESS, 0x00, NumberFormat.UInt8BE, false)
-        pins.i2cWriteNumber(CHIP_ADDRESS, 0x00, NumberFormat.UInt8BE, false)
-        pins.i2cWriteNumber(CHIP_ADDRESS, 0x00, NumberFormat.UInt8BE, false)
-        pins.i2cWriteNumber(CHIP_ADDRESS, 0x00, NumberFormat.UInt8BE, false)
-        pins.i2cWriteNumber(CHIP_ADDRESS, 0x00, NumberFormat.UInt8BE, false)
-        pins.i2cWriteNumber(CHIP_ADDRESS, 0x00, NumberFormat.UInt8BE, false)
-        pins.i2cWriteNumber(CHIP_ADDRESS, 0x00, NumberFormat.UInt8BE, false)
-        pins.i2cWriteNumber(CHIP_ADDRESS, 0x00, NumberFormat.UInt8BE, false)
-        pins.i2cWriteNumber(CHIP_ADDRESS, 0x00, NumberFormat.UInt8BE, false)
-        pins.i2cWriteNumber(CHIP_ADDRESS, 0x00, NumberFormat.UInt8BE, false)
-        pins.i2cWriteNumber(CHIP_ADDRESS, 0x00, NumberFormat.UInt8BE, false)
-        pins.i2cWriteNumber(CHIP_ADDRESS, 0x00, NumberFormat.UInt8BE, false)
-        pins.i2cWriteNumber(CHIP_ADDRESS, 0x00, NumberFormat.UInt8BE, false)
-        pins.i2cWriteNumber(CHIP_ADDRESS, 0x00, NumberFormat.UInt8BE, false)
-        pins.i2cWriteNumber(CHIP_ADDRESS, 0x00, NumberFormat.UInt8BE, false)
-        pins.i2cWriteNumber(CHIP_ADDRESS, 0x00, NumberFormat.UInt8BE, false)
+        buff[0] = 0x00
+        buff[1] = 0x00
+        buff[2] = 0x00
+        buff[3] = 0x00
+        buff[4] = 0x00
+        buff[5] = 0x00
+        buff[6] = 0x00
+        buff[7] = 0x00
+        buff[8] = 0x00
+        buff[9] = 0x00
+        buff[10] = 0x00
+        buff[11] = 0x00
+        buff[12] = 0x00
+        buff[13] = 0x00
+        buff[14] = 0x00
+        buff[15] = 0x00
+        buff[16] = 0x00
+        buff[17] = 0x00
+        buff[18] = 0x00
+        buff[19] = 0x00
+        buff[20] = 0x00
+        buff[21] = 0x00
+        buff[22] = 0x00
         // RESERVED
-        pins.i2cWriteNumber(CHIP_ADDRESS, 0x00, NumberFormat.UInt8BE, false)
-        pins.i2cWriteNumber(CHIP_ADDRESS, 0x00, NumberFormat.UInt8BE, false)
-        pins.i2cWriteNumber(CHIP_ADDRESS, 0x00, NumberFormat.UInt8BE, false)
-        pins.i2cWriteNumber(CHIP_ADDRESS, 0x00, NumberFormat.UInt8BE, false)
-        pins.i2cWriteNumber(CHIP_ADDRESS, 0x00, NumberFormat.UInt8BE, false)
-        pins.i2cWriteNumber(CHIP_ADDRESS, 0x00, NumberFormat.UInt8BE, false)
+        buff[23] = 0x00
+        buff[24] = 0x00
+        buff[25] = 0x00
+        buff[26] = 0x00
+        buff[27] = 0x00
+        buff[28] = 0x00
         // SCRATCHPAD0-1 123
-        pins.i2cWriteNumber(CHIP_ADDRESS, 0x00, NumberFormat.UInt8BE, false)
-        pins.i2cWriteNumber(CHIP_ADDRESS, 0x00, NumberFormat.UInt8BE, false)
+        buff[29] = 0x00
+        buff[30] = 0x00
+        pins.i2cWriteBuffer(CHIP_ADDRESS, buff, true)
+        //ADRESS
+        buff1[0] = 0x7C //124
+        pins.i2cWriteBuffer(CHIP_ADDRESS, buff1, true)
         // RESERVED
-        pins.i2cWriteNumber(CHIP_ADDRESS, 0x00, NumberFormat.UInt8BE, false)
-        pins.i2cWriteNumber(CHIP_ADDRESS, 0x00, NumberFormat.UInt8BE, false)
+        buff4[0] = 0x00
+        buff4[1] = 0x00
         //CRC
-        pins.i2cWriteNumber(CHIP_ADDRESS, 0x87, NumberFormat.UInt8BE, false)
-        pins.i2cWriteNumber(CHIP_ADDRESS, 0x04, NumberFormat.UInt8BE, false)
+        buff4[2] = 0x87
+        buff4[3] = 0x04
+        pins.i2cWriteBuffer(CHIP_ADDRESS, buff4, true)
         ///////////////////////////////////////////////
-        pins.i2cWriteNumber(CHIP_ADDRESS, CTRL_CMD, NumberFormat.UInt8BE, false)
-        pins.i2cWriteNumber(CHIP_ADDRESS, SAVE_CHECK_CRC, NumberFormat.UInt8BE, false)
+        buff2[0] = CTRL_CMD
+        buff2[1] = SAVE_CHECK_CRC
+        pins.i2cWriteBuffer(CHIP_ADDRESS, buff2, false)
+        control.waitMicros(200000);
         ///////////////////////////////////////////////
-        pins.i2cWriteNumber(CHIP_ADDRESS, CTRL_CMD, NumberFormat.UInt8BE, false)
-        pins.i2cWriteNumber(CHIP_ADDRESS, SW_RESET, NumberFormat.UInt8BE, false)
+        buff2[0] = CTRL_CMD
+        buff2[1] = SW_RESET
+        pins.i2cWriteBuffer(CHIP_ADDRESS, buff2, false)
+        control.waitMicros(200000);
     }
+
 
     function ReadSensorStatus(): void {
         let proximityCounter = 0;
@@ -615,6 +645,24 @@ namespace PicoBricks {
         B = 13,
         //% block="C2"
         C2 = 14
+    }
+
+    //% block="Test"
+    //% subcategory="Touch Sensor-Piano"
+    export function test(): number {
+        let val = 0;
+
+        pins.i2cWriteNumber(CHIP_ADDRESS, PROX_STAT, NumberFormat.UInt8BE)
+        val = pins.i2cReadNumber(CHIP_ADDRESS, NumberFormat.UInt8BE)
+
+        pins.i2cWriteNumber(CHIP_ADDRESS, BUTTON_STATUS, NumberFormat.UInt8BE)
+        buff = pins.i2cReadBuffer(CHIP_ADDRESS, 2, false)
+
+        rec_buf[0] = val
+        rec_buf[1] = buff[0]
+        rec_buf[2] = buff[1]
+
+        return rec_buf[2]
     }
 
 }
