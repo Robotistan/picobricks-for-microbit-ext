@@ -128,10 +128,10 @@ namespace PicoBricks {
     const NOTE_DS8 = 4978
 
     let rec_buf = pins.createBuffer(3);
-    let buff = pins.createBuffer(128);
+    let buff = pins.createBuffer(32);
     let buff1 = pins.createBuffer(1);
     let buff2 = pins.createBuffer(2);
-    let buff4 = pins.createBuffer(4);
+    let buff5 = pins.createBuffer(5);
     let tone = 0;
     let volume = 0;
     let noteDuration = 0;
@@ -141,20 +141,18 @@ namespace PicoBricks {
         //let val = pins.i2cReadNumber(CHIP_ADDRESS, NumberFormat.UInt8BE)
         //control.waitMicros(2000);
         // WAKE UP
-
-        buff2[0] = 0
-        buff2[1] = 0
-        pins.i2cWriteBuffer(CHIP_ADDRESS, buff2, false)
-        pins.i2cWriteBuffer(CHIP_ADDRESS, buff2, false)
-        //ADRESS
-        buff1[0] = 0	//0
-        pins.i2cWriteBuffer(CHIP_ADDRESS, buff1, true)
+        buff2[0] = 0x00
+        buff2[1] = 0x00
+        pins.i2cWriteBuffer(CHIP_ADDRESS, buff2, true)
+        buff2[0] = 0x00
+        buff2[1] = 0x00
+        pins.i2cWriteBuffer(CHIP_ADDRESS, buff2, true)
         // ENABLE SENSORS
-        buff[0] = 0xFF
-        buff[1] = 0x7F
-        buff[2] = 0xFE
-        buff[3] = 0x7F
-        buff[4] = 0x00
+        buff[0] = 0x00
+        buff[1] = 0xFF
+        buff[2] = 0x7F
+        buff[3] = 0xFE
+        buff[4] = 0x7F
         buff[5] = 0x00
         buff[6] = 0x00
         buff[7] = 0x00
@@ -162,9 +160,9 @@ namespace PicoBricks {
         buff[9] = 0x00
         buff[10] = 0x00
         buff[11] = 0x00
+        buff[12] = 0x00
         // FINGER THRESHOLDS 27
-        buff[12] = 0x0E
-        buff[13] = 0x84
+        buff[13] = 0x0E
         buff[14] = 0x84
         buff[15] = 0x84
         buff[16] = 0x84
@@ -179,76 +177,74 @@ namespace PicoBricks {
         buff[25] = 0x84
         buff[26] = 0x84
         buff[27] = 0x84
+        buff[28] = 0x84
         // Debounce 
-        buff[28] = 0x03
+        buff[29] = 0x03
         // HYSTERESIS 
-        buff[29] = 0x00
         buff[30] = 0x00
-        pins.i2cWriteBuffer(CHIP_ADDRESS, buff, true)
+        buff[31] = 0x00
+        pins.i2cWriteBuffer(CHIP_ADDRESS, buff, false)
         //ADRESS
-        buff1[0] = 0x1F //31
-        pins.i2cWriteBuffer(CHIP_ADDRESS, buff1, true)
+        buff[0] = 0x1F //31
         // LBR
-        buff[0] = 0x00
-        // RESERVED
         buff[1] = 0x00
+        // RESERVED
         buff[2] = 0x00
         buff[3] = 0x00
         buff[4] = 0x00
-        // NEGATIVE NOISE TH
         buff[5] = 0x00
-        // NOISE TH
+        // NEGATIVE NOISE TH
         buff[6] = 0x00
+        // NOISE TH
+        buff[7] = 0x00
         // PROX_EN  38 
-        buff[7] = 0x01
+        buff[8] = 0x01
         // PROX CFG1-2
-        buff[8] = 0x81
-        buff[9] = 0x06
+        buff[9] = 0x81
+        buff[10] = 0x06
         // PS0 TH
-        buff[10] = 0x00
         buff[11] = 0x00
-        buff[12] = 0xFF
+        buff[12] = 0x00
+        buff[13] = 0xFF
         // PS1 TH
-        buff[13] = 0xF0
-        buff[14] = 0x02
+        buff[14] = 0xF0
+        buff[15] = 0x02
         // PROX_RESOLUTION0-1
-        buff[15] = 0x00
         buff[16] = 0x00
-        // PROX HYS
         buff[17] = 0x00
-        // RESERVED
+        // PROX HYS
         buff[18] = 0x00
-        // PROX LBR
+        // RESERVED
         buff[19] = 0x00
-        // PROX NNT
+        // PROX LBR
         buff[20] = 0x00
-        // PROX NT
+        // PROX NNT
         buff[21] = 0x00
-        // PROX POS TH 0 -1
+        // PROX NT
         buff[22] = 0x00
+        // PROX POS TH 0 -1
         buff[23] = 0x00
-        // RESERVED
         buff[24] = 0x00
+        // RESERVED
         buff[25] = 0x00
-        // PROX NEGATIVE TH0 -1
         buff[26] = 0x00
+        // PROX NEGATIVE TH0 -1
         buff[27] = 0x00
-        // RESERVED
         buff[28] = 0x00
-        buff[29] = 0x00
-        // 61
-        buff[30] = 0x00
-        pins.i2cWriteBuffer(CHIP_ADDRESS, buff, true)
-        //ADRESS
-        buff1[0] = 0x3E //62
-        pins.i2cWriteBuffer(CHIP_ADDRESS, buff1, true)
-        // BUZZER
-        buff[0] = 0x00
-        // BUZZER ONT  //63
-        buff[1] = 0x00
         // RESERVED
+        buff[29] = 0x00
+        buff[30] = 0x00
+        // 61
+        buff[31] = 0x00
+        pins.i2cWriteBuffer(CHIP_ADDRESS, buff, false)
+        //ADRESS
+        buff[0] = 0x3E //62
+        // BUZZER
+        buff[1] = 0x00
+        // BUZZER ONT  //63
         buff[2] = 0x00
-        buff[3] = 0xFF
+        // RESERVED
+        buff[3] = 0x00
         buff[4] = 0xFF
         buff[5] = 0xFF
         buff[6] = 0xFF
@@ -256,41 +252,40 @@ namespace PicoBricks {
         buff[8] = 0xFF
         buff[9] = 0xFF
         buff[10] = 0xFF
-        buff[11] = 0x00
+        buff[11] = 0xFF
         buff[12] = 0x00
         buff[13] = 0x00
-        // SPO CFG, NExt time might be 0x20
         buff[14] = 0x00
+        // SPO CFG, NExt time might be 0x20
+        buff[15] = 0x00
         // D_CFG0
-        buff[15] = 0x03
+        buff[16] = 0x03
         // D_CFG1
-        buff[16] = 0x01
+        buff[17] = 0x01
         // DEVICE CFG 3 
-        buff[17] = 0x58
-        buff[18] = 0x00
+        buff[18] = 0x58
+        buff[19] = 0x00
         // 81 I2C address
-        buff[19] = 0x37
+        buff[20] = 0x37
         // REFRSH CTRL
-        buff[20] = 0x06
+        buff[21] = 0x06
         // RESERVED
-        buff[21] = 0x00
         buff[22] = 0x00
+        buff[23] = 0x00
         // STT TIMEOUT
-        buff[23] = 0x0A
+        buff[24] = 0x0A
         // RESERVED
-        buff[24] = 0x00
         buff[25] = 0x00
         buff[26] = 0x00
         buff[27] = 0x00
         buff[28] = 0x00
         buff[29] = 0x00
         buff[30] = 0x00
-        pins.i2cWriteBuffer(CHIP_ADDRESS, buff, true)
+        buff[31] = 0x00
+        pins.i2cWriteBuffer(CHIP_ADDRESS, buff, false)
         //ADRESS
-        buff1[0] = 0x5D //93
-        pins.i2cWriteBuffer(CHIP_ADDRESS, buff1, true)
+        buff[0] = 0x5D //93
         // SLIDERS 115
-        buff[0] = 0x00
         buff[1] = 0x00
         buff[2] = 0x00
         buff[3] = 0x00
@@ -313,27 +308,27 @@ namespace PicoBricks {
         buff[20] = 0x00
         buff[21] = 0x00
         buff[22] = 0x00
-        // RESERVED
         buff[23] = 0x00
+        // RESERVED
         buff[24] = 0x00
         buff[25] = 0x00
         buff[26] = 0x00
         buff[27] = 0x00
         buff[28] = 0x00
-        // SCRATCHPAD0-1 123
         buff[29] = 0x00
+        // SCRATCHPAD0-1 123
         buff[30] = 0x00
-        pins.i2cWriteBuffer(CHIP_ADDRESS, buff, true)
+        buff[31] = 0x00
+        pins.i2cWriteBuffer(CHIP_ADDRESS, buff, false)
         //ADRESS
-        buff1[0] = 0x7C //124
-        pins.i2cWriteBuffer(CHIP_ADDRESS, buff1, true)
+        buff5[0] = 0x7C //124
         // RESERVED
-        buff4[0] = 0x00
-        buff4[1] = 0x00
+        buff5[1] = 0x00
+        buff5[2] = 0x00
         //CRC
-        buff4[2] = 0x87
-        buff4[3] = 0x04
-        pins.i2cWriteBuffer(CHIP_ADDRESS, buff4, true)
+        buff5[3] = 0x87
+        buff5[4] = 0x04
+        pins.i2cWriteBuffer(CHIP_ADDRESS, buff5, false)
         ///////////////////////////////////////////////
         buff2[0] = CTRL_CMD
         buff2[1] = SAVE_CHECK_CRC
