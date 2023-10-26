@@ -50,13 +50,6 @@ const enum IrButtonAction {
     Released = 1,
 }
 
-const enum IrProtocol {
-    //% block="Keyestudio"
-    Keyestudio = 0,
-    //% block="NEC"
-    NEC = 1,
-}
-
 namespace PicoBricks {
     let irState: IrState;
 
@@ -67,7 +60,6 @@ namespace PicoBricks {
     const REPEAT_TIMEOUT_MS = 120;
 
     interface IrState {
-        protocol: IrProtocol;
         hasNewDatagram: boolean;
         bitsReceived: uint8;
         addressSectionBits: uint16;
@@ -98,10 +90,6 @@ namespace PicoBricks {
 
         if (irState.bitsReceived <= 8) {
             irState.hiword = (irState.hiword << 1) + bit;
-            if (irState.protocol === IrProtocol.Keyestudio && bit === 1) {
-                irState.bitsReceived = 9;
-                irState.hiword = 1;
-            }
         } else if (irState.bitsReceived <= 16) {
             irState.hiword = (irState.hiword << 1) + bit;
         } else if (irState.bitsReceived <= 32) {
@@ -197,7 +185,6 @@ namespace PicoBricks {
         }
 
         irState = {
-            protocol: undefined,
             bitsReceived: 0,
             hasNewDatagram: false,
             addressSectionBits: 0,
@@ -213,19 +200,14 @@ namespace PicoBricks {
     }
 
     //% subcategory="IR Receiver"
-    //% block="connect IR receiver at pin %pin and decode %protocol"
+    //% block="connect IR receiver at pin %pin"
     //% pin.fieldEditor="gridpicker"
     //% pin.fieldOptions.columns=4
     //% pin.fieldOptions.tooltips="false"
     //% weight=90
-    export function connectIrReceiver(pin: DigitalPin, protocol: IrProtocol): void {
+    export function connectIrReceiver(pin: DigitalPin): void {
         initIrState();
 
-        if (irState.protocol) {
-            return;
-        }
-
-        irState.protocol = protocol;
         enableIrMarkSpaceDetection(pin);
         background.schedule(notifyIrEvents, background.Thread.Priority, background.Mode.Repeat, REPEAT_TIMEOUT_MS);
     }
