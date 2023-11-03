@@ -21,15 +21,6 @@ enum NeoPixelColors {
     Black = 0x000000
 }
 
-enum NeoPixelMode {
-    //% block="RGB (GRB format)"
-    RGB = 1,
-    //% block="RGB+W"
-    RGBW = 2,
-    //% block="RGB (RGB format)"
-    RGB_RGB = 3
-}
-
 namespace PicoBricks {
     export class Strip {
         buf: Buffer;
@@ -38,7 +29,6 @@ namespace PicoBricks {
         brightness: number;
         start: number; // start offset in LED strip
         _length: number; // number of LEDs
-        _mode: NeoPixelMode;
         _matrixWidth: number; // number of leds in a matrix - if any
 
         //% blockId="neopixel_set_strip_color" block="%strip|show color %rgb=neopixel_colors"
@@ -191,9 +181,6 @@ namespace PicoBricks {
         //% parts="neopixel"
         //% subcategory="RGB Leds"
         setPixelWhiteLED(pixeloffset: number, white: number): void {
-            if (this._mode === NeoPixelMode.RGBW) {
-                this.setPixelW(pixeloffset >> 0, white >> 0);
-            }
         }
 
         //% blockId="neopixel_show" block="%strip|show" blockGap=8
@@ -213,7 +200,7 @@ namespace PicoBricks {
         //% parts="neopixel"
         //% subcategory="RGB Leds"
         clear(): void {
-            const stride = this._mode === NeoPixelMode.RGBW ? 4 : 3;
+            const stride = 3;
             this.buf.fill(0, this.start * stride, this._length * stride);
         }
 
@@ -240,7 +227,7 @@ namespace PicoBricks {
         //% parts="neopixel" 
         //% subcategory="RGB Leds"
         easeBrightness(): void {
-            const stride = this._mode === NeoPixelMode.RGBW ? 4 : 3;
+            const stride = 3;
             const br = this.brightness;
             const buf = this.buf;
             const end = this.start + this._length;
@@ -254,9 +241,6 @@ namespace PicoBricks {
                 const r = (buf[ledoffset + 0] * br) >> 8; buf[ledoffset + 0] = r;
                 const g = (buf[ledoffset + 1] * br) >> 8; buf[ledoffset + 1] = g;
                 const b = (buf[ledoffset + 2] * br) >> 8; buf[ledoffset + 2] = b;
-                if (stride == 4) {
-                    const w = (buf[ledoffset + 3] * br) >> 8; buf[ledoffset + 3] = w;
-                }
             }
         }
 
@@ -276,7 +260,6 @@ namespace PicoBricks {
             strip.start = this.start + Math.clamp(0, this._length - 1, start);
             strip._length = Math.clamp(0, this._length - (strip.start - this.start), length);
             strip._matrixWidth = 0;
-            strip._mode = this._mode;
             return strip;
         }
 
@@ -287,7 +270,7 @@ namespace PicoBricks {
         //% subcategory="RGB Leds"
         shift(offset: number = 1): void {
             offset = offset >> 0;
-            const stride = this._mode === NeoPixelMode.RGBW ? 4 : 3;
+            const stride = 3;
             this.buf.shift(-offset * stride, this.start * stride, this._length * stride)
         }
 
@@ -298,7 +281,7 @@ namespace PicoBricks {
         //% subcategory="RGB Leds"
         rotate(offset: number = 1): void {
             offset = offset >> 0;
-            const stride = this._mode === NeoPixelMode.RGBW ? 4 : 3;
+            const stride = 3;
             this.buf.rotate(-offset * stride, this.start * stride, this._length * stride)
         }
 
@@ -316,7 +299,7 @@ namespace PicoBricks {
 
         //% subcategory="RGB Leds"
         power(): number {
-            const stride = this._mode === NeoPixelMode.RGBW ? 4 : 3;
+            const stride = 3;
             const end = this.start + this._length;
             let p = 0;
             for (let i = this.start; i < end; ++i) {
@@ -330,13 +313,8 @@ namespace PicoBricks {
         }
 
         private setBufferRGB(offset: number, red: number, green: number, blue: number): void {
-            if (this._mode === NeoPixelMode.RGB_RGB) {
-                this.buf[offset + 0] = red;
-                this.buf[offset + 1] = green;
-            } else {
-                this.buf[offset + 0] = green;
-                this.buf[offset + 1] = red;
-            }
+            this.buf[offset + 0] = green;
+            this.buf[offset + 1] = red;
             this.buf[offset + 2] = blue;
         }
 
@@ -352,15 +330,12 @@ namespace PicoBricks {
                 blue = (blue * br) >> 8;
             }
             const end = this.start + this._length;
-            const stride = this._mode === NeoPixelMode.RGBW ? 4 : 3;
+            const stride = 3;
             for (let i = this.start; i < end; ++i) {
                 this.setBufferRGB(i * stride, red, green, blue)
             }
         }
         private setAllW(white: number) {
-            if (this._mode !== NeoPixelMode.RGBW)
-                return;
-
             let br = this.brightness;
             if (br < 255) {
                 white = (white * br) >> 8;
@@ -377,7 +352,7 @@ namespace PicoBricks {
                 || pixeloffset >= this._length)
                 return;
 
-            let stride = this._mode === NeoPixelMode.RGBW ? 4 : 3;
+            let stride = 3;
             pixeloffset = (pixeloffset + this.start) * stride;
 
             let red = unpackR(rgb);
@@ -393,15 +368,11 @@ namespace PicoBricks {
             this.setBufferRGB(pixeloffset, red, green, blue)
         }
         private setPixelW(pixeloffset: number, white: number): void {
-            if (this._mode !== NeoPixelMode.RGBW)
-                return;
-
             if (pixeloffset < 0
                 || pixeloffset >= this._length)
                 return;
 
             pixeloffset = (pixeloffset + this.start) * 4;
-
             let br = this.brightness;
             if (br < 255) {
                 white = (white * br) >> 8;
@@ -415,15 +386,15 @@ namespace PicoBricks {
     //% weight=90 blockGap=8
     //% parts="neopixel"
     //% trackArgs=0,2
+    //% numleds.defl=3
     //% blockSetVariable=strip
     //% subcategory="RGB Leds"
-    export function create(pin: DigitalPin, numleds: number, mode: NeoPixelMode): Strip {
+    export function create(pin: DigitalPin, numleds: number): Strip {
         let strip = new Strip();
-        let stride = mode === NeoPixelMode.RGBW ? 4 : 3;
+        let stride = 3;
         strip.buf = pins.createBuffer(numleds * stride);
         strip.start = 0;
         strip._length = numleds;
-        strip._mode = mode || NeoPixelMode.RGB;
         strip._matrixWidth = 0;
         strip.setBrightness(128)
         strip.setPin(pin)

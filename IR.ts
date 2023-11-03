@@ -107,20 +107,16 @@ namespace PicoBricks {
 
     function decode(markAndSpace: number): number {
         if (markAndSpace < 1600) {
-            // low bit
             return appendBitToDatagram(0);
         } else if (markAndSpace < 2700) {
-            // high bit
             return appendBitToDatagram(1);
         }
 
         irState.bitsReceived = 0;
 
         if (markAndSpace < 12500) {
-            // Repeat detected
             return IR_REPEAT;
         } else if (markAndSpace < 14500) {
-            // Start detected
             return IR_INCOMPLETE;
         } else {
             return IR_INCOMPLETE;
@@ -138,7 +134,6 @@ namespace PicoBricks {
         });
 
         pins.onPulsed(pin, PulseValue.High, () => {
-            // LOW
             space = pins.pulseDuration();
             const status = decode(mark + space);
 
@@ -152,15 +147,12 @@ namespace PicoBricks {
         if (irEvent === IR_DATAGRAM || irEvent === IR_REPEAT) {
             irState.repeatTimeout = input.runningTime() + REPEAT_TIMEOUT_MS;
         }
-
         if (irEvent === IR_DATAGRAM) {
             irState.hasNewDatagram = true;
-
             if (irState.onIrDatagram) {
                 background.schedule(irState.onIrDatagram, background.Thread.UserCallback, background.Mode.Once, 0);
             }
             const newCommand = irState.commandSectionBits >> 8;
-
             if (newCommand !== irState.activeCommand) {
                 if (irState.activeCommand >= 0) {
                     const releasedHandler = irState.onIrButtonReleased.find(h => h.irButton === irState.activeCommand || IrButton.Any === h.irButton);
@@ -168,12 +160,10 @@ namespace PicoBricks {
                         background.schedule(releasedHandler.onEvent, background.Thread.UserCallback, background.Mode.Once, 0);
                     }
                 }
-
                 const pressedHandler = irState.onIrButtonPressed.find(h => h.irButton === newCommand || IrButton.Any === h.irButton);
                 if (pressedHandler) {
                     background.schedule(pressedHandler.onEvent, background.Thread.UserCallback, background.Mode.Once, 0);
                 }
-
                 irState.activeCommand = newCommand;
             }
         }
@@ -183,7 +173,6 @@ namespace PicoBricks {
         if (irState) {
             return;
         }
-
         irState = {
             bitsReceived: 0,
             hasNewDatagram: false,
@@ -201,9 +190,6 @@ namespace PicoBricks {
 
     //% subcategory="IR Receiver"
     //% block="connect IR receiver at pin %pin"
-    //% pin.fieldEditor="gridpicker"
-    //% pin.fieldOptions.columns=4
-    //% pin.fieldOptions.tooltips="false"
     //% weight=90
     export function connectIrReceiver(pin: DigitalPin): void {
         initIrState();
@@ -302,7 +288,7 @@ namespace PicoBricks {
     //% block="IR datagram"
     //% weight=30
     export function irDatagram(): string {
-        basic.pause(0); // Yield to support background processing when called in tight loops
+        basic.pause(0);
         initIrState();
         return (
             "0x" +

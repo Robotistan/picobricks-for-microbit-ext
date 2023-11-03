@@ -59,7 +59,6 @@ namespace PicoBricks {
         for (let i = 1; i < 17; i++) {
             data[i] = 0x00
         }
-        // send display buffer in 16 byte chunks
         for (let j = 0; j < screenSize; j += 16) {
             pins.i2cWriteBuffer(chipAdress, data, false)
         }
@@ -95,7 +94,6 @@ namespace PicoBricks {
                 } else {
                     k++
                 }
-
             }
         }
         charX = 30
@@ -119,7 +117,7 @@ namespace PicoBricks {
         command(4)
         command(5)
         let data3 = pins.createBuffer(2);
-        data3[0] = 0x40; // Data Mode
+        data3[0] = 0x40;
         data3[1] = 0x7E
         for (let l = lastStart; l < width * (Math.floor(percent) / 100); l++) {
             pins.i2cWriteBuffer(chipAdress, data3, false)
@@ -244,7 +242,6 @@ namespace PicoBricks {
                     command(SSD1306_SETPAGEADRESS)
                     command(page3)
                     command(page3 + 1)
-                    //line[1] |= pins.i2cReadBuffer(chipAdress, 2)[1]
                     pins.i2cWriteBuffer(chipAdress, line2, false)
                 }
             }
@@ -314,16 +311,16 @@ namespace PicoBricks {
     export function init(width: number, height: number) {
         command(SSD1306_DISPLAYOFF);
         command(SSD1306_SETDISPLAYCLOCKDIV);
-        command(0x80);                                  // the suggested ratio 0x80
+        command(0x80);                                  
         command(SSD1306_SETMULTIPLEX);
         command(0x3F);
         command(SSD1306_SETDISPLAYOFFSET);
-        command(0x0);                                   // no offset
-        command(SSD1306_SETSTARTLINE | 0x0);            // line #0
+        command(0x0);                                  
+        command(SSD1306_SETSTARTLINE | 0x0);            
         command(SSD1306_CHARGEPUMP);
         command(0x14);
         command(SSD1306_MEMORYMODE);
-        command(0x00);                                  // 0x0 act like ks0108
+        command(0x00);                                  
         command(SSD1306_SEGREMAP | 0x1);
         command(SSD1306_COMSCANDEC);
         command(SSD1306_SETCOMPINS);
