@@ -93,7 +93,6 @@ namespace PicoBricks {
         }
     }
 
-
     function appendBitToDatagram(bit: number): number {
         irState.bitsReceived += 1;
 
@@ -162,8 +161,6 @@ namespace PicoBricks {
     }
 
     function handleIrEvent(irEvent: number) {
-
-        // Refresh repeat timer
         if (irEvent === IR_DATAGRAM || irEvent === IR_REPEAT) {
             irState.repeatTimeout = input.runningTime() + REPEAT_TIMEOUT_MS;
         }
@@ -221,10 +218,7 @@ namespace PicoBricks {
     //% pin.fieldOptions.columns=4
     //% pin.fieldOptions.tooltips="false"
     //% weight=90
-    export function connectIrReceiver(
-        pin: DigitalPin,
-        protocol: IrProtocol
-    ): void {
+    export function connectIrReceiver(pin: DigitalPin, protocol: IrProtocol): void {
         initIrState();
 
         if (irState.protocol) {
@@ -232,9 +226,7 @@ namespace PicoBricks {
         }
 
         irState.protocol = protocol;
-
         enableIrMarkSpaceDetection(pin);
-
         background.schedule(notifyIrEvents, background.Thread.Priority, background.Mode.Repeat, REPEAT_TIMEOUT_MS);
     }
 
@@ -247,7 +239,6 @@ namespace PicoBricks {
                 if (handler) {
                     background.schedule(handler.onEvent, background.Thread.UserCallback, background.Mode.Once, 0);
                 }
-
                 irState.bitsReceived = 0;
                 irState.activeCommand = -1;
             }
@@ -261,11 +252,7 @@ namespace PicoBricks {
     //% button.fieldOptions.columns=3
     //% button.fieldOptions.tooltips="false"
     //% weight=50
-    export function onIrButton(
-        button: IrButton,
-        action: IrButtonAction,
-        handler: () => void
-    ) {
+    export function onIrButton(button: IrButton, action: IrButtonAction, handler: () => void) {
         initIrState();
         if (action === IrButtonAction.Pressed) {
             irState.onIrButtonPressed.push(new IrButtonHandler(button, handler));
@@ -280,7 +267,7 @@ namespace PicoBricks {
     //% block="IR button"
     //% weight=70
     export function irButton(): number {
-        basic.pause(0); // Yield to support background processing when called in tight loops
+        basic.pause(0); 
         if (!irState) {
             return IrButton.Any;
         }
@@ -398,13 +385,10 @@ namespace PicoBricks {
                     const delta = now - previous;
                     previous = now;
 
-                    // Add new jobs
                     this._newJobs.forEach(function (job: Job, index: number) {
                         _jobs.push(job);
                     });
                     this._newJobs = [];
-
-                    // Cancel jobs
                     this._jobsToRemove.forEach(function (jobId: number, index: number) {
                         for (let i = _jobs.length - 1; i >= 0; i--) {
                             const job = _jobs[i];
@@ -415,17 +399,13 @@ namespace PicoBricks {
                         }
                     });
                     this._jobsToRemove = []
-
-                    // Execute all jobs
                     if (this._type === Thread.Priority) {
-                        // newest first
                         for (let i = _jobs.length - 1; i >= 0; i--) {
                             if (_jobs[i].run(delta)) {
                                 this._jobsToRemove.push(_jobs[i].id)
                             }
                         }
                     } else {
-                        // Execute in order of schedule
                         for (let i = 0; i < _jobs.length; i++) {
                             if (_jobs[i].run(delta)) {
                                 this._jobsToRemove.push(_jobs[i].id)
@@ -478,9 +458,7 @@ namespace PicoBricks {
 
         const queues: Executor[] = [];
 
-        export function schedule(
-            func: () => void,
-            type: Thread,
+        export function schedule(func: () => void, type: Thread,
             mode: Mode,
             delay: number,
         ): number {

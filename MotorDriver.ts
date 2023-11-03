@@ -9,6 +9,7 @@ enum dc_motor_type {
     DC2 = 1
 }
 
+//% color="#067565" weight=10 icon="\uf135"
 namespace PicoBricks {
     let MotorBuffer = pins.createBuffer(5);
 
