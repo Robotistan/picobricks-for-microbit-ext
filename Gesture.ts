@@ -21,10 +21,6 @@ enum GESTURE_TYPE {
     Up = 3,
     //% block=down
     Down = 4,
-    //% block=near
-    Forward = 5,
-    //% block=far
-    Backward = 6
 }
 
 namespace PicoBricks {
@@ -80,7 +76,7 @@ namespace PicoBricks {
     const APDS9960_GFIFO_L = 0xFE
     const APDS9960_GFIFO_R = 0xFF
 
-    let GESTURE_THRESHOLD_OUT = 30;
+    let GESTURE_THRESHOLD_OUT = 10;
     let GESTURE_SENSITIVITY_1 = 33
     let GESTURE_SENSITIVITY_2 = 18
 
@@ -337,8 +333,6 @@ namespace PicoBricks {
         DIR_RIGHT,
         DIR_UP,
         DIR_DOWN,
-        DIR_NEAR,
-        DIR_FAR,
         DIR_ALL
     }
     enum STATE {
@@ -360,7 +354,6 @@ namespace PicoBricks {
     }
 
     let gesture_data = new gesture_data_type;
-
     let data_buf: Buffer = pins.createBuffer(128);
 
     export class APDS9960class {
@@ -375,6 +368,7 @@ namespace PicoBricks {
 
         APDS9960ReadReg(addr: number): number {
             let buf: Buffer = pins.createBuffer(1);
+
             buf[0] = addr;
             pins.i2cWriteBuffer(ADDR, buf, false);
             buf = pins.i2cReadBuffer(ADDR, 1, false);
@@ -386,7 +380,6 @@ namespace PicoBricks {
 
             buf2[0] = addr;
             buf2[1] = cmd;
-
             pins.i2cWriteBuffer(ADDR, buf2, false);
         }
 
@@ -413,6 +406,7 @@ namespace PicoBricks {
 
         setMode(mode: number, enable: number) {
             let reg_val: number;
+
             reg_val = this.getMode();
             enable = enable & 0x01;
             if (mode >= 0 && mode <= 6) {
@@ -421,7 +415,8 @@ namespace PicoBricks {
                 } else {
                     reg_val = 0x00;
                 }
-            } else if (mode == ALL) {
+            } 
+            else if (mode == ALL) {
                 if (enable) {
                     reg_val = 0x7F;
                 } else {
@@ -431,39 +426,35 @@ namespace PicoBricks {
             this.APDS9960WriteReg(APDS9960_ENABLE, reg_val);
         }
         setGestureGain(gain: number) {
-        let val: number;
+            let val: number;
+            
             val = this.APDS9960ReadReg(APDS9960_GCONF2);
-
-        gain &= 0b00000011;
-        gain = gain << 5;
-        val &= 0b10011111;
-        val |= gain;
-
+            gain &= 0b00000011;
+            gain = gain << 5;
+            val &= 0b10011111;
+            val |= gain;
             this.APDS9960WriteReg(APDS9960_GCONF2, val);
         }
 
         setGestureLEDDrive(drive: number) {
             let val2: number;
-            val2 = this.APDS9960ReadReg(APDS9960_GCONF2);
 
+            val2 = this.APDS9960ReadReg(APDS9960_GCONF2);
             drive &= 0b00000011;
             drive = drive << 3;
             val2 &= 0b11100111;
             val2 |= drive;
-
-            /* Write register value back into GCONF2 register */
             this.APDS9960WriteReg(APDS9960_GCONF2, val2);
         }
 
         setLEDBoost(boost: number) {
             let val3: number;
-            val3 = this.APDS9960ReadReg(APDS9960_CONFIG2);
 
+            val3 = this.APDS9960ReadReg(APDS9960_CONFIG2);
             boost &= 0b00000011;
             boost = boost << 4;
             val3 &= 0b11001111;
             val3 |= boost;
-
             this.APDS9960WriteReg(APDS9960_CONFIG2, val3);
         }
 
@@ -474,7 +465,6 @@ namespace PicoBricks {
             time &= 0b00000111;
             val4 &= 0b11111000;
             val4 |= time;
-
             this.APDS9960WriteReg(APDS9960_GCONF2, val4);
         }
 
@@ -482,47 +472,34 @@ namespace PicoBricks {
             let val5: number;
 
             val5 = this.APDS9960ReadReg(APDS9960_GCONF4);
-
             enable &= 0b00000001;
             enable = enable << 1;
             val5 &= 0b11111101;
             val5 |= enable;
-
-            /* Write register value back into GCONF4 register */
             this.APDS9960WriteReg(APDS9960_GCONF4, val5);
         }
 
         resetGestureParameters() {
-
             gesture_data.index = 0;
             gesture_data.total_gestures = 0;
 
             this.gesture_ud_delta = 0;
             this.gesture_lr_delta = 0;
-
             this.gesture_ud_count = 0;
             this.gesture_lr_count = 0;
-
             this.gesture_near_count = 0;
             this.gesture_far_count = 0;
-
             this.gesture_state = 0;
             this.gesture_motion = DIR.DIR_NONE;
-
         }
 
         setGestureMode(mode: number) {
             let val6: number;
 
-            /* Read value from GCONF4 register */
             val6 = this.APDS9960ReadReg(APDS9960_GCONF4);
-
-            /* Set bits in register to given value */
             mode &= 0b00000001;
             val6 &= 0b11111110;
             val6 |= mode;
-
-            /* Write register value back into GCONF4 register */
             this.APDS9960WriteReg(APDS9960_GCONF4, val6);
         }
 
@@ -531,7 +508,6 @@ namespace PicoBricks {
         }
 
         enableGestureSensor(interrupts: boolean) {
-
             this.resetGestureParameters();
             this.APDS9960WriteReg(APDS9960_WTIME, 0xFF);
             this.APDS9960WriteReg(APDS9960_PPULSE, DEFAULT_GESTURE_PPULSE);
@@ -549,7 +525,6 @@ namespace PicoBricks {
         }
 
         pads9960_init() {
-
             let aa = this.APDS9960ReadReg(0X92);
             if (aa == 0xAB) {
                 this.APDS9960WriteReg(APDS9960_GPENTH, DEFAULT_GPENTH);//0x28
@@ -571,12 +546,8 @@ namespace PicoBricks {
         isGestureAvailable(): boolean {
             let val8: number;
 
-            /* Read value from GSTATUS register */
             val8 = this.APDS9960ReadReg(0xAF);
-            /* Shift and mask out GVALID bit */
             val8 &= 0b00000001;
-
-            /* Return true/false based on GVALID bit */
             if (val8 == 1) {
                 return true;
             } else {
@@ -601,15 +572,11 @@ namespace PicoBricks {
             let lr_delta: number;
             let k: number;
 
-            /* If we have less than 4 total gestures, that's not enough */
             if (gesture_data.total_gestures <= 4) {
                 return false;
             }
 
-            /* Check to make sure our data isn't out of bounds */
             if ((gesture_data.total_gestures <= 32) && (gesture_data.total_gestures > 0)) {
-
-                /* Find the first value in U/D/L/R above the threshold */
                 for (k = 0; k < gesture_data.total_gestures; k++) {
                     if ((gesture_data.u_data[k] > GESTURE_THRESHOLD_OUT) &&
                         (gesture_data.d_data[k] > GESTURE_THRESHOLD_OUT) &&
@@ -624,15 +591,12 @@ namespace PicoBricks {
                     }
                 }
 
-                /* If one of the _first values is 0, then there is no good data */
                 if ((u_first == 0) || (d_first == 0) || (l_first == 0) || (r_first == 0)) {
 
                     return false;
                 }
-                /* Find the last value in U/D/L/R above the threshold */
+
                 for (k = gesture_data.total_gestures - 1; k >= 0; k--) {
-
-
                     if ((gesture_data.u_data[k] > GESTURE_THRESHOLD_OUT) &&
                         (gesture_data.d_data[k] > GESTURE_THRESHOLD_OUT) &&
                         (gesture_data.l_data[k] > GESTURE_THRESHOLD_OUT) &&
@@ -647,13 +611,11 @@ namespace PicoBricks {
                 }
             }
 
-            /* Calculate the first vs. last ratio of up/down and left/right */
             ud_ratio_first = ((u_first - d_first) * 100) / (u_first + d_first);
             lr_ratio_first = ((l_first - r_first) * 100) / (l_first + r_first);
             ud_ratio_last = ((u_last - d_last) * 100) / (u_last + d_last);
             lr_ratio_last = ((l_last - r_last) * 100) / (l_last + r_last);
             if (ud_ratio_first == 0 && lr_ratio_first == 0 && ud_ratio_last == 0 && lr_ratio_last == 0) {
-
                 this.pads9960_init();
                 this.enableGestureSensor(false);
             }
@@ -682,13 +644,11 @@ namespace PicoBricks {
 
             if ((this.gesture_ud_count == 0) && (this.gesture_lr_count == 0)) {
                 if ((Math.abs(ud_delta) < GESTURE_SENSITIVITY_2) && (Math.abs(lr_delta) < GESTURE_SENSITIVITY_2)) {
-
                     if ((ud_delta == 0) && (lr_delta == 0)) {
                         this.gesture_near_count++;
                     } else if ((ud_delta != 0) || (lr_delta != 0)) {
                         this.gesture_far_count++;
                     }
-
                     if ((this.gesture_near_count >= 10) && (this.gesture_far_count >= 2)) {
                         if ((ud_delta == 0) && (lr_delta == 0)) {
                             this.gesture_state = STATE.NEAR_STATE;
@@ -698,13 +658,12 @@ namespace PicoBricks {
                         return true;
                     }
                 }
-            } else {
+            } 
+            else {
                 if ((Math.abs(ud_delta) < GESTURE_SENSITIVITY_2) && (Math.abs(lr_delta) < GESTURE_SENSITIVITY_2)) {
-
                     if ((ud_delta == 0) && (lr_delta == 0)) {
                         this.gesture_near_count++;
                     }
-
                     if (this.gesture_near_count >= 10) {
                         this.gesture_ud_count = 0;
                         this.gesture_lr_count = 0;
@@ -715,16 +674,7 @@ namespace PicoBricks {
             }
             return true;
         }
-
         decodeGesture(): boolean {
-            if (this.gesture_state == STATE.NEAR_STATE) {
-                this.gesture_motion = DIR.DIR_NEAR;
-                return true;
-            } else if (this.gesture_state == STATE.FAR_STATE) {
-                this.gesture_motion = DIR.DIR_FAR;
-                return true;
-            }
-
             if ((this.gesture_ud_count == -1) && (this.gesture_lr_count == 0)) {
                 this.gesture_motion = DIR.DIR_UP;
             } else if ((this.gesture_ud_count == 1) && (this.gesture_lr_count == 0)) {
@@ -760,7 +710,6 @@ namespace PicoBricks {
             } else {
                 return false;
             }
-
             return true;
         }
 
@@ -843,12 +792,6 @@ namespace PicoBricks {
                 case DIR.DIR_RIGHT:
                     result = GESTURE_TYPE.Right;
                     break;
-                case DIR.DIR_NEAR:
-                    result = GESTURE_TYPE.Forward;
-                    break;
-                case DIR.DIR_FAR:
-                    result = GESTURE_TYPE.Backward;
-                    break;
                 default:
             }
             return result;
@@ -856,8 +799,6 @@ namespace PicoBricks {
         readi2c(addr: number): number {
             return this.APDS9960ReadReg(addr);
         }
-
-
     }
 
     let gestureRuns = false
@@ -874,7 +815,6 @@ namespace PicoBricks {
                 if (gst != prevGst) {
                     prevGst = gst;
                     control.raiseEvent(3100, gst, EventCreationMode.CreateAndFire);
-
                 }
                 basic.pause(50);
             }

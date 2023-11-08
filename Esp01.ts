@@ -19,7 +19,6 @@ namespace PicoBricks {
         let result = false
         let timestamp = input.runningTime()
         while (true) {
-            // Timeout.
             if (input.runningTime() - timestamp > timeout) {
                 result = false
                 break
@@ -41,7 +40,6 @@ namespace PicoBricks {
                 rxData = rxData.slice(rxData.indexOf("\r\n") + 2)
             }
         }
-
         return result
     }
 
@@ -106,8 +104,7 @@ namespace PicoBricks {
         return url
     }
 
-    //% weight=30
-    //% blockGap=8
+    //% weight=80
     //% blockId=isESP8266Initialized
     //% block="Wi-Fi Module initialized"
     //% subcategory="Wi-Fi"
@@ -115,13 +112,11 @@ namespace PicoBricks {
         return esp8266Initialized
     }
 
-    //% weight=29
-    //% blockGap=40
+    //% weight=70
     //% blockId=espinit
     //% block="initialize Wi-Fi Module: Tx %tx Rx %rx Baudrate %baudrate"
     //% subcategory="Wi-Fi"
     export function espinit(tx: SerialPin, rx: SerialPin, baudrate: BaudRate) {
-        // Redirect the serial port.
         serial.redirect(tx, rx, baudrate)
         serial.setTxBufferSize(128)
         serial.setRxBufferSize(128)
@@ -135,8 +130,7 @@ namespace PicoBricks {
         esp8266Initialized = true
     }
 
-    //% weight=28
-    //% blockGap=8
+    //% weight=50
     //% blockId=isWifiConnected
     //% block="WiFi connected"
     //% subcategory="Wi-Fi"
@@ -152,18 +146,16 @@ namespace PicoBricks {
         }
     }
 
-    //% weight=27
-    //% blockGap=8
+    //% weight=60
     //% blockId=connectWiFi
-    //% block="connect to WiFi: SSID %ssid Password %password"
+    //% block="Connect to WiFi: SSID %ssid Password %password"
     //% subcategory="Wi-Fi"
     export function connectWiFi(ssid: string, password: string) {
         sendCommand("AT+CWMODE=1", "OK")
         sendCommand("AT+CWJAP=\"" + ssid + "\",\"" + password + "\"", "OK", 20000)
     }
 
-    //% weight=30
-    //% blockGap=8
+    //% weight=10
     //% blockId=isTelegramMessageSent
     //% block="Telegram message sent"
     //% subcategory="Wi-Fi"
@@ -171,10 +163,9 @@ namespace PicoBricks {
         return telegramMessageSent
     }
 
-    //% weight=29
-    //% blockGap=8
+    //% weight=20
     //% blockId=sendTelegramMessage
-    //% block="send message to Telegram:|API Key %apiKey|Chat ID %chatId|Message %message"
+    //% block="Send message to Telegram:|API Key %apiKey|Chat ID %chatId|Message %message"
     //% subcategory="Wi-Fi"
     export function sendTelegramMessage(apiKey: string, chatId: string, message: string) {
         telegramMessageSent = false
@@ -207,7 +198,6 @@ namespace PicoBricks {
     }
 
     //% weight=30
-    //% blockGap=8
     //% blockId=isThingspeakUploaded
     //% block="ThingSpeak data uploaded"
     //% subcategory="Wi-Fi"
@@ -215,8 +205,7 @@ namespace PicoBricks {
         return thingspeakUploaded
     }
 
-    //% weight=29
-    //% blockGap=8
+    //% weight=40
     //% blockId=uploadThingspeak
     //% block="Upload data to ThingSpeak|Write API key %writeApiKey|Field 1 %field1||Field 2 %field2|Field 3 %field3|Field 4 %field4|Field 5 %field5|Field 6 %field6|Field 7 %field7|Field 8 %field8"
     //% subcategory="Wi-Fi"
@@ -272,6 +261,4 @@ namespace PicoBricks {
         thingspeakUploaded = true
         return
     }
-
-
 }
