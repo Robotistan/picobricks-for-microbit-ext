@@ -1,22 +1,4 @@
 const enum IrButton {
-    //% block="any"
-    Any = -1,
-    //% block="^"
-    Up = 24,
-    //% block=" "
-    Unused_2 = -2,
-    //% block="<"
-    Left = 16,
-    //% block="OK"
-    Ok = 56,
-    //% block=">"
-    Right = 90,
-    //% block=" "
-    Unused_3 = -3,
-    //% block="v"
-    Down = 74,
-    //% block=" "
-    Unused_4 = -4,
     //% block="1"
     Number_1 = 162,
     //% block="2"
@@ -41,6 +23,24 @@ const enum IrButton {
     Number_0 = 152,
     //% block="#"
     Hash = 176,
+    //% block=" "
+    Unused_4 = -4,
+    //% block="^"
+    Up = 24,
+    //% block=" "
+    Unused_2 = -2,
+    //% block="<"
+    Left = 16,
+    //% block="OK"
+    Ok = 56,
+    //% block=">"
+    Right = 90,
+    //% block=" "
+    Unused_3 = -3,
+    //% block="v"
+    Down = 74,
+    //% block="any"
+    Any = -1,
 }
 
 const enum IrButtonAction {
@@ -219,7 +219,7 @@ namespace PicoBricks {
     //% button.fieldEditor="gridpicker"
     //% button.fieldOptions.columns=3
     //% button.fieldOptions.tooltips="false"
-    //% weight=50
+    //% weight=80
     export function onIrButton(button: IrButton, action: IrButtonAction, handler: () => void) {
         initIrState();
         if (action === IrButtonAction.Pressed) {
@@ -233,7 +233,7 @@ namespace PicoBricks {
     //% subcategory="IR Receiver"
     //% blockId=makerbit_infrared_ir_button_pressed
     //% block="IR button"
-    //% weight=70
+    //% weight=50
     export function irButton(): string {
         basic.pause(0); 
         if ((irState.commandSectionBits >> 8) == 162)
@@ -275,32 +275,9 @@ namespace PicoBricks {
     }
 
     //% subcategory="IR Receiver"
-    //% blockId=onIrDatagram
-    //% block="on IR datagram received"
-    //% weight=40
-    export function onIrDatagram(handler: () => void) {
-        initIrState();
-        irState.onIrDatagram = handler;
-    }
-
-    //% subcategory="IR Receiver"
-    //% blockId=irDatagram
-    //% block="IR datagram"
-    //% weight=30
-    export function irDatagram(): string {
-        basic.pause(0);
-        initIrState();
-        return (
-            "0x" +
-            ir_rec_to16BitHex(irState.addressSectionBits) +
-            ir_rec_to16BitHex(irState.commandSectionBits)
-        );
-    }
-
-    //% subcategory="IR Receiver"
     //% blockId=wasIrDataReceived
     //% block="IR data was received"
-    //% weight=80
+    //% weight=70
     export function wasIrDataReceived(): boolean {
         basic.pause(0); 
         initIrState();

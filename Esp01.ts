@@ -1,73 +1,13 @@
 namespace PicoBricks {
     let rxData = ""
-    let esp8266Initialized = false
+    let espinit = false
     let telegramMessageSent = false
     let thingspeakUploaded = false
 
     const TELEGRAM_API_URL = "api.telegram.org"
     const THINGSPEAK_API_URL = "api.thingspeak.com"
 
-    function sendCommand(command: string, expected_response: string = null, timeout: number = 100): boolean {
-        basic.pause(10)
-        serial.readString()
-        rxData = ""
-        serial.writeString(command + "\r\n")
-        if (expected_response == null) {
-            return true
-        }
-
-        let result = false
-        let timestamp = input.runningTime()
-        while (true) {
-            if (input.runningTime() - timestamp > timeout) {
-                result = false
-                break
-            }
-
-            rxData += serial.readString()
-            if (rxData.includes("\r\n")) {
-                if (rxData.slice(0, rxData.indexOf("\r\n")).includes(expected_response)) {
-                    result = true
-                    break
-                }
-
-                if (expected_response == "OK") {
-                    if (rxData.slice(0, rxData.indexOf("\r\n")).includes("ERROR")) {
-                        result = false
-                        break
-                    }
-                }
-                rxData = rxData.slice(rxData.indexOf("\r\n") + 2)
-            }
-        }
-        return result
-    }
-
-    function getResponse(response: string, timeout: number = 100): string {
-        let responseLine = ""
-        let timestamp2 = input.runningTime()
-        while (true) {
-            if (input.runningTime() - timestamp2 > timeout) {
-                if (rxData.includes(response)) {
-                    responseLine = rxData
-                }
-                break
-            }
-
-            rxData += serial.readString()
-            if (rxData.includes("\r\n")) {
-                if (rxData.slice(0, rxData.indexOf("\r\n")).includes(response)) {
-                    responseLine = rxData.slice(0, rxData.indexOf("\r\n"))
-                    rxData = rxData.slice(rxData.indexOf("\r\n") + 2)
-                    break
-                }
-                rxData = rxData.slice(rxData.indexOf("\r\n") + 2)
-            }
-        }
-        return responseLine
-    }
-
-    function formatUrl(url: string): string {
+    function Urlformat(url: string): string {
         url = url.replaceAll("%", "%25")
         url = url.replaceAll(" ", "%20")
         url = url.replaceAll("!", "%21")
@@ -104,30 +44,90 @@ namespace PicoBricks {
         return url
     }
 
+    function send(command: string, response: string = null, timeout: number = 100): boolean {
+        basic.pause(10)
+        serial.readString()
+        rxData = ""
+        serial.writeString(command + "\r\n")
+        if (response == null) {
+            return true
+        }
+
+        let result = false
+        let time_val = input.runningTime()
+        while (true) {
+            if (input.runningTime() - time_val > timeout) {
+                result = false
+                break
+            }
+
+            rxData += serial.readString()
+            if (rxData.includes("\r\n")) {
+                if (rxData.slice(0, rxData.indexOf("\r\n")).includes(response)) {
+                    result = true
+                    break
+                }
+
+                if (response == "OK") {
+                    if (rxData.slice(0, rxData.indexOf("\r\n")).includes("ERROR")) {
+                        result = false
+                        break
+                    }
+                }
+                rxData = rxData.slice(rxData.indexOf("\r\n") + 2)
+            }
+        }
+        return result
+    }
+
+    function receive(response: string, timeout: number = 100): string {
+        let receivebuf = ""
+        let time_val2 = input.runningTime()
+        while (true) {
+            if (input.runningTime() - time_val2 > timeout) {
+                if (rxData.includes(response)) {
+                    receivebuf = rxData
+                }
+                break
+            }
+
+            rxData += serial.readString()
+            if (rxData.includes("\r\n")) {
+                if (rxData.slice(0, rxData.indexOf("\r\n")).includes(response)) {
+                    receivebuf = rxData.slice(0, rxData.indexOf("\r\n"))
+                    rxData = rxData.slice(rxData.indexOf("\r\n") + 2)
+                    break
+                }
+                rxData = rxData.slice(rxData.indexOf("\r\n") + 2)
+            }
+        }
+        return receivebuf
+    }
+
     //% weight=80
-    //% blockId=isESP8266Initialized
+    //% blockId=Espcontrol
     //% block="Wi-Fi Module initialized"
     //% subcategory="Wi-Fi"
-    export function isESP8266Initialized(): boolean {
-        return esp8266Initialized
+    export function Espcontrol(): boolean {
+        return espinit
     }
 
     //% weight=70
-    //% blockId=espinit
+    //% blockId=esp01init
     //% block="initialize Wi-Fi Module: Tx %tx Rx %rx Baudrate %baudrate"
     //% subcategory="Wi-Fi"
-    export function espinit(tx: SerialPin, rx: SerialPin, baudrate: BaudRate) {
+    export function esp01init(tx: SerialPin, rx: SerialPin, baudrate: BaudRate) {
         serial.redirect(tx, rx, baudrate)
         serial.setTxBufferSize(128)
         serial.setRxBufferSize(128)
-        esp8266Initialized = false
-        if (sendCommand("AT+RESTORE", "ready", 5000) == false) 
+        espinit = false
+        if (send("AT+RESTORE", "ready", 5000) == false) 
             return
 
-        if (sendCommand("ATE0", "OK") == false) 
+        if (send("ATE0", "OK") == false) 
             return
 
-        esp8266Initialized = true
+        espinit = true
     }
 
     //% weight=50
@@ -135,9 +135,9 @@ namespace PicoBricks {
     //% block="WiFi connected"
     //% subcategory="Wi-Fi"
     export function isWifiConnected(): boolean {
-        sendCommand("AT+CIPSTATUS")
-        let status = getResponse("STATUS:", 1000)
-        getResponse("OK")
+        send("AT+CIPSTATUS")
+        let status = receive("STATUS:", 1000)
+        receive("OK")
         if ((status == "") || status.includes("STATUS:5")) {
             return false
         }
@@ -151,8 +151,8 @@ namespace PicoBricks {
     //% block="Connect to WiFi: SSID %ssid Password %password"
     //% subcategory="Wi-Fi"
     export function connectWiFi(ssid: string, password: string) {
-        sendCommand("AT+CWMODE=1", "OK")
-        sendCommand("AT+CWJAP=\"" + ssid + "\",\"" + password + "\"", "OK", 20000)
+        send("AT+CWMODE=1", "OK")
+        send("AT+CWJAP=\"" + ssid + "\",\"" + password + "\"", "OK", 20000)
     }
 
     //% weight=10
@@ -171,28 +171,28 @@ namespace PicoBricks {
         telegramMessageSent = false
         if (isWifiConnected() == false) 
             return
-        if (sendCommand("AT+CIPSTART=\"SSL\",\"" + TELEGRAM_API_URL + "\",443", "OK", 10000) == false) 
+        if (send("AT+CIPSTART=\"SSL\",\"" + TELEGRAM_API_URL + "\",443", "OK", 10000) == false) 
             return
 
-        let data4 = "GET /bot" + formatUrl(apiKey) + "/sendMessage?chat_id=" + formatUrl(chatId) + "&text=" + formatUrl(message)
-        data4 += " HTTP/1.1\r\n"
-        data4 += "Host: " + TELEGRAM_API_URL + "\r\n"
+        let getdata = "GET /bot" + Urlformat(apiKey) + "/sendMessage?chat_id=" + Urlformat(chatId) + "&text=" + Urlformat(message)
+        getdata += " HTTP/1.1\r\n"
+        getdata += "Host: " + TELEGRAM_API_URL + "\r\n"
 
-        sendCommand("AT+CIPSEND=" + (data4.length + 2))
-        sendCommand(data4)
+        send("AT+CIPSEND=" + (getdata.length + 2))
+        send(getdata)
 
-        if (getResponse("SEND OK", 1000) == "") {
-            sendCommand("AT+CIPCLOSE", "OK", 1000)
+        if (receive("SEND OK", 1000) == "") {
+            send("AT+CIPCLOSE", "OK", 1000)
             return
         }
 
-        let response = getResponse("\"ok\":true", 1000)
+        let response = receive("\"ok\":true", 1000)
         if (response == "") {
-            sendCommand("AT+CIPCLOSE", "OK", 1000)
+            send("AT+CIPCLOSE", "OK", 1000)
             return
         }
 
-        sendCommand("AT+CIPCLOSE", "OK", 1000)
+        send("AT+CIPCLOSE", "OK", 1000)
         telegramMessageSent = true
         return
     }
@@ -210,45 +210,45 @@ namespace PicoBricks {
     //% block="Upload data to ThingSpeak|Write API key %writeApiKey|Field 1 %field1||Field 2 %field2|Field 3 %field3|Field 4 %field4|Field 5 %field5|Field 6 %field6|Field 7 %field7|Field 8 %field8"
     //% subcategory="Wi-Fi"
     export function uploadThingspeak(writeApiKey: string,
-        field1: number,
-        field2: number = null,
-        field3: number = null,
-        field4: number = null,
-        field5: number = null,
-        field6: number = null,
-        field7: number = null,
-        field8: number = null) {
+        val1: number,
+        val2: number = null,
+        val3: number = null,
+        val4: number = null,
+        val5: number = null,
+        val6: number = null,
+        val7: number = null,
+        val8: number = null) {
 
         thingspeakUploaded = false
         if (isWifiConnected() == false) 
             return
 
-        if (sendCommand("AT+CIPSTART=\"TCP\",\"" + THINGSPEAK_API_URL + "\",80", "OK", 10000) == false) 
+        if (send("AT+CIPSTART=\"TCP\",\"" + THINGSPEAK_API_URL + "\",80", "OK", 10000) == false) 
             return
 
-        let data = "GET /update?api_key=" + writeApiKey + "&field1=" + field1
-        if (field2 != null) 
-            data += "&field2=" + field2
-        if (field2 != null) 
-            data += "&field3=" + field3
-        if (field2 != null) 
-            data += "&field4=" + field4
-        if (field2 != null) 
-            data += "&field5=" + field5
-        if (field2 != null) 
-            data += "&field6=" + field6
-        if (field2 != null) 
-            data += "&field7=" + field7
-        if (field2 != null) 
-            data += "&field8=" + field8
+        let data = "GET /update?api_key=" + writeApiKey + "&field1=" + val1
+        if (val2 != null)
+            data += "&val2=" + val2
+        if (val2 != null)
+            data += "&val3=" + val3
+        if (val2 != null)
+            data += "&val4=" + val4
+        if (val2 != null)
+            data += "&val5=" + val5
+        if (val2 != null)
+            data += "&val6=" + val6
+        if (val2 != null)
+            data += "&val7=" + val7
+        if (val2 != null)
+            data += "&val8=" + val8
 
-        sendCommand("AT+CIPSEND=" + (data.length + 2))
-        sendCommand(data)
+        send("AT+CIPSEND=" + (data.length + 2))
+        send(data)
 
-        if (getResponse("SEND OK", 1000) == "") 
+        if (receive("SEND OK", 1000) == "")
             return
 
-        let response = getResponse("+IPD", 1000)
+        let response = receive("+IPD", 1000)
         if (response == "") 
             return
 
