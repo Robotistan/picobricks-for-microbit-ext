@@ -1,24 +1,28 @@
+# Picobricks for Micro:Bit
 
-> Open this page at [https://atakanoztrk.github.io/picobricksv1/](https://atakanoztrk.github.io/picobricksv1/)
+Picobricks for Micro:Bit teaches kids and adults coding, electronics basics and advanced technology while providing a fun and fascinating experience filled with project. 
 
-## Use as Extension
+## Blocks
 
-This repository can be added as an **extension** in MakeCode.
+* Piano And Gaming Brick : This touchpad module is designed to offer makers an interactive and ecciting world.
+* Micro:Bit Brick : It is a module that will enable Micro:Bit to connect to Picobricks more easily.
+* Oled Screen Brick ([source](https://github.com/tinkertanker/pxt-oled-ssd1306)) : This is the area where you will show the degrees you measured in Picobircks for Micro:Bit.
+* RGB LED Brick ([source](https://github.com/microsoft/pxt-neopixel)) : This bricks will allow you to turn routine notifications into a colorful show instead of receiving them in a boring way.
+* Action Brick : This module is your ticket to transforming mundane routines into an extraordinary experience.
+* PIR Brick (IR Motion Brick) : This sensor aims to add some excitement to every moment, instead of boring routine motion detection.
+* Relay Brick : This brick puts control of electrical devices in your hands and makes your life more comfortable.
+* Motor Driver Brick : This birck allows to control 2 DC and 4 Servo motors at the same time.
+* Wireless Brick ([source](https://github.com/cytrontechnologies/pxt-esp8266)) : This brick allows you to push the boundaries of the entertainment world with wifi.
+* Temperature And Humidity Brick : This brick is designed to measure and monitor temprature and humidity levels.
+* LDR Module (Light Sensor) : This brick allows you to make projects by detecting the level of light around you.
+* Button And Potentiometer Module : This brick aloows control of button and potentiometer.  
 
-* open [https://makecode.microbit.org/](https://makecode.microbit.org/)
-* click on **New Project**
-* click on **Extensions** under the gearwheel menu
-* search for **https://github.com/atakanoztrk/picobricksv1** and import
+## Meta
 
-## Edit this project
+Questions? [Email us](mailto:support@picobricks.com)
 
-To edit this repository in MakeCode.
+Keywords: picobricks, microbit
 
-* open [https://makecode.microbit.org/](https://makecode.microbit.org/)
-* click on **Import** then click on **Import URL**
-* paste **https://github.com/atakanoztrk/picobricksv1** and click import
+## Supported targets
 
-#### Metadata (used for search, rendering)
-
-* for PXT/microbit
-<script src="https://makecode.com/gh-pages-embed.js"></script><script>makeCodeRender("{{ site.makecode.home_url }}", "{{ site.github.owner_name }}/{{ site.github.repository_name }}");</script>
+* for microbit v1 and microbit v2
