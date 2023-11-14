@@ -42,6 +42,40 @@ namespace PicoBricks {
             this.show();
         }
 
+        //% weight=84
+        //% blockId=neopixel_show_bar_graph block="%strip|show bar graph of %value|up to %high"
+        //% strip.defl=strip
+        //% icon="\uf080"
+        //% parts="neopixel"
+        //% subcategory="RGB Leds"
+        showBarGraph(value: number, high: number): void {
+            if (high <= 0) {
+                this.clear();
+                this.setPixelColor(0, NeoPixelColors.Yellow);
+                this.show();
+                return;
+            }
+
+            value = Math.abs(value);
+            const n = this._length;
+            const n1 = n - 1;
+            let v = Math.idiv((value * n), high);
+            if (v == 0) {
+                this.setPixelColor(0, 0x666600);
+                for (let i = 1; i < n; ++i)
+                    this.setPixelColor(i, 0);
+            } else {
+                for (let i = 0; i < n; ++i) {
+                    if (i <= v) {
+                        const b = Math.idiv(i * 255, n1);
+                        this.setPixelColor(i, PicoBricks.rgb(b, 0, 255 - b));
+                    }
+                    else this.setPixelColor(i, 0);
+                }
+            }
+            this.show();
+        }
+
         //% blockId="neopixel_set_strip_rainbow" block="%strip|show rainbow from %startHue|to %endHue"
         //% strip.defl=strip
         //% weight=85 blockGap=8
@@ -100,40 +134,6 @@ namespace PicoBricks {
                     this.setPixelColor(i, hsl(h, s, l));
                 }
                 this.setPixelColor(steps - 1, hsl(endHue, saturation, luminance));
-            }
-            this.show();
-        }
-
-        //% weight=84
-        //% blockId=neopixel_show_bar_graph block="%strip|show bar graph of %value|up to %high"
-        //% strip.defl=strip
-        //% icon="\uf080"
-        //% parts="neopixel"
-        //% subcategory="RGB Leds"
-        showBarGraph(value: number, high: number): void {
-            if (high <= 0) {
-                this.clear();
-                this.setPixelColor(0, NeoPixelColors.Yellow);
-                this.show();
-                return;
-            }
-
-            value = Math.abs(value);
-            const n = this._length;
-            const n1 = n - 1;
-            let v = Math.idiv((value * n), high);
-            if (v == 0) {
-                this.setPixelColor(0, 0x666600);
-                for (let i = 1; i < n; ++i)
-                    this.setPixelColor(i, 0);
-            } else {
-                for (let i = 0; i < n; ++i) {
-                    if (i <= v) {
-                        const b = Math.idiv(i * 255, n1);
-                        this.setPixelColor(i, PicoBricks.rgb(b, 0, 255 - b));
-                    }
-                    else this.setPixelColor(i, 0);
-                }
             }
             this.show();
         }
