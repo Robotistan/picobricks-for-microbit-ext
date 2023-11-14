@@ -341,7 +341,6 @@ namespace PicoBricks {
         control.waitMicros(200000);
     }
 
-
     function ReadSensorStatus(): void {
         let proximityCounter = 0;
         let proximityStatus = 0;
@@ -659,5 +658,4 @@ namespace PicoBricks {
 
         return rec_buf[2]
     }
-
 }

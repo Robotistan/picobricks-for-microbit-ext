@@ -101,7 +101,6 @@ namespace PicoBricks {
         writeString("Loading:")
     }
 
-
     function drawLoadingBar(percent: number) {
         charX = 78
         charY = 2
@@ -139,7 +138,6 @@ namespace PicoBricks {
         }
     }
 
-
     //% block="show (without newline) string $str"
     //% weight=6
     //% subcategory="OLED"
@@ -152,6 +150,7 @@ namespace PicoBricks {
             charX += 6
         }
     }
+
     //% block="show (without newline) number $n"
     //% weight=5
     //% subcategory="OLED"
@@ -159,6 +158,7 @@ namespace PicoBricks {
         let numString = n.toString()
         writeString(numString)
     }
+
     //% block="show string $str"
     //% weight=8
     //% subcategory="OLED"
@@ -166,6 +166,7 @@ namespace PicoBricks {
         writeString(str)
         newLine()
     }
+
     //% block="show number $n"
     //% weight=7
     //% subcategory="OLED"
@@ -173,6 +174,7 @@ namespace PicoBricks {
         writeNum(n)
         newLine()
     }
+
     //% block="insert newline"
     //% weight=4
     //% subcategory="OLED"
@@ -180,6 +182,7 @@ namespace PicoBricks {
         charY++
         charX = xOffset
     }
+
     function drawChar(x: number, y: number, c: string) {
         command(SSD1306_SETCOLUMNADRESS)
         command(x)
@@ -202,6 +205,7 @@ namespace PicoBricks {
         }
 
     }
+
     function drawShape(pixels: Array<Array<number>>) {
         let x1 = displayWidth
         let y1 = displayHeight * 8
@@ -303,6 +307,7 @@ namespace PicoBricks {
         drawLine(x0, y0, x0, y1)
         drawLine(x1, y0, x1, y1)
     }
+    
     //% block="initialize OLED with width $width height $height"
     //% width.defl=128
     //% height.defl=64

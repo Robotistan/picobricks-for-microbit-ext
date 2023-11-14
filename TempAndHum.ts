@@ -16,7 +16,6 @@ namespace PicoBricks {
     let read_buf = pins.createBuffer(5);
     let val = 0;
 
-
     function i2cread16(addr: number, reg: number) {
         pins.i2cWriteNumber(addr, reg, NumberFormat.UInt16BE);
         let rval = pins.i2cReadNumber(addr, NumberFormat.UInt16BE);
@@ -68,5 +67,4 @@ namespace PicoBricks {
         pins.i2cWriteNumber(SHTC3_DEFAULT_ADDR, SHTC3_WAKEUP, NumberFormat.UInt16BE, false)
         basic.pause(1)
     }
-
 }

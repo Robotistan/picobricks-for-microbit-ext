@@ -296,7 +296,6 @@ namespace PicoBricks {
 
         //% weight=9 blockId=neopixel_power block="%strip|power (mA)"
         //% strip.defl=strip
-
         //% subcategory="RGB Leds"
         power(): number {
             const stride = 3;
@@ -335,6 +334,7 @@ namespace PicoBricks {
                 this.setBufferRGB(i * stride, red, green, blue)
             }
         }
+
         private setAllW(white: number) {
             let br = this.brightness;
             if (br < 255) {
@@ -347,6 +347,7 @@ namespace PicoBricks {
                 buf[ledoffset + 3] = white;
             }
         }
+
         private setPixelRGB(pixeloffset: number, rgb: number): void {
             if (pixeloffset < 0
                 || pixeloffset >= this._length)
@@ -367,6 +368,7 @@ namespace PicoBricks {
             }
             this.setBufferRGB(pixeloffset, red, green, blue)
         }
+
         private setPixelW(pixeloffset: number, white: number): void {
             if (pixeloffset < 0
                 || pixeloffset >= this._length)
@@ -404,7 +406,6 @@ namespace PicoBricks {
 
     //% weight=1
     //% blockId="neopixel_rgb" block="red %red|green %green|blue %blue"
-
     //% subcategory="RGB Leds"
     export function rgb(red: number, green: number, blue: number): number {
         return packRGB(red, green, blue);
@@ -412,7 +413,6 @@ namespace PicoBricks {
 
     //% weight=2 blockGap=8
     //% blockId="neopixel_colors" block="%color"
-
     //% subcategory="RGB Leds"
     export function colors(color: NeoPixelColors): number {
         return color;

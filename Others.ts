@@ -14,6 +14,7 @@ namespace PicoBricks {
         low = 0,
         high = 1
     }
+
     export enum RfidSector {
         S1 = 1,
         S2 = 2,
@@ -178,7 +179,5 @@ namespace PicoBricks {
         pins.i2cWriteNumber(addr, reg, NumberFormat.UInt8BE);
         let val = pins.i2cReadNumber(addr, NumberFormat.UInt8BE);
         return val;
-    }
-
-    
+    }  
 }
