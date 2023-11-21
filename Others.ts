@@ -88,13 +88,14 @@ namespace PicoBricks {
         let trigpin = pin1
         let echopin = pin2
 
+        pins.setPull(trigpin, PinPullMode.PullNone);
         pins.digitalWritePin(trigpin, 0)
         control.waitMicros(5);
         pins.digitalWritePin(trigpin, 1)
         control.waitMicros(10);
         pins.digitalWritePin(trigpin, 0)
 
-        let duration = pins.pulseIn(echopin, 1)
+        let duration = pins.pulseIn(echopin, PulseValue.High, 29000)
         let cm = (duration / 2) / 29.1
 
         return cm
