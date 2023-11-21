@@ -640,22 +640,4 @@ namespace PicoBricks {
         //% block="C2"
         C2 = 14
     }
-
-    //% block="Test"
-    //% subcategory="Touch Sensor-Piano"
-    export function test(): number {
-        let val = 0;
-
-        pins.i2cWriteNumber(CHIP_ADDRESS, PROX_STAT, NumberFormat.UInt8BE)
-        val = pins.i2cReadNumber(CHIP_ADDRESS, NumberFormat.UInt8BE)
-
-        pins.i2cWriteNumber(CHIP_ADDRESS, BUTTON_STATUS, NumberFormat.UInt8BE)
-        buff = pins.i2cReadBuffer(CHIP_ADDRESS, 2, false)
-
-        rec_buf[0] = val
-        rec_buf[1] = buff[0]
-        rec_buf[2] = buff[1]
-
-        return rec_buf[2]
-    }
 }
