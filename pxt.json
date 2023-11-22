@@ -1,5 +1,5 @@
 {
-    "name": "picobricksv1",
+    "name": "PicoBricks",
     "description": "",
     "dependencies": {
         "core": "*",
