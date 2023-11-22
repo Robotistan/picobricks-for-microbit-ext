@@ -11,8 +11,8 @@ enum servo_motor_type {
 }
 
 enum direction_type {
-    0 = 0,
-    1 = 1
+    D0 = 0,
+    D1 = 1
 }
 
 //% weight=10 color=#067565 block="PicoBricks" icon="\uf135"
