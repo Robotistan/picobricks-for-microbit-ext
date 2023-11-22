@@ -10,7 +10,7 @@ enum servo_motor_type {
     Servo4 = 6
 }
 
-enum direction {
+enum direction_type {
     0 = 0,
     1 = 1
 }
@@ -34,7 +34,7 @@ namespace PicoBricks {
     //% block="Dc Motor %dc_motor_type and speed %speed and direction %direction"
     //% speed.min=0 speed.max=255
     //% subcategory="Motor Driver"
-    export function Dcmotor(dc_type: dc_motor_type, speed: number, direction: number): void {
+    export function Dcmotor(dc_type: dc_motor_type, speed: number, direction: direction_type): void {
         pins.i2cWriteNumber(MOTOR_DRIVER_ADDRESS, 0x26, NumberFormat.UInt8BE, false)
         pins.i2cWriteNumber(MOTOR_DRIVER_ADDRESS, dc_type, NumberFormat.UInt8BE, false)
         pins.i2cWriteNumber(MOTOR_DRIVER_ADDRESS, speed, NumberFormat.UInt8BE, false)
