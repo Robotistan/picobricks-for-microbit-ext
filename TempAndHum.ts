@@ -22,7 +22,10 @@ namespace PicoBricks {
         return rval;
     }
 
-    //% block="Read Temprature"
+    /**
+     * Get temperature from SHTC-3 temperature and humidity sensor.
+     */
+    //% block="read temperature"
     //% subcategory="Temp & Hum"
     export function temperature(): number {
         pins.i2cWriteNumber(SHTC3_DEFAULT_ADDR, SHTC3_NORMAL_MEAS_TFIRST, NumberFormat.UInt16BE, false)
@@ -36,7 +39,10 @@ namespace PicoBricks {
         return temperature
     }
 
-    //% block="Read Humidity"
+    /**
+     * Get humidity percentage from SHTC-3 temperature and humidity sensor.
+     */
+    //% block="read humidity"
     //% subcategory="Temp & Hum"
     export function humidity(): number {
         pins.i2cWriteNumber(SHTC3_DEFAULT_ADDR, SHTC3_NORMAL_MEAS_TFIRST, NumberFormat.UInt16BE, false)
@@ -51,7 +57,10 @@ namespace PicoBricks {
         return humidity;
     }
 
-    //% block="Temp & Hum Read ID"
+    /**
+     * Read ID of the SHTC-3 temperature and humidity sensor.
+     */
+    //% block="temperature & humidity read id"
     //% subcategory="Temp & Hum"
     export function readId(): number {
         let read_value = i2cread16(SHTC3_DEFAULT_ADDR, SHTC3_READID)
@@ -59,8 +68,8 @@ namespace PicoBricks {
     }
     
     /**
-    * @param mode Initialize SHTC-3 temperature and humidity sensor.
-    */
+     * Initialize SHTC-3 temperature and humidity sensor.
+     */
     //% block="Temp & Hum Init"
     //% subcategory="Temp & Hum"
     export function shtcInit(): void {
