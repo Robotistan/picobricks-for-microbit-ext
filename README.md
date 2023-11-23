@@ -1,6 +1,7 @@
 # Picobricks for Micro:Bit
 
 Picobricks for Micro:Bit teaches kids and adults coding, electronics basics and advanced technology while providing a fun and fascinating experience filled with project. 
+[Click Here to Explore PicoBricks for micro:bit](https://picobricks.com/pages/kickstarter)
 
 ## Blocks
 
