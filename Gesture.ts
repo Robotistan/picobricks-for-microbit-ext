@@ -161,6 +161,9 @@ namespace PicoBricks {
 
     let currentMode = SENSORINIT.None
 
+    /**
+     * Initialize the selected action module feature
+     */
     //% block="apds9960 init |%sensor"
     //% subcategory="Action"
     export function initGesture(sensor: SENSORINIT): void {
@@ -199,6 +202,9 @@ namespace PicoBricks {
         i2cwrite(ADDR, APDS9960_ENABLE, 0x05) // enable ALS,PROX,GESTURE
     }
 
+    /**
+     * Read the APDS ID
+     */
     //% block="apds9960 ID"
     //% subcategory="Action"
     export function readId(): number {
@@ -206,6 +212,9 @@ namespace PicoBricks {
         return chipid;
     }
 
+    /**
+     * Read the Hue value
+     */
     //% block="apds9960 Get Hue"
     //% subcategory="Action"
     export function readHue(): number {
@@ -230,6 +239,9 @@ namespace PicoBricks {
         return hue
     }
 
+    /**
+     * Read the color (0-255) value from the action module 
+     */
     //% block="apds9960 Get Color"
     //% subcategory="Action"
     export function readColor(): string {
@@ -252,6 +264,9 @@ namespace PicoBricks {
             return "NO COLOR"
     }
 
+    /**
+     * Read the red color (0-255) value from the action module 
+     */
     //% block="apds9960 Get Red Color"
     //% subcategory="Action"
     export function readRedColor(): number {
@@ -267,6 +282,9 @@ namespace PicoBricks {
         return r
     }
 
+    /**
+     * Read the green color (0-255) value from the action module
+     */
     //% block="apds9960 Get Green Color"
     //% subcategory="Action"
     export function readGreenColor(): number {
@@ -281,7 +299,10 @@ namespace PicoBricks {
         let g = i2cread(ADDR, APDS9960_GDATAL) + i2cread(ADDR, APDS9960_GDATAH) * 256;
         return g
     }
-    
+
+    /**
+     * Read the blue color (0-255) value from the action module
+     */
     //% block="apds9960 Get Blue Color"
     //% subcategory="Action"
     export function readBlueColor(): number {
@@ -296,7 +317,10 @@ namespace PicoBricks {
         let b = i2cread(ADDR, APDS9960_BDATAL) + i2cread(ADDR, APDS9960_BDATAH) * 256;
         return b
     }
-    
+
+    /**
+     * Read the light value 
+     */
     //% block="apds9960 Get Clear"
     //% subcategory="Action"
     export function readClear(): number {
@@ -312,6 +336,9 @@ namespace PicoBricks {
         return c
     }
 
+    /**
+     * Read the proximity value 
+     */
     //% block="apds9960 Get Proximity"
     //% subcategory="Action"
     export function readProximity(): number {
@@ -821,6 +848,9 @@ namespace PicoBricks {
         })
     }
 
+    /**
+     * When the sensor detects the set value
+     */
     //% blockId="gesture_listener_block" block="onGesture |%gesture"
     //% subcategory="Action"
     export function onGesture(gesture: GESTURE_TYPE, handler: () => void) {
