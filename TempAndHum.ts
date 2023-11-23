@@ -62,7 +62,7 @@ namespace PicoBricks {
      */
     //% block="temperature & humidity read id"
     //% subcategory="Temp & Hum"
-    export function readId(): number {
+    export function readSensorId(): number {
         let read_value = i2cread16(SHTC3_DEFAULT_ADDR, SHTC3_READID)
         return read_value
     }
