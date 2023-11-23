@@ -42,6 +42,10 @@ namespace PicoBricks {
         buf[1] = cmd
         pins.i2cWriteBuffer(chipAdress, buf, false)
     }
+
+    /**
+     * Clear OLED screen.
+     */
     //% block="clear OLED display"
     //% weight=3
     //% subcategory="OLED"
@@ -124,6 +128,9 @@ namespace PicoBricks {
         loadPercent = num
     }
 
+    /**
+     * Draw loading bar on OLED screen at given percentage.
+     */
     //% block="draw loading bar at $percent percent"
     //% percent.min=0 percent.max=100
     //% weight=2
@@ -138,6 +145,9 @@ namespace PicoBricks {
         }
     }
 
+    /**
+     * Show string on the same line on OLED screen.
+     */
     //% block="show (without newline) string $str"
     //% weight=6
     //% subcategory="OLED"
@@ -151,6 +161,9 @@ namespace PicoBricks {
         }
     }
 
+    /**
+     * Show number on the same line on OLED screen.
+     */
     //% block="show (without newline) number $n"
     //% weight=5
     //% subcategory="OLED"
@@ -159,6 +172,9 @@ namespace PicoBricks {
         writeString(numString)
     }
 
+    /**
+     * Show string on a new line on OLED screen.
+     */
     //% block="show string $str"
     //% weight=8
     //% subcategory="OLED"
@@ -167,6 +183,9 @@ namespace PicoBricks {
         newLine()
     }
 
+    /**
+     * Show number on a new line on OLED screen.
+     */
     //% block="show number $n"
     //% weight=7
     //% subcategory="OLED"
@@ -175,6 +194,9 @@ namespace PicoBricks {
         newLine()
     }
 
+    /**
+     * Insert a new line.
+     */
     //% block="insert newline"
     //% weight=4
     //% subcategory="OLED"
@@ -252,6 +274,9 @@ namespace PicoBricks {
         }
     }
 
+    /**
+     * Draw a line between the given x - y coordinates on OLED screen.
+     */
     //% block="draw line from:|x: $x0 y: $y0 to| x: $x1 y: $y1"
     //% x0.defl=0
     //% y0.defl=0
@@ -294,6 +319,9 @@ namespace PicoBricks {
         drawShape(pixels)
     }
 
+    /**
+     * Draw a rectangle with the given x - y coordinates on OLED screen.
+     */
     //% block="draw rectangle from:|x: $x0 y: $y0 to| x: $x1 y: $y1"
     //% x0.defl=0
     //% y0.defl=0
@@ -308,6 +336,9 @@ namespace PicoBricks {
         drawLine(x1, y0, x1, y1)
     }
     
+    /**
+     * Initialize OLED screen with the given width and height values.
+     */
     //% block="initialize OLED with width $width height $height"
     //% width.defl=128
     //% height.defl=64
