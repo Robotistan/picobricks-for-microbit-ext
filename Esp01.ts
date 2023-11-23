@@ -105,16 +105,16 @@ namespace PicoBricks {
     }
 
     //% weight=80
-    //% blockId=Espcontrol
-    //% block="Wi-Fi Module initialized"
+    //% blockId=espcontrol
+    //% block="wifi module initialized"
     //% subcategory="Wi-Fi"
-    export function Espcontrol(): boolean {
+    export function espcontrol(): boolean {
         return espinit
     }
 
     //% weight=70
     //% blockId=esp01init
-    //% block="initialize Wi-Fi Module: Tx %tx Rx %rx Baudrate %baudrate"
+    //% block="initialize wifi module: tx %tx rx %rx baudrate %baudrate"
     //% subcategory="Wi-Fi"
     export function esp01init(tx: SerialPin, rx: SerialPin, baudrate: BaudRate) {
         serial.redirect(tx, rx, baudrate)
@@ -132,7 +132,7 @@ namespace PicoBricks {
 
     //% weight=50
     //% blockId=isWifiConnected
-    //% block="WiFi connected"
+    //% block="wifi connected"
     //% subcategory="Wi-Fi"
     export function isWifiConnected(): boolean {
         send("AT+CIPSTATUS")
@@ -148,7 +148,7 @@ namespace PicoBricks {
 
     //% weight=60
     //% blockId=connectWiFi
-    //% block="Connect to WiFi: SSID %ssid Password %password"
+    //% block="connect to wifi: ssid %ssid password %password"
     //% subcategory="Wi-Fi"
     export function connectWiFi(ssid: string, password: string) {
         send("AT+CWMODE=1", "OK")
@@ -157,7 +157,7 @@ namespace PicoBricks {
 
     //% weight=10
     //% blockId=isTelegramMessageSent
-    //% block="Telegram message sent"
+    //% block="telegram message sent"
     //% subcategory="Wi-Fi"
     export function isTelegramMessageSent(): boolean {
         return telegramMessageSent
@@ -165,7 +165,7 @@ namespace PicoBricks {
 
     //% weight=20
     //% blockId=sendTelegramMessage
-    //% block="Send message to Telegram:|API Key %apiKey|Chat ID %chatId|Message %message"
+    //% block="send message to telegram:|api key %apiKey|chat id %chatId|message %message"
     //% subcategory="Wi-Fi"
     export function sendTelegramMessage(apiKey: string, chatId: string, message: string) {
         telegramMessageSent = false
@@ -199,7 +199,7 @@ namespace PicoBricks {
 
     //% weight=30
     //% blockId=isThingspeakUploaded
-    //% block="ThingSpeak data uploaded"
+    //% block="thingSpeak data uploaded"
     //% subcategory="Wi-Fi"
     export function isThingspeakUploaded(): boolean {
         return thingspeakUploaded
@@ -207,7 +207,7 @@ namespace PicoBricks {
 
     //% weight=40
     //% blockId=uploadThingspeak
-    //% block="Upload data to ThingSpeak|Write API key %writeApiKey|Field 1 %field1||Field 2 %field2|Field 3 %field3|Field 4 %field4|Field 5 %field5|Field 6 %field6|Field 7 %field7|Field 8 %field8"
+    //% block="upload data to thingspeak|write api key %writeApiKey|field 1 %field1||field 2 %field2|field 3 %field3|field 4 %field4|field 5 %field5|field 6 %field6|field 7 %field7|field 8 %field8"
     //% subcategory="Wi-Fi"
     export function uploadThingspeak(writeApiKey: string,
         val1: number,
