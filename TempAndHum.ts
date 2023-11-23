@@ -59,7 +59,7 @@ namespace PicoBricks {
     }
     
     /**
-    * Initialize SHTC-3 temperature and humidity sensor.
+    * @param mode Initialize SHTC-3 temperature and humidity sensor.
     */
     //% block="Temp & Hum Init"
     //% subcategory="Temp & Hum"
