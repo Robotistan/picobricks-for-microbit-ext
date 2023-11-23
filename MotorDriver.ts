@@ -19,6 +19,9 @@ enum direction_type {
 namespace PicoBricks {
     const MOTOR_DRIVER_ADDRESS = 0x22;
 
+    /**
+     * It brings the selected servo motor to the set angle
+     */
     //% blockId="servomotor" block="servo motor %servo_motor_type and angle %angle"
     //% angle.min=0 angle.max=180
     //% subcategory="Motor Driver"
@@ -31,6 +34,9 @@ namespace PicoBricks {
         pins.i2cWriteNumber(MOTOR_DRIVER_ADDRESS, cs, NumberFormat.UInt8BE, false)
     }
 
+    /**
+     * It runs the selected DC motor forward or reverse at the set speed and direction
+     */
     //% block="dc motor %dc_motor_type and speed %speed and direction %direction"
     //% speed.min=0 speed.max=255
     //% subcategory="Motor Driver"
