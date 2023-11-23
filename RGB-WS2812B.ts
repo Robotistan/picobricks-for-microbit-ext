@@ -31,6 +31,9 @@ namespace PicoBricks {
         _length: number; // number of LEDs
         _matrixWidth: number; // number of leds in a matrix - if any
 
+        /**
+         * Show all LEDs to a given color (0-255 R,G,B)
+         */
         //% blockId="neopixel_set_strip_color" block="%strip|show color %rgb=neopixel_colors"
         //% strip.defl=strip
         //% weight=85 blockGap=8
@@ -42,6 +45,9 @@ namespace PicoBricks {
             this.show();
         }
 
+        /**
+         * Displays a vertical bar graph based on the “value” and “high” value. İf “high” is 0,the chart gets adjusted automatically
+         */
         //% weight=84
         //% blockId=neopixel_show_bar_graph block="%strip|show bar graph of %value|up to %high"
         //% strip.defl=strip
@@ -76,6 +82,9 @@ namespace PicoBricks {
             this.show();
         }
 
+        /**
+         * Shows a rainbow pattern on all LEDs
+         */
         //% blockId="neopixel_set_strip_rainbow" block="%strip|show rainbow from %startHue|to %endHue"
         //% strip.defl=strip
         //% weight=85 blockGap=8
@@ -138,6 +147,9 @@ namespace PicoBricks {
             this.show();
         }
 
+        /**
+         * Set LED to a given color (0-255 R,G,B) You need to call “show” to make the changes visible
+         */
         //% blockId="neopixel_set_pixel_color" block="%strip|set pixel color at %pixeloffset|to %rgb=neopixel_colors"
         //% strip.defl=strip
         //% blockGap=8
@@ -148,6 +160,9 @@ namespace PicoBricks {
             this.setPixelRGB(pixeloffset >> 0, rgb >> 0);
         }
 
+        /**
+         * Sets the number of pixels in a matrix shaped strip
+         */
         //% blockId=neopixel_set_matrix_width block="%strip|set matrix width %width"
         //% strip.defl=strip
         //% blockGap=8
@@ -158,6 +173,9 @@ namespace PicoBricks {
             this._matrixWidth = Math.min(this._length, width >> 0);
         }
 
+        /**
+         * Set LED to a given color in a matrix shaped strip you need to call “show” to make the changes visible
+         */
         //% blockId="neopixel_set_matrix_color" block="%strip|set matrix color at x %x|y %y|to %rgb=neopixel_colors"
         //% strip.defl=strip
         //% weight=4
@@ -174,6 +192,9 @@ namespace PicoBricks {
             this.setPixelColor(i, rgb);
         }
 
+         /**
+         * For NeoPixels with RGB LEDs, set the white LED brightness
+         */
         //% blockId="neopixel_set_pixel_white" block="%strip|set pixel white LED at %pixeloffset|to %white"
         //% strip.defl=strip
         //% blockGap=8
@@ -183,6 +204,9 @@ namespace PicoBricks {
         setPixelWhiteLED(pixeloffset: number, white: number): void {
         }
 
+        /**
+         * Send all the changes to the stript
+         */
         //% blockId="neopixel_show" block="%strip|show" blockGap=8
         //% strip.defl=strip
         //% weight=79
@@ -194,6 +218,9 @@ namespace PicoBricks {
             ws2812b.sendBuffer(this.buf, this.pin);
         }
 
+        /**
+         * Turn off all LEDs
+         */
         //% blockId="neopixel_clear" block="%strip|clear"
         //% strip.defl=strip
         //% weight=76
@@ -212,6 +239,9 @@ namespace PicoBricks {
             return this._length;
         }
 
+        /**
+         * Apply brightness to current colors using a quadratic easing function
+         */
         //% blockId="neopixel_set_brightness" block="%strip|set brightness %brightness" blockGap=8
         //% strip.defl=strip
         //% weight=59
@@ -221,6 +251,9 @@ namespace PicoBricks {
             this.brightness = brightness & 0xff;
         }
 
+        /**
+         * Converts a hue saturation luminosity value into a RGB Color
+         */
         //% blockId="neopixel_each_brightness" block="%strip|ease brightness" blockGap=8
         //% strip.defl=strip
         //% weight=58
@@ -244,6 +277,9 @@ namespace PicoBricks {
             }
         }
 
+        /**
+         * Number of LEDs range
+         */
         //% weight=89
         //% blockId="neopixel_range" block="%strip|range from %start|with %length|leds"
         //% strip.defl=strip
@@ -263,6 +299,9 @@ namespace PicoBricks {
             return strip;
         }
 
+        /**
+         * Shift LEDs forward and clear with zeros. You need to call “show” to make the changes visible
+         */
         //% blockId="neopixel_shift" block="%strip|shift pixels by %offset" blockGap=8
         //% strip.defl=strip
         //% weight=40
@@ -274,6 +313,9 @@ namespace PicoBricks {
             this.buf.shift(-offset * stride, this.start * stride, this._length * stride)
         }
 
+        /**
+         * Rotate LEDs forward. You need to call “show” to make the changes visible
+         */
         //% blockId="neopixel_rotate" block="%strip|rotate pixels by %offset" blockGap=8
         //% strip.defl=strip
         //% weight=39
@@ -294,6 +336,9 @@ namespace PicoBricks {
             // don't yield to avoid races on initialization
         }
 
+        /**
+         * Estimates the electrical current consumed by the current light configuration
+         */
         //% weight=9 blockId=neopixel_power block="%strip|power (mA)"
         //% strip.defl=strip
         //% subcategory="RGB Leds"
@@ -384,6 +429,9 @@ namespace PicoBricks {
         }
     }
 
+    /**
+     * Select number of pin and number of LEDs
+     */
     //% blockId="neopixel_create" block="NeoPixel at pin %pin|with %numleds|leds as %mode"
     //% weight=90 blockGap=8
     //% parts="neopixel"
@@ -403,7 +451,9 @@ namespace PicoBricks {
         return strip;
     }
 
-
+    /**
+     * Converts RED,GREEN,BLUE channels into a RGB color
+     */
     //% weight=1
     //% blockId="neopixel_rgb" block="red %red|green %green|blue %blue"
     //% subcategory="RGB Leds"
@@ -411,6 +461,9 @@ namespace PicoBricks {
         return packRGB(red, green, blue);
     }
 
+    /**
+     * Gets the RGB value off a know color
+     */
     //% weight=2 blockGap=8
     //% blockId="neopixel_colors" block="%color"
     //% subcategory="RGB Leds"
@@ -434,6 +487,9 @@ namespace PicoBricks {
         return b;
     }
 
+    /**
+     * Converts a hue saturation luminosity value into a RGB Color
+     */
     //% blockId=neopixelHSL block="hue %h|saturation %s|luminosity %l"
     //% subcategory="RGB Leds"
     export function hsl(h: number, s: number, l: number): number {
