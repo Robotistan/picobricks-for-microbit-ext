@@ -104,6 +104,9 @@ namespace PicoBricks {
         return receivebuf
     }
 
+    /**
+     * Check if ESP successfully Wi-Fi initialize
+     */
     //% weight=80
     //% blockId=espcontrol
     //% block="wifi module initialized"
@@ -112,6 +115,9 @@ namespace PicoBricks {
         return espinit
     }
 
+    /**
+     * Initialize Wi-Fi Module
+     */
     //% weight=70
     //% blockId=esp01init
     //% block="initialize wifi module: tx %tx rx %rx baudrate %baudrate"
@@ -130,6 +136,9 @@ namespace PicoBricks {
         espinit = true
     }
 
+    /**
+     * Check if ESP is successfully Wi-Fi connected
+     */
     //% weight=50
     //% blockId=isWifiConnected
     //% block="wifi connected"
@@ -146,6 +155,9 @@ namespace PicoBricks {
         }
     }
 
+    /**
+     * Connect to the WiFi router
+     */
     //% weight=60
     //% blockId=connectWiFi
     //% block="connect to wifi: ssid %ssid password %password"
@@ -155,6 +167,9 @@ namespace PicoBricks {
         send("AT+CWJAP=\"" + ssid + "\",\"" + password + "\"", "OK", 20000)
     }
 
+    /**
+     * Check if ESP successfully telegram message send
+     */
     //% weight=10
     //% blockId=isTelegramMessageSent
     //% block="telegram message sent"
@@ -163,6 +178,9 @@ namespace PicoBricks {
         return telegramMessageSent
     }
 
+    /**
+     * Connect to the set telegram channel and send the message
+     */
     //% weight=20
     //% blockId=sendTelegramMessage
     //% block="send message to telegram:|api key %apiKey|chat id %chatId|message %message"
@@ -197,6 +215,9 @@ namespace PicoBricks {
         return
     }
 
+    /**
+     * Check if ESP successfully thingSpeak data uploaded
+     */
     //% weight=30
     //% blockId=isThingspeakUploaded
     //% block="thingSpeak data uploaded"
@@ -205,6 +226,9 @@ namespace PicoBricks {
         return thingspeakUploaded
     }
 
+    /**
+     * Connect to thingspeak and upload data. it would not upload anything if it failed to connect to Wi-Fi or thingSpeak 
+     */
     //% weight=40
     //% blockId=uploadThingspeak
     //% block="upload data to thingspeak|write api key %writeApiKey|field 1 %field1||field 2 %field2|field 3 %field3|field 4 %field4|field 5 %field5|field 6 %field6|field 7 %field7|field 8 %field8"
