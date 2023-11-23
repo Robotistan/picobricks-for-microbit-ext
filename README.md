@@ -18,6 +18,62 @@ Picobricks for Micro:Bit teaches kids and adults coding, electronics basics and 
 * LDR Module (Light Sensor) : This brick allows you to make projects by detecting the level of light around you.
 * Button And Potentiometer Module : This brick aloows control of button and potentiometer.  
 
+## Examples
+
+```blocks
+PicoBricks.onGesture(GESTURE_TYPE.Left, function () {
+    basic.showLeds(`
+        . . # . .
+        . # . . .
+        # # # # #
+        . # . . .
+        . . # . .
+        `)
+})
+PicoBricks.onGesture(GESTURE_TYPE.Up, function () {
+    basic.showLeds(`
+        . . # . .
+        . # # # .
+        # . # . #
+        . . # . .
+        . . # . .
+        `)
+})
+PicoBricks.onGesture(GESTURE_TYPE.Right, function () {
+    basic.showLeds(`
+        . . # . .
+        . . . # .
+        # # # # #
+        . . . # .
+        . . # . .
+        `)
+})
+PicoBricks.onGesture(GESTURE_TYPE.Down, function () {
+    basic.showLeds(`
+        . . # . .
+        . . # . .
+        # . # . #
+        . # # # .
+        . . # . .
+        `)
+})
+PicoBricks.initOled(128, 64)
+PicoBricks.shtcInit()
+PicoBricks.initGesture(SENSORINIT.Gesture)
+basic.forever(function () {
+    PicoBricks.clear()
+    basic.pause(5000)
+    PicoBricks.writeStringNewLine("Temprature")
+    PicoBricks.writeNumNewLine(PicoBricks.temperature())
+    PicoBricks.writeStringNewLine("Humidity")
+    PicoBricks.writeNumNewLine(PicoBricks.humidity())
+    PicoBricks.writeStringNewLine("Light Sensor")
+    PicoBricks.writeNumNewLine(PicoBricks.ldrRead())
+    basic.pause(5000)
+})
+```
+
+
 ## Meta
 
 Questions? [Email us](mailto:support@picobricks.com)
