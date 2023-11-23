@@ -20,6 +20,8 @@ Picobricks for Micro:Bit teaches kids and adults coding, electronics basics and 
 
 ## Examples
 
+In this example, you can use and control action brick, oled brick, temperature - humidity brick and LDR brick. Micro:bit screen will show way of gesture and oled bricks will show temperature, humidity and light value every 5 seconds.
+
 ```blocks
 PicoBricks.onGesture(GESTURE_TYPE.Left, function () {
     basic.showLeds(`
@@ -79,6 +81,10 @@ basic.forever(function () {
 Questions? [Email us](mailto:support@picobricks.com)
 
 Keywords: picobricks, microbit
+
+## License
+
+This software made available under the MIT open source license.
 
 ## Supported targets
 
