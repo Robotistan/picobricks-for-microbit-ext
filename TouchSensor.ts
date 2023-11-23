@@ -475,19 +475,28 @@ namespace PicoBricks {
         }
     }
 
+    /**
+     * Touch sensor init
+     */
     //% blockId="touchInit" block="touch sensor init"
     //% subcategory="Touch Sensor-Piano"
     export function touchInit(): void {
         configureMB()
         
     }
-    
+
+    /**
+     * Play Piano
+     */
     //% blockId="playPiano" block="play piano"
     //% subcategory="Touch Sensor-Piano"
     export function play(): void {
         readSensorStatus()
     }
 
+    /**
+     * Play the selected note when the selected button is pressed
+     */
     //% block="play %PianoKeyAddresses and %Notes"
     //% subcategory="Touch Sensor-Piano"
     export function user_Piano(button: PianoKeyAddresses, tone: Notes): void {
@@ -550,6 +559,9 @@ namespace PicoBricks {
         }
     }
 
+    /**
+     * Check if Touch Sensor & Piano buttons successfully pressed
+     */
     //% block="key %key|is pressed"
     //% subcategory="Touch Sensor-Piano"
     export function keyIsPressed(key: PianoKeyAddresses): boolean {
