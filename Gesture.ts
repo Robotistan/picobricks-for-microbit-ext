@@ -163,7 +163,7 @@ namespace PicoBricks {
 
     //% block="apds9960 init |%sensor"
     //% subcategory="Action"
-    export function init(sensor: SENSORINIT): void {
+    export function initGesture(sensor: SENSORINIT): void {
         i2cwrite(ADDR, APDS9960_ATIME, 252) // default inte time 4x2.78ms
         i2cwrite(ADDR, APDS9960_CONTROL, 0x03) // todo: make gain adjustable
         i2cwrite(ADDR, APDS9960_ENABLE, 0x00) // put everything off
