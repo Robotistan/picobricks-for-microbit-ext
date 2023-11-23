@@ -47,27 +47,27 @@ namespace PicoBricks {
         WRITE_SUCC = 4
     }
 
-    //% block="Light Sensor Read"
+    //% block="light sensor read"
     //% subcategory="Others"
     export function ldrRead(): number {
         result = pins.analogReadPin(AnalogPin.P0);
         return result;
     }
 
-    //% block="Button Read"
+    //% block="button read"
     //% subcategory="Others"
     export function buttonRead(): number {
         result = pins.digitalReadPin(DigitalPin.P2);
         return result;
     }
     
-    //% block="Set Relay To %set_relay"
+    //% block="set relay to %set_relay"
     //% subcategory="Others"
     export function relay(state: set_relay): void {
         pins.digitalWritePin(DigitalPin.P16, state)
     }
 
-    //% block="Pot Read"
+    //% block="pot read"
     //% subcategory="Others"
     export function potRead(): number {
 
@@ -75,14 +75,14 @@ namespace PicoBricks {
         return result;
     }
 
-    //% block="Motion Sensor Read"
+    //% block="motion sensor read"
     //% subcategory="Others"
     export function pirRead(): number {
         result = pins.digitalReadPin(DigitalPin.P13);
         return result;
     }
 
-    //% block="Read Ultrasonic Distance Sensor With Trig Pin At %pin1 And Echo Pin At %pin2"
+    //% block="read ultrasonic distance sensor with trig pin at %pin1 and echo pin at %pin2"
     //% subcategory="Others"
     export function hcsrRead(pin1: DigitalPin, pin2: DigitalPin): number {
         let trigpin = pin1
@@ -101,7 +101,7 @@ namespace PicoBricks {
         return cm
     }
 
-    //% block="Read Soil Sensor With Analog Pin At %pin1"
+    //% block="read soil sensor with analog pin at %pin1"
     //% subcategory="Others"
     export function soilRead(pin1: AnalogPin): number {
         let analogpin = pin1
@@ -109,7 +109,7 @@ namespace PicoBricks {
         return ADCVal / 1023.0
     }
 
-    //% block="Read Gas Sensor With Analog Pin At %pin1"
+    //% block="read gas sensor with analog pin at %pin1"
     //% subcategory="Others"
     export function mq2Read(pin1: AnalogPin): number {
         let analogpin = pin1
@@ -117,7 +117,7 @@ namespace PicoBricks {
         return value
     }
 
-    //% block="RFID UUID"
+    //% block="rfid uuid"
     //% subcategory="Others"
     export function rfidUUID(): string {
         pins.i2cWriteNumber(RFID_ADDR, RFID_UUID, NumberFormat.UInt8BE);
@@ -131,7 +131,7 @@ namespace PicoBricks {
         return uuidReverse.toHex();
     }
 
-    //% block="RFID Write sector|%sector block|%block text|%txt"
+    //% block="rfid write sector|%sector block|%block text|%txt"
     //% subcategory="Others"
     export function rfidWrite(sector: RfidSector, block: RfidBlock, txt: string): void {
         let buf = pins.createBuffer(19)
@@ -147,7 +147,7 @@ namespace PicoBricks {
         basic.pause(100)
     }
 
-    //% block="RFID Read sector|%sector block|%block"
+    //% block="rfid read sector|%sector block|%block"
     //% subcategory="Others"
     export function rfidRead(sector: RfidSector, block: RfidBlock): string {
         let retry: number = 5;
