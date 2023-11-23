@@ -188,6 +188,9 @@ namespace PicoBricks {
         };
     }
 
+    /**
+     * Connect IR receiver
+     */
     //% subcategory="IR Receiver"
     //% block="connect IR receiver at pin %pin"
     //% weight=90
@@ -213,6 +216,9 @@ namespace PicoBricks {
         }
     }
 
+    /**
+     * When the selected IR controller button is pressed
+     */
     //% subcategory="IR Receiver"
     //% blockId=IrButton
     //% block="on IR button | %button | %action"
@@ -230,6 +236,9 @@ namespace PicoBricks {
         }
     }
 
+    /**
+     * Value of the selected IR Controller button
+     */
     //% subcategory="IR Receiver"
     //% blockId=makerbit_infrared_ir_button_pressed
     //% block="IR button"
@@ -274,6 +283,9 @@ namespace PicoBricks {
             return "0"
     }
 
+    /**
+     * Returns the value (True or False) when any button on the IR remote control is pressed
+     */
     //% subcategory="IR Receiver"
     //% blockId=wasIrDataReceived
     //% block="IR data was received"
@@ -289,6 +301,9 @@ namespace PicoBricks {
         }
     }
 
+    /**
+     * Code of the selected IR controller button
+     */
     //% subcategory="IR Receiver"
     //% blockId=irButtonCode
     //% button.fieldEditor="gridpicker"
