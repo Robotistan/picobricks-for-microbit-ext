@@ -159,7 +159,7 @@ namespace PicoBricks {
 
         while (retry) {
             basic.pause(100);
-            let stat = i2cread(RFID_ADDR, RFID_STATUS);
+            let stat = i2cRead(RFID_ADDR, RFID_STATUS);
             if (stat == RfidStat.READ_SUCC) {
                 let ret = '';
                 pins.i2cWriteNumber(RFID_ADDR, RFID_READOUT, NumberFormat.UInt8BE);
