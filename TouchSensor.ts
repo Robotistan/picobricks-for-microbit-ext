@@ -341,7 +341,7 @@ namespace PicoBricks {
         control.waitMicros(200000);
     }
 
-    function ReadSensorStatus(): void {
+    function readSensorStatus(): void {
         let proximityCounter = 0;
         let proximityStatus = 0;
         let val = 0;
@@ -475,22 +475,22 @@ namespace PicoBricks {
         }
     }
 
-    //% blockId="TouchInit" block="Touch Sensor Init"
+    //% blockId="touchInit" block="touch sensor init"
     //% subcategory="Touch Sensor-Piano"
-    export function TouchInit(): void {
+    export function touchInit(): void {
         configureMB()
         
     }
     
-    //% blockId="PlayPiano" block="Play piano"
+    //% blockId="playPiano" block="play piano"
     //% subcategory="Touch Sensor-Piano"
-    export function Play(): void {
+    export function play(): void {
         ReadSensorStatus()
     }
 
-    //% block="Play %PianoKeyAddresses and %Notes"
+    //% block="play %PianoKeyAddresses and %Notes"
     //% subcategory="Touch Sensor-Piano"
-    export function User_Piano(button: PianoKeyAddresses, tone: Notes): void {
+    export function user_Piano(button: PianoKeyAddresses, tone: Notes): void {
         let val = 0;
 
         pins.i2cWriteNumber(CHIP_ADDRESS, PROX_STAT, NumberFormat.UInt8BE)
@@ -550,7 +550,7 @@ namespace PicoBricks {
         }
     }
 
-    //% block="Key %key|is pressed"
+    //% block="key %key|is pressed"
     //% subcategory="Touch Sensor-Piano"
     export function keyIsPressed(key: PianoKeyAddresses): boolean {
         let val = 0;
