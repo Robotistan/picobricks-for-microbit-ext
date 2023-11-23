@@ -70,7 +70,7 @@ namespace PicoBricks {
     /**
      * Initialize SHTC-3 temperature and humidity sensor.
      */
-    //% block="Temp & Hum Init"
+    //% block="initialize temperature & humidity sensor"
     //% subcategory="Temp & Hum"
     export function shtcInit(): void {
         pins.i2cWriteNumber(SHTC3_DEFAULT_ADDR, SHTC3_SOFTRESET, NumberFormat.UInt16BE, false)
