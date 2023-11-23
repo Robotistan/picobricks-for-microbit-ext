@@ -485,7 +485,7 @@ namespace PicoBricks {
     //% blockId="playPiano" block="play piano"
     //% subcategory="Touch Sensor-Piano"
     export function play(): void {
-        ReadSensorStatus()
+        readSensorStatus()
     }
 
     //% block="play %PianoKeyAddresses and %Notes"
