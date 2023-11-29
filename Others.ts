@@ -12,8 +12,7 @@ namespace PicoBricks {
     //% block="light sensor read"
     //% subcategory="Others"
     export function ldrRead(): number {
-        result = pins.analogReadPin(AnalogPin.P0);
-        return result;
+        return pins.analogReadPin(AnalogPin.P0);
     }
 
     /**
@@ -22,8 +21,7 @@ namespace PicoBricks {
     //% block="button read"
     //% subcategory="Others"
     export function buttonRead(): number {
-        result = pins.digitalReadPin(DigitalPin.P2);
-        return result;
+        return pins.digitalReadPin(DigitalPin.P2);
     }
 
     /**
@@ -41,8 +39,7 @@ namespace PicoBricks {
     //% block="pot read"
     //% subcategory="Others"
     export function potRead(): number {
-        result = pins.analogReadPin(AnalogPin.P1);
-        return result;
+        return pins.analogReadPin(AnalogPin.P1);
     }
 
     /**
@@ -51,8 +48,7 @@ namespace PicoBricks {
     //% block="motion sensor read"
     //% subcategory="Others"
     export function pirRead(): number {
-        result = pins.digitalReadPin(DigitalPin.P13);
-        return result;
+        return pins.digitalReadPin(DigitalPin.P13);
     }
 
     /**
