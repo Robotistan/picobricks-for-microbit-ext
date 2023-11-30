@@ -53,7 +53,8 @@ namespace PicoBricks {
 
     /**
      * Read ultrasonic distance sensor (HC-SR04) value (Integer) on selected trig and echo pin 
-     * @param pin1 describe parameter here, eg: DigitalPin.P5
+     * @param pin1 describe parameter here, eg: DigitalPin.P2
+     * @param pin2 describe parameter here, eg: DigitalPin.P1
      */
     //% block="read ultrasonic distance sensor with trig pin at %pin1 and echo pin at %pin2"
     //% subcategory="Others"
