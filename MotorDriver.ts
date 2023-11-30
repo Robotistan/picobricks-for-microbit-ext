@@ -1,18 +1,18 @@
-enum dc_motor_type {
+enum dcMotorType {
     DC1 = 1,
     DC2 = 2
 }
 
-enum servo_motor_type {
+enum servoMotorType {
     Servo1 = 3,
     Servo2 = 4,
     Servo3 = 5,
     Servo4 = 6
 }
 
-enum direction_type {
-    D0 = 0,
-    D1 = 1
+enum directionType {
+    Forward = 0,
+    Backward = 1
 }
 
 //% weight=10 color=#067565 block="PicoBricks" icon="\uf135"
