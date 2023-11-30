@@ -22,10 +22,10 @@ namespace PicoBricks {
     /**
      * It brings the selected servo motor to the set angle
      */
-    //% blockId="servomotor" block="servo motor %servo_motor_type and angle %angle"
+    //% blockId="servomotor" block="servo motor %servoMotorType and angle %angle"
     //% angle.min=0 angle.max=180
     //% subcategory="Motor Driver"
-    export function servomotor(Servo_type: servo_motor_type, angle: number): void {
+    export function servomotor(Servo_type: servoMotorType, angle: number): void {
         pins.i2cWriteNumber(MOTOR_DRIVER_ADDRESS, 0x26, NumberFormat.UInt8BE, false)
         pins.i2cWriteNumber(MOTOR_DRIVER_ADDRESS, Servo_type, NumberFormat.UInt8BE, false)
         pins.i2cWriteNumber(MOTOR_DRIVER_ADDRESS, 0x00, NumberFormat.UInt8BE, false)
@@ -37,10 +37,10 @@ namespace PicoBricks {
     /**
      * It runs the selected DC motor forward or reverse at the set speed and direction
      */
-    //% block="dc motor %dc_motor_type and speed %speed and direction %direction"
+    //% block="dc motor %dcMotorType and speed %speed and direction %direction"
     //% speed.min=0 speed.max=255
     //% subcategory="Motor Driver"
-    export function dcmotor(dc_type: dc_motor_type, speed: number, direction: direction_type): void {
+    export function dcmotor(dc_type: dcMotorType, speed: number, direction: directionType): void {
         pins.i2cWriteNumber(MOTOR_DRIVER_ADDRESS, 0x26, NumberFormat.UInt8BE, false)
         pins.i2cWriteNumber(MOTOR_DRIVER_ADDRESS, dc_type, NumberFormat.UInt8BE, false)
         pins.i2cWriteNumber(MOTOR_DRIVER_ADDRESS, speed, NumberFormat.UInt8BE, false)
@@ -48,5 +48,4 @@ namespace PicoBricks {
         let cs = dc_type ^ speed ^ direction
         pins.i2cWriteNumber(MOTOR_DRIVER_ADDRESS, cs, NumberFormat.UInt8BE, false)
     }
-
 }
