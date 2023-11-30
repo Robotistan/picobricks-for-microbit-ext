@@ -34,7 +34,6 @@ PicoBricks.onGesture(GESTURE_TYPE.Down, function () {
         . . # . .
         `)
 })
-PicoBricks.initOled(128, 64)
 PicoBricks.shtcInit()
 PicoBricks.initGesture(SENSORINIT.Gesture)
 basic.forever(function () {
