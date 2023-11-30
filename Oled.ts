@@ -254,35 +254,33 @@ namespace PicoBricks {
     }
 
     /**
-     * draw a horizontal line
+     * draw a horizontal line between 0 and 30
      * @param x is X alis, eg: 0
      * @param y is Y alis, eg: 0
      * @param len is the length of line, eg: 10
-     * @param color is line color, eg: 1
      */
-    //% blockId="OLED12864_I2C_HLINE" block="draw a horizontal line at x %x|y %y|number %len|color %color"
+    //% blockId="OLED12864_I2C_HLINE" block="draw a horizontal line at x %x|y %y|length %len"
     //% weight=71 blockGap=8
     //% parts=OLED12864_I2C trackArgs=0
     //% subcategory="OLED"
-    export function hline(x: number, y: number, len: number, color: number = 1) {
+    export function hline(x: number, y: number, len: number) {
         for (let i = x; i < (x + len); i++)
-            pixel(i, y, color)
+            pixel(i, y, 1)
     }
 
     /**
-     * draw a vertical line
+     * draw a vertical line between 0 and 30
      * @param x is X alis, eg: 0
      * @param y is Y alis, eg: 0
      * @param len is the length of line, eg: 10
-     * @param color is line color, eg: 1
      */
-    //% blockId="OLED12864_I2C_VLINE" block="draw a vertical line at x %x|y %y|number %len|color %color"
+    //% blockId="OLED12864_I2C_VLINE" block="draw a vertical line at x %x|y %y|length %len"
     //% weight=72 blockGap=8
     //% parts=OLED12864_I2C trackArgs=0
     //% subcategory="OLED"
-    export function vline(x: number, y: number, len: number, color: number = 1) {
+    export function vline(x: number, y: number, len: number) {
         for (let i = y; i < (y + len); i++)
-            pixel(x, i, color)
+            pixel(x, i, 1)
     }
 
     /**
