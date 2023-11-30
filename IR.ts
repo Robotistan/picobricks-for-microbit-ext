@@ -80,7 +80,7 @@ namespace PicoBricks {
             irButton: irButtonList,
             onEvent: () => void
         ) {
-            this.irButton = irButtonList;
+            this.irButton = irButton;
             this.onEvent = onEvent;
         }
     }
