@@ -51,7 +51,7 @@ const enum irButtonAction {
 }
 
 namespace PicoBricks {
-    let irState: IrState;
+    let irState: irState;
 
     const IR_REPEAT = 256;
     const IR_INCOMPLETE = 257;
@@ -68,8 +68,8 @@ namespace PicoBricks {
         loword: uint16;
         activeCommand: number;
         repeatTimeout: number;
-        onIrButtonPressed: IrButtonHandler[];
-        onIrButtonReleased: IrButtonHandler[];
+        onIrButtonPressed: irButtonHandler[];
+        onIrButtonReleased: irButtonHandler[];
         onIrDatagram: () => void;
     }
     class irButtonHandler {
@@ -155,12 +155,12 @@ namespace PicoBricks {
             const newCommand = irState.commandSectionBits >> 8;
             if (newCommand !== irState.activeCommand) {
                 if (irState.activeCommand >= 0) {
-                    const releasedHandler = irState.onIrButtonReleased.find(h => h.irButton === irState.activeCommand || IrButton.Any === h.irButton);
+                    const releasedHandler = irState.onIrButtonReleased.find(h => h.irButton === irState.activeCommand || irButton.Any === h.irButton);
                     if (releasedHandler) {
                         background.schedule(releasedHandler.onEvent, background.thread.UserCallback, background.irMode.Once, 0);
                     }
                 }
-                const pressedHandler = irState.onIrButtonPressed.find(h => h.irButton === newCommand || IrButton.Any === h.irButton);
+                const pressedHandler = irState.onIrButtonPressed.find(h => h.irButton === newCommand || irButton.Any === h.irButton);
                 if (pressedHandler) {
                     background.schedule(pressedHandler.onEvent, background.thread.UserCallback, background.irMode.Once, 0);
                 }
@@ -206,7 +206,7 @@ namespace PicoBricks {
         } else {
             const now = input.runningTime();
             if (now > irState.repeatTimeout) {
-                const handler = irState.onIrButtonReleased.find(h => h.irButton === irState.activeCommand || IrButton.Any === h.irButton);
+                const handler = irState.onIrButtonReleased.find(h => h.irButton === irState.activeCommand || irButton.Any === h.irButton);
                 if (handler) {
                     background.schedule(handler.onEvent, background.thread.UserCallback, background.irMode.Once, 0);
                 }
@@ -311,7 +311,7 @@ namespace PicoBricks {
     //% button.fieldOptions.tooltips="false"
     //% block="ir button code %button"
     //% weight=60
-    export function irButtonCode(button: IrButton): number {
+    export function irButtonCode(button: irButton): number {
         basic.pause(0); 
         return button as number;
     }
