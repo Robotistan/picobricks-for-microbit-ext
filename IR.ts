@@ -1,4 +1,4 @@
-const enum IrButton {
+const enum irButton {
     //% block="1"
     Number_1 = 162,
     //% block="2"
@@ -43,7 +43,7 @@ const enum IrButton {
     Any = -1,
 }
 
-const enum IrButtonAction {
+const enum irButtonAction {
     //% block="pressed"
     Pressed = 0,
     //% block="released"
@@ -59,7 +59,7 @@ namespace PicoBricks {
 
     const REPEAT_TIMEOUT_MS = 120;
 
-    interface IrState {
+    interface irState {
         hasNewDatagram: boolean;
         bitsReceived: uint8;
         addressSectionBits: uint16;
@@ -72,12 +72,12 @@ namespace PicoBricks {
         onIrButtonReleased: IrButtonHandler[];
         onIrDatagram: () => void;
     }
-    class IrButtonHandler {
-        irButton: IrButton;
+    class irButtonHandler {
+        irButton: irButton;
         onEvent: () => void;
 
         constructor(
-            irButton: IrButton,
+            irButton: irButton,
             onEvent: () => void
         ) {
             this.irButton = irButton;
@@ -150,19 +150,19 @@ namespace PicoBricks {
         if (irEvent === IR_DATAGRAM) {
             irState.hasNewDatagram = true;
             if (irState.onIrDatagram) {
-                background.schedule(irState.onIrDatagram, background.Thread.UserCallback, background.Mode.Once, 0);
+                background.schedule(irState.onIrDatagram, background.thread.UserCallback, background.irMode.Once, 0);
             }
             const newCommand = irState.commandSectionBits >> 8;
             if (newCommand !== irState.activeCommand) {
                 if (irState.activeCommand >= 0) {
                     const releasedHandler = irState.onIrButtonReleased.find(h => h.irButton === irState.activeCommand || IrButton.Any === h.irButton);
                     if (releasedHandler) {
-                        background.schedule(releasedHandler.onEvent, background.Thread.UserCallback, background.Mode.Once, 0);
+                        background.schedule(releasedHandler.onEvent, background.thread.UserCallback, background.irMode.Once, 0);
                     }
                 }
                 const pressedHandler = irState.onIrButtonPressed.find(h => h.irButton === newCommand || IrButton.Any === h.irButton);
                 if (pressedHandler) {
-                    background.schedule(pressedHandler.onEvent, background.Thread.UserCallback, background.Mode.Once, 0);
+                    background.schedule(pressedHandler.onEvent, background.thread.UserCallback, background.irMode.Once, 0);
                 }
                 irState.activeCommand = newCommand;
             }
@@ -198,7 +198,7 @@ namespace PicoBricks {
         initIrState();
 
         enableIrMarkSpaceDetection(pin);
-        background.schedule(notifyIrEvents, background.Thread.Priority, background.Mode.Repeat, REPEAT_TIMEOUT_MS);
+        background.schedule(notifyIrEvents, background.thread.Priority, background.irMode.Repeat, REPEAT_TIMEOUT_MS);
     }
 
     function notifyIrEvents() {
@@ -208,7 +208,7 @@ namespace PicoBricks {
             if (now > irState.repeatTimeout) {
                 const handler = irState.onIrButtonReleased.find(h => h.irButton === irState.activeCommand || IrButton.Any === h.irButton);
                 if (handler) {
-                    background.schedule(handler.onEvent, background.Thread.UserCallback, background.Mode.Once, 0);
+                    background.schedule(handler.onEvent, background.thread.UserCallback, background.irMode.Once, 0);
                 }
                 irState.bitsReceived = 0;
                 irState.activeCommand = -1;
@@ -220,19 +220,19 @@ namespace PicoBricks {
      * When the selected IR controller button is pressed
      */
     //% subcategory="IR Receiver"
-    //% blockId=IrButton
+    //% blockId=irButton
     //% block="on IR button | %button | %action"
     //% button.fieldEditor="gridpicker"
     //% button.fieldOptions.columns=3
     //% button.fieldOptions.tooltips="false"
     //% weight=80
-    export function onIrButton(button: IrButton, action: IrButtonAction, handler: () => void) {
+    export function onIrButton(button: irButton, action: irButtonAction, handler: () => void) {
         initIrState();
-        if (action === IrButtonAction.Pressed) {
-            irState.onIrButtonPressed.push(new IrButtonHandler(button, handler));
+        if (action === irButtonAction.Pressed) {
+            irState.onIrButtonPressed.push(new irButtonHandler(button, handler));
         }
         else {
-            irState.onIrButtonReleased.push(new IrButtonHandler(button, handler));
+            irState.onIrButtonReleased.push(new irButtonHandler(button, handler));
         }
     }
 
@@ -240,8 +240,8 @@ namespace PicoBricks {
      * Value of the selected IR Controller button
      */
     //% subcategory="IR Receiver"
-    //% blockId=makerbit_infrared_ir_button_pressed
-    //% block="IR button"
+    //% blockId=irButton
+    //% block="ir button"
     //% weight=50
     export function irButton(): string {
         basic.pause(0); 
@@ -288,7 +288,7 @@ namespace PicoBricks {
      */
     //% subcategory="IR Receiver"
     //% blockId=wasIrDataReceived
-    //% block="IR data was received"
+    //% block="ir data was received"
     //% weight=70
     export function wasIrDataReceived(): boolean {
         basic.pause(0); 
@@ -309,7 +309,7 @@ namespace PicoBricks {
     //% button.fieldEditor="gridpicker"
     //% button.fieldOptions.columns=3
     //% button.fieldOptions.tooltips="false"
-    //% block="IR button code %button"
+    //% block="ir button code %button"
     //% weight=60
     export function irButtonCode(button: IrButton): number {
         basic.pause(0); 
@@ -331,12 +331,12 @@ namespace PicoBricks {
     }
 
     export namespace background {
-        export enum Thread {
+        export enum thread {
             Priority = 0,
             UserCallback = 1,
         }
 
-        export enum Mode {
+        export enum irMode {
             Repeat,
             Once,
         }
@@ -345,17 +345,17 @@ namespace PicoBricks {
             _newJobs: Job[] = undefined;
             _jobsToRemove: number[] = undefined;
             _pause: number = 100;
-            _type: Thread;
+            _type: thread;
 
-            constructor(type: Thread) {
+            constructor(type: thread) {
                 this._type = type;
                 this._newJobs = [];
                 this._jobsToRemove = [];
                 control.runInParallel(() => this.loop());
             }
 
-            push(task: () => void, delay: number, mode: Mode): number {
-                if (delay > 0 && delay < this._pause && mode === Mode.Repeat) {
+            push(task: () => void, delay: number, mode: irMode): number {
+                if (delay > 0 && delay < this._pause && mode === irMode.Repeat) {
                     this._pause = Math.floor(delay);
                 }
                 const job = new Job(task, delay, mode);
@@ -391,7 +391,7 @@ namespace PicoBricks {
                         }
                     });
                     this._jobsToRemove = []
-                    if (this._type === Thread.Priority) {
+                    if (this._type === thread.Priority) {
                         for (let i = _jobs.length - 1; i >= 0; i--) {
                             if (_jobs[i].run(delta)) {
                                 this._jobsToRemove.push(_jobs[i].id)
@@ -414,9 +414,9 @@ namespace PicoBricks {
             func: () => void;
             delay: number;
             remaining: number;
-            mode: Mode;
+            mode: irMode;
 
-            constructor(func: () => void, delay: number, mode: Mode) {
+            constructor(func: () => void, delay: number, mode: irMode) {
                 this.id = randint(0, 2147483647)
                 this.func = func;
                 this.delay = delay;
@@ -435,11 +435,11 @@ namespace PicoBricks {
                 }
 
                 switch (this.mode) {
-                    case Mode.Once:
+                    case irMode.Once:
                         this.func();
                         basic.pause(0);
                         return true;
-                    case Mode.Repeat:
+                    case irMode.Repeat:
                         this.func();
                         this.remaining = this.delay;
                         basic.pause(0);
@@ -450,8 +450,8 @@ namespace PicoBricks {
 
         const queues: Executor[] = [];
 
-        export function schedule(func: () => void, type: Thread,
-            mode: Mode,
+        export function schedule(func: () => void, type: thread,
+            mode: irMode,
             delay: number,
         ): number {
             if (!func || delay < 0) return 0;
@@ -463,7 +463,7 @@ namespace PicoBricks {
             return queues[type].push(func, delay, mode);
         }
 
-        export function remove(type: Thread, jobId: number): void {
+        export function remove(type: thread, jobId: number): void {
             if (queues[type]) {
                 queues[type].cancel(jobId);
             }
