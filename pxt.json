@@ -1,6 +1,7 @@
 {
     "name": "PicoBricks",
     "description": "",
+    "license": "MIT",
     "dependencies": {
         "core": "*",
         "radio": "*",
