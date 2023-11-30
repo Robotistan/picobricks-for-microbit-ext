@@ -7,7 +7,7 @@ namespace PicoBricks {
     const TELEGRAM_API_URL = "api.telegram.org"
     const THINGSPEAK_API_URL = "api.thingspeak.com"
 
-    function Urlformat(url: string): string {
+    function urlformat(url: string): string {
         url = url.replaceAll("%", "%25")
         url = url.replaceAll(" ", "%20")
         url = url.replaceAll("!", "%21")
@@ -192,7 +192,7 @@ namespace PicoBricks {
         if (send("AT+CIPSTART=\"SSL\",\"" + TELEGRAM_API_URL + "\",443", "OK", 10000) == false) 
             return
 
-        let getdata = "GET /bot" + Urlformat(apiKey) + "/sendMessage?chat_id=" + Urlformat(chatId) + "&text=" + Urlformat(message)
+        let getdata = "GET /bot" + urlformat(apiKey) + "/sendMessage?chat_id=" + urlformat(chatId) + "&text=" + urlformat(message)
         getdata += " HTTP/1.1\r\n"
         getdata += "Host: " + TELEGRAM_API_URL + "\r\n"
 
