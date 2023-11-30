@@ -300,10 +300,10 @@ namespace PicoBricks {
             x1 = [x2, x2 = x1][0];
         if (y1 > y2)
             y1 = [y2, y2 = y1][0];
-        hline(x1, y1, x2 - x1 + 1, color)
-        hline(x1, y2, x2 - x1 + 1, color)
-        vline(x1, y1, y2 - y1 + 1, color)
-        vline(x2, y1, y2 - y1 + 1, color)
+        hline(x1, y1, x2 - x1 + 1)
+        hline(x1, y2, x2 - x1 + 1)
+        vline(x1, y1, y2 - y1 + 1)
+        vline(x2, y1, y2 - y1 + 1)
     }
 
     /**
