@@ -205,7 +205,7 @@ namespace PicoBricks {
     /**
      * Read the gesture sensor ID
      */
-    //% block="gesture sensor ID"
+    //% block="gesture sensor id"
     //% subcategory="Gesture"
     export function gestureId(): number {
         let chipid = i2cread(ADDR, APDS9960_ID);
