@@ -193,6 +193,7 @@ namespace PicoBricks {
      */
     //% subcategory="IR Receiver"
     //% block="connect IR receiver at pin %pin"
+    * @param pin describe parameter here, eg: AnalogPin.P15
     //% weight=90
     export function connectIrReceiver(pin: DigitalPin): void {
         initIrState();
