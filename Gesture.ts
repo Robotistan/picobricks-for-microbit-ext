@@ -270,7 +270,7 @@ namespace PicoBricks {
     //% block="gesture sensor red color value"
     //% subcategory="Gesture"
     export function readRedColor(): number {
-        if (!(currentMode == sensorinit.Color)) {
+        if (!(currentMode == sensorinit.color)) {
             return 0
         }
         let tmp = i2cread(ADDR, APDS9960_STATUS) & 0x1;
@@ -802,7 +802,7 @@ namespace PicoBricks {
             return motion;
         }
         read(): number {
-            if (!(currentMode == sensorinit.Gesture)) {
+            if (!(currentMode == sensorinit.gesture)) {
                 return 0
             }
             let result = gestureType.none;
