@@ -431,7 +431,7 @@ namespace PicoBricks {
 
     /**
      * Select number of pin and number of LEDs
-     * @param pin1 describe parameter here, eg: DigitalPin.P8
+     * @param pin describe parameter here, eg: DigitalPin.P8
      */
     //% blockId="create" block="rgb at pin %pin|with %numleds|leds as %mode"
     //% weight=90 blockGap=8
