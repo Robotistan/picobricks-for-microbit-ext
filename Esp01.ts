@@ -1,4 +1,4 @@
-namespace PicoBricks {
+namespace picobricks {
     let rxData = ""
     let espinit = false
     let telegramMessageSent = false
