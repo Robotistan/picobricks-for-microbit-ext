@@ -98,7 +98,7 @@ namespace PicoBricks {
             const saturation = 100;
             const luminance = 50;
             const steps = this._length;
-            const direction = HueInterpolationDirection.Clockwise;
+            const direction = hueInterpolationDirection.Clockwise;
 
             //hue
             const h1 = startHue;
@@ -108,9 +108,9 @@ namespace PicoBricks {
             const hDistCCW = ((h1 + 360) - h2) % 360;
             const hStepCCW = Math.idiv(-(hDistCCW * 100), steps);
             let hStep: number;
-            if (direction === HueInterpolationDirection.Clockwise) {
+            if (direction === hueInterpolationDirection.Clockwise) {
                 hStep = hStepCW;
-            } else if (direction === HueInterpolationDirection.CounterClockwise) {
+            } else if (direction === hueInterpolationDirection.CounterClockwise) {
                 hStep = hStepCCW;
             } else {
                 hStep = hDistCW < hDistCCW ? hStepCW : hStepCCW;
@@ -431,6 +431,7 @@ namespace PicoBricks {
 
     /**
      * Select number of pin and number of LEDs
+     * @param pin1 describe parameter here, eg: DigitalPin.P8
      */
     //% blockId="create" block="rgb at pin %pin|with %numleds|leds as %mode"
     //% weight=90 blockGap=8
@@ -528,7 +529,7 @@ namespace PicoBricks {
         return packRGB(r, g, b);
     }
 
-    export enum HueInterpolationDirection {
+    export enum hueInterpolationDirection {
         Clockwise,
         CounterClockwise,
         Shortest
