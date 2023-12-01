@@ -227,8 +227,8 @@ namespace picobricks {
         //% parts="rgb"
         //% subcategory="RGB Leds"
         clear(): void {
-            const stride = 3;
-            this.buf.fill(0, this.start * stride, this._length * stride);
+            this.setAllRGB(0x000000);
+            this.show();
         }
 
         //% blockId="rgb_length" block="%strip|length" blockGap=8
