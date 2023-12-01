@@ -50,7 +50,7 @@ const enum irButtonAction {
     Released = 1,
 }
 
-namespace PicoBricks {
+namespace picobricks {
     let irState: irState;
 
     const IR_REPEAT = 256;
