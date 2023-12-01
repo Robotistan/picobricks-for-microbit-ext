@@ -8,7 +8,6 @@
     },
     "files": [
         "main.blocks",
-        "main.ts",
         "README.md",
         "RGB-WS2812B.ts",
         "Gesture.ts",
