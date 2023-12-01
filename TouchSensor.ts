@@ -564,7 +564,7 @@ namespace PicoBricks {
      */
     //% block="key %key|is pressed"
     //% subcategory="Touch Sensor-Piano"
-    export function keyIsPressed(key: PianoKeyAddresses): boolean {
+    export function keyIsPressed(key: pianoKeyAddresses): boolean {
         let val = 0;
 
         pins.i2cWriteNumber(CHIP_ADDRESS, PROX_STAT, NumberFormat.UInt8BE)
