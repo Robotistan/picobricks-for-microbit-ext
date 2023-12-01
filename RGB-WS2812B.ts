@@ -193,18 +193,6 @@ namespace picobricks {
             this.setPixelColor(i, rgb);
         }
 
-         /**
-         * For rgbs with RGB LEDs, set the white LED brightness
-         */
-        //% blockId="rgb_set_pixel_white" block="%strip|set pixel white LED at %pixeloffset|to %white"
-        //% strip.defl=strip
-        //% blockGap=8
-        //% weight=80
-        //% parts="rgb"
-        //% subcategory="RGB Leds"
-        setPixelWhiteLED(pixeloffset: number, white: number): void {
-        }
-
         /**
          * Send all the changes to the stript
          */
