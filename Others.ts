@@ -1,4 +1,4 @@
-namespace PicoBricks {
+namespace picobricks {
     let result = 0;
 
     export enum set_relay {
