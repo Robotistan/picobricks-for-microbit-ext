@@ -16,7 +16,7 @@ enum directionType {
 }
 
 //% weight=10 color=#067565 block="PicoBricks" icon="\uf135"
-namespace PicoBricks {
+namespace picobricks {
     const MOTOR_DRIVER_ADDRESS = 0x22;
 
     /**
