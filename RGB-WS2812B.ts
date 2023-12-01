@@ -21,7 +21,7 @@ enum rgbColors {
     Black = 0x000000
 }
 
-namespace PicoBricks {
+namespace picobricks {
     export class Strip {
         buf: Buffer;
         pin: DigitalPin;
