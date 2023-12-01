@@ -148,7 +148,7 @@ namespace picobricks {
         }
 
         /**
-         * Set LED to a given color (0-255 R,G,B) You need to call “show” to make the changes visible
+         * Set LED to a given color (First LED is 0)
          */
         //% blockId="rgb_set_pixel_color" block="%strip|set pixel color at %pixeloffset|to %rgb=rgb_colors"
         //% strip.defl=strip
@@ -158,6 +158,7 @@ namespace picobricks {
         //% subcategory="RGB Leds"
         setPixelColor(pixeloffset: number, rgb: number): void {
             this.setPixelRGB(pixeloffset >> 0, rgb >> 0);
+            this.show();
         }
 
         /**
