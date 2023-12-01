@@ -9,7 +9,7 @@ namespace PicoBricks {
      /**
      * Read light sensor value (Integer)
      */
-    //% block="light sensor read"
+    //% block="light sensor value"
     //% subcategory="Others"
     export function ldrRead(): number {
         return pins.analogReadPin(AnalogPin.P0);
@@ -18,7 +18,7 @@ namespace PicoBricks {
     /**
      * Read the button value (1-0)
      */
-    //% block="button read"
+    //% block="button state"
     //% subcategory="Others"
     export function buttonRead(): number {
         return pins.digitalReadPin(DigitalPin.P2);
@@ -36,7 +36,7 @@ namespace PicoBricks {
     /**
      * Read potentiometer value (Integer)
      */
-    //% block="pot read"
+    //% block="pot value"
     //% subcategory="Others"
     export function potRead(): number {
         return pins.analogReadPin(AnalogPin.P1);
@@ -45,7 +45,7 @@ namespace PicoBricks {
     /**
      * Read motion sensor value (Integer)
      */
-    //% block="motion sensor read"
+    //% block="motion sensor state"
     //% subcategory="Others"
     export function pirRead(): number {
         return pins.digitalReadPin(DigitalPin.P13);
@@ -56,7 +56,7 @@ namespace PicoBricks {
      * @param pin1 describe parameter here, eg: DigitalPin.P2
      * @param pin2 describe parameter here, eg: DigitalPin.P1
      */
-    //% block="read ultrasonic distance sensor with trig pin at %pin1 and echo pin at %pin2"
+    //% block="ultrasonic distance sensor value with trig pin at %pin1 and echo pin at %pin2"
     //% subcategory="Others"
     export function hcsrRead(pin1: DigitalPin, pin2: DigitalPin): number {
         let trigpin = pin1
@@ -78,7 +78,7 @@ namespace PicoBricks {
     /**
      * Read soil sensor value (Integer) on selected analog pin
      */
-    //% block="read soil sensor with analog pin at %pin1"
+    //% block="soil sensor value with analog pin at %pin1"
     //% subcategory="Others"
     export function soilRead(pin1: AnalogPin): number {
         let analogpin = pin1
@@ -89,7 +89,7 @@ namespace PicoBricks {
     /**
      * Read gas sensor  value (Integer) on selected analog pin (Integer)
      */
-    //% block="read gas sensor with analog pin at %pin1"
+    //% block="gas sensor value with analog pin at %pin1"
     //% subcategory="Others"
     export function mq2Read(pin1: AnalogPin): number {
         let analogpin = pin1
