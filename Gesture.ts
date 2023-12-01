@@ -23,7 +23,7 @@ enum gestureType {
     down = 4,
 }
 
-namespace PicoBricks {
+namespace picobricks {
     const ADDR = 0x39
     const APDS9960_RAM = 0x00
     const APDS9960_ENABLE = 0x80
