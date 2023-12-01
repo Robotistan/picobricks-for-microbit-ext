@@ -1,4 +1,4 @@
-namespace PicoBricks {
+namespace picobricks {
     const SHTC3_DEFAULT_ADDR = 0x70;
     const SHTC3_NORMAL_MEAS_TFIRST_STRETCH = 0x7CA2;
     const SHTC3_LOWPOW_MEAS_TFIRST_STRETCH = 0x6458; 
