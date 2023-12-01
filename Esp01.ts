@@ -117,8 +117,8 @@ namespace picobricks {
 
     /**
      * Initialize Wi-Fi Module
-     * @param tx describe parameter here, eg: DigitalPin.P14
-     * @param rx describe parameter here, eg: DigitalPin.P15
+     * @param tx describe parameter here, eg: SerialPin.P14
+     * @param rx describe parameter here, eg: SerialPin.P15
      */
     //% weight=70
     //% blockId=esp01init
