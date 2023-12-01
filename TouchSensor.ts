@@ -1,25 +1,25 @@
-enum Notes {
-    Low_Do = 131,
-    Low_Re = 147,
-    Low_Mi = 165,
-    Low_Fa = 175,
-    Low_Sol = 196,
-    Low_La = 220,
-    Low_Si = 247,
-    Middle_Do = 262,
-    Middle_Re = 294,
-    Middle_Mi = 330,
-    Middle_Fa = 349,
-    Middle_Sol = 392,
-    Middle_La = 440,
-    Middle_Si = 494,
-    High_Do = 523,
-    High_Re = 587,
-    High_Mi = 659,
-    High_Fa = 698,
-    High_Sol = 784,
-    High_La = 880,
-    High_Si = 988
+enum notes {
+    lowDo = 131,
+    lowRe = 147,
+    lowMi = 165,
+    lowFa = 175,
+    lowSol = 196,
+    lowLa = 220,
+    lowSi = 247,
+    middleDo = 262,
+    middleRe = 294,
+    middleMi = 330,
+    middleFa = 349,
+    middleSol = 392,
+    middleLa = 440,
+    middleSi = 494,
+    highDo = 523,
+    highRe = 587,
+    highMi = 659,
+    highFa = 698,
+    highSol = 784,
+    highLa = 880,
+    highSi = 988
 }
 
 namespace PicoBricks {
@@ -137,7 +137,7 @@ namespace PicoBricks {
     let noteDuration = 0;
 
     function configureMB(): void {
-       // pins.i2cWriteNumber(CHIP_ADDRESS, 0x8F, NumberFormat.UInt8BE, false)
+        //pins.i2cWriteNumber(CHIP_ADDRESS, 0x8F, NumberFormat.UInt8BE, false)
         //let val = pins.i2cReadNumber(CHIP_ADDRESS, NumberFormat.UInt8BE)
         //control.waitMicros(2000);
         // WAKE UP
@@ -497,9 +497,9 @@ namespace PicoBricks {
     /**
      * Play the selected note when the selected button is pressed
      */
-    //% block="play %PianoKeyAddresses and %Notes"
+    //% block="play %pianoKeyAddresses and %notes"
     //% subcategory="Touch Sensor-Piano"
-    export function user_Piano(button: PianoKeyAddresses, tone: Notes): void {
+    export function userPiano(button: pianoKeyAddresses, tone: notes): void {
         let val = 0;
 
         pins.i2cWriteNumber(CHIP_ADDRESS, PROX_STAT, NumberFormat.UInt8BE)
@@ -622,10 +622,10 @@ namespace PicoBricks {
 
         return false;
     }
-    export enum PianoKeyAddresses {
-        //% block="Touch_A"
+    export enum pianoKeyAddresses {
+        //% block="X"
         Touch_A = 1,
-        //% block="Touch_B"
+        //% block="Y"
         Touch_B = 2,
         //% block="Up"
         Up = 3,
