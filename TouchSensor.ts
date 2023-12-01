@@ -22,7 +22,7 @@ enum notes {
     highSi = 988
 }
 
-namespace PicoBricks {
+namespace picobricks {
     const CHIP_ADDRESS = 0x37;
     const PROX_STAT = 0xAE;
     const CTRL_CMD = 0x86;
