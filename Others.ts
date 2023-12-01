@@ -43,7 +43,7 @@ namespace picobricks {
     }
 
     /**
-     * Read motion sensor value (Integer)
+     * Read motion sensor value (1-0)
      */
     //% block="motion sensor state"
     //% subcategory="Others"
