@@ -16,7 +16,7 @@ namespace picobricks {
     }
 
     /**
-     * Read the button value (1-0)
+     * Read the button state (1-0)
      */
     //% block="button state"
     //% subcategory="Others"
