@@ -9,7 +9,7 @@ Picobricks for Micro:Bit teaches kids and adults coding, electronics basics and 
 * Micro:Bit Brick : It is a module that will enable Micro:Bit to connect to Picobricks more easily.
 * Oled Screen Brick ([source](https://github.com/makecode-extensions/OLED12864_I2C)) : This is the area where you will show the degrees you measured in Picobircks for Micro:Bit.
 * RGB LED Brick ([source](https://github.com/microsoft/pxt-neopixel)) : This bricks will allow you to turn routine notifications into a colorful show instead of receiving them in a boring way.
-* Action Brick : This module is your ticket to transforming mundane routines into an extraordinary experience.
+* Gesture Brick : This module is your ticket to transforming mundane routines into an extraordinary experience.
 * PIR Brick (IR Motion Brick) : This sensor aims to add some excitement to every moment, instead of boring routine motion detection.
 * Relay Brick : This brick puts control of electrical devices in your hands and makes your life more comfortable.
 * Motor Driver Brick : This birck allows to control 2 DC and 4 Servo motors at the same time.
