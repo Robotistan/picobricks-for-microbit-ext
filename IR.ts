@@ -190,7 +190,7 @@ namespace picobricks {
 
     /**
      * Connect IR receiver
-     * @param pin describe parameter here, eg: AnalogPin.P15
+     * @param pin describe parameter here, eg: DigitalPin.P15
      */
     //% subcategory="IR Receiver"
     //% block="connect IR receiver at pin %pin"
