@@ -15,8 +15,8 @@ Picobricks for Micro:Bit teaches kids and adults coding, electronics basics and 
 * Motor Driver Brick : This birck allows to control 2 DC and 4 Servo motors at the same time.
 * Wireless Brick ([source](https://github.com/cytrontechnologies/pxt-esp8266)) : This brick allows you to push the boundaries of the entertainment world with wifi.
 * Temperature And Humidity Brick : This brick is designed to measure and monitor temprature and humidity levels.
-* LDR Module (Light Sensor) : This brick allows you to make projects by detecting the level of light around you.
-* Button And Potentiometer Module : This brick aloows control of button and potentiometer.  
+* LDR (Light Sensor) Brick : This brick allows you to make projects by detecting the level of light around you.
+* Button And Potentiometer Brick : This brick aloows control of button and potentiometer.  
 
 ## Examples
 
