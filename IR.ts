@@ -243,7 +243,7 @@ namespace picobricks {
     //% subcategory="IR Receiver"
     //% blockId=irButton
     //% block="ir button"
-    //% weight=50
+    //% weight=20
     export function irButton(): string {
         basic.pause(0); 
         if ((irState.commandSectionBits >> 8) == 162)
