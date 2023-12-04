@@ -28,7 +28,7 @@ basic.forever(function () {
     strip.showColor(picobricks.colors(rgbColors.Red))
 ```
 
-Read color and scroll on the micro:bit screen.
+Read color and scroll on the Micro:Bit screen.
 
 ```blocks
 picobricks.initGesture(sensorinit.color)
@@ -37,7 +37,7 @@ basic.forever(function () {
 })
 ```
 
-Scroll button state on the micro:bit screen. (0 or 1)
+Scroll button state on the Micro:Bit screen. (0 or 1)
 
 ```blocks
 basic.forever(function () {
@@ -62,7 +62,7 @@ basic.forever(function () {
 })
 ```
 
-Draw smile icon on micro:bit when the selected IR controller button is pressed.
+Draw smile icon on Micro:Bit when the selected IR controller button is pressed.
 
 ```blocks
 picobricks.onIrButton(irButtonList.Number_1, irButtonAction.Pressed, function () {
@@ -71,7 +71,7 @@ picobricks.onIrButton(irButtonList.Number_1, irButtonAction.Pressed, function ()
 picobricks.connectIrReceiver(DigitalPin.P15)
 ```
 
-Scroll temperature value on the micro:bit screen.
+Scroll temperature value on the Micro:Bit screen.
 
 ```blocks
 picobricks.shtcInit()
