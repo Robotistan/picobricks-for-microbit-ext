@@ -20,61 +20,79 @@ Picobricks for Micro:Bit teaches kids and adults coding, electronics basics and 
 
 ## Examples
 
-In this example, you can use and control action brick, oled brick, temperature - humidity brick and LDR brick. Micro:bit screen will show way of gesture and oled bricks will show temperature, humidity and light value every 5 seconds.
+Show red color all rgb leds.
 
 ```blocks
-PicoBricks.onGesture(GESTURE_TYPE.Left, function () {
-    basic.showLeds(`
-        . . # . .
-        . # . . .
-        # # # # #
-        . # . . .
-        . . # . .
-        `)
-})
-PicoBricks.onGesture(GESTURE_TYPE.Up, function () {
-    basic.showLeds(`
-        . . # . .
-        . # # # .
-        # . # . #
-        . . # . .
-        . . # . .
-        `)
-})
-PicoBricks.onGesture(GESTURE_TYPE.Right, function () {
-    basic.showLeds(`
-        . . # . .
-        . . . # .
-        # # # # #
-        . . . # .
-        . . # . .
-        `)
-})
-PicoBricks.onGesture(GESTURE_TYPE.Down, function () {
-    basic.showLeds(`
-        . . # . .
-        . . # . .
-        # . # . #
-        . # # # .
-        . . # . .
-        `)
-})
-PicoBricks.initOled(128, 64)
-PicoBricks.shtcInit()
-PicoBricks.initGesture(SENSORINIT.Gesture)
+let strip = picobricks.create(DigitalPin.P8, 3)
 basic.forever(function () {
-    PicoBricks.clear()
-    basic.pause(5000)
-    PicoBricks.writeStringNewLine("Temprature")
-    PicoBricks.writeNumNewLine(PicoBricks.temperature())
-    PicoBricks.writeStringNewLine("Humidity")
-    PicoBricks.writeNumNewLine(PicoBricks.humidity())
-    PicoBricks.writeStringNewLine("Light Sensor")
-    PicoBricks.writeNumNewLine(PicoBricks.ldrRead())
-    basic.pause(5000)
+    strip.showColor(picobricks.colors(rgbColors.Red))
+```
+
+Read color and scroll on the micro:bit screen.
+
+```blocks
+picobricks.initGesture(sensorinit.color)
+basic.forever(function () {
+    basic.showString(picobricks.readColor())
 })
 ```
 
+Scroll button state on the micro:bit screen. (0 or 1)
+
+```blocks
+basic.forever(function () {
+    basic.showNumber(picobricks.buttonRead())
+})
+```
+
+Set 90 degree angle to servo 1 motor.
+
+```blocks
+basic.forever(function () {
+    picobricks.servomotor(servoMotorType.Servo1, 90)
+})
+```
+
+Play piano.
+
+```blocks
+picobricks.touchInit()
+basic.forever(function () {
+    picobricks.play()
+})
+```
+
+Draw smile icon on micro:bit when the selected IR controller button is pressed.
+
+```blocks
+picobricks.onIrButton(irButtonList.Number_1, irButtonAction.Pressed, function () {
+    basic.showIcon(IconNames.Heart)
+})
+picobricks.connectIrReceiver(DigitalPin.P15)
+```
+
+Scroll temperature value on the micro:bit screen.
+
+```blocks
+picobricks.shtcInit()
+basic.forever(function () {
+    basic.showNumber(picobricks.temperature())
+})
+```
+
+Show text on OLED.
+
+```blocks
+picobricks.init(60)
+basic.forever(function () {
+    picobricks.showString(
+    0,
+    0,
+    "Hello!",
+    1
+    )
+})
+```
 
 ## Meta
 
