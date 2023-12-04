@@ -241,10 +241,10 @@ namespace picobricks {
      * Value of the selected IR Controller button
      */
     //% subcategory="IR Receiver"
-    //% blockId=irButton
-    //% block="ir button"
+    //% blockId=selectIrButton
+    //% block="select ir button"
     //% weight=20
-    export function irButton(): string {
+    export function selectIrButton(): string {
         basic.pause(0); 
         if ((irState.commandSectionBits >> 8) == 162)
             return "1"
