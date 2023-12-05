@@ -1,6 +1,6 @@
 {
     "name": "PicoBricks",
-    "description": "",
+    "description": "PicoBricks for Micro:Bit",
     "license": "MIT",
     "dependencies": {
         "core": "*",
