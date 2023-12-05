@@ -18,7 +18,6 @@
         "IR.ts",
         "TempAndHum.ts",
         "Oled.ts",
-        "main.py"
     ],
     "testFiles": [
         "test.ts"
