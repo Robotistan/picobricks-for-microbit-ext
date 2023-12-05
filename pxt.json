@@ -1,6 +1,7 @@
 {
     "name": "PicoBricks",
     "description": "",
+    "license": "MIT",
     "dependencies": {
         "core": "*",
         "ws2812b": "github:microsoft/pxt-ws2812b#v0.1.2"
