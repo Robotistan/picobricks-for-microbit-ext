@@ -17,7 +17,7 @@
         "Esp01.ts",
         "IR.ts",
         "TempAndHum.ts",
-        "Oled.ts",
+        "Oled.ts"
     ],
     "testFiles": [
         "test.ts"
