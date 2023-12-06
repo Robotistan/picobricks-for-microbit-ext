@@ -38,14 +38,15 @@ namespace picobricks {
      * It runs the selected DC motor forward or reverse at the set speed and direction
      */
     //% block="dc motor %dcMotorType and speed %speed and direction %direction"
-    //% speed.min=0 speed.max=255
+    //% speed.min=0 speed.max=100
     //% subcategory="Motor Driver"
     export function dcmotor(dc_type: dcMotorType, speed: number, direction: directionType): void {
+        let mspeed = Math.map(speed,0,100,0,255)
         pins.i2cWriteNumber(MOTOR_DRIVER_ADDRESS, 0x26, NumberFormat.UInt8BE, false)
         pins.i2cWriteNumber(MOTOR_DRIVER_ADDRESS, dc_type, NumberFormat.UInt8BE, false)
-        pins.i2cWriteNumber(MOTOR_DRIVER_ADDRESS, speed, NumberFormat.UInt8BE, false)
+        pins.i2cWriteNumber(MOTOR_DRIVER_ADDRESS, mspeed, NumberFormat.UInt8BE, false)
         pins.i2cWriteNumber(MOTOR_DRIVER_ADDRESS, direction, NumberFormat.UInt8BE, false)
-        let cs = dc_type ^ speed ^ direction
+        let cs = dc_type ^ mspeed ^ direction
         pins.i2cWriteNumber(MOTOR_DRIVER_ADDRESS, cs, NumberFormat.UInt8BE, false)
     }
 }
