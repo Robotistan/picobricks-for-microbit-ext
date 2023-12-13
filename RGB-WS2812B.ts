@@ -49,7 +49,7 @@ namespace picobricks {
          * Displays a vertical bar graph based on the “value” and “high” value. İf “high” is 0,the chart gets adjusted automatically
          */
         //% weight=84
-        //% blockId=rgb_show_bar_graph block="%strip|show bar graph of %value|up to %high"
+        //% blockId=showBarGraph block="%strip|show bar graph of %value|up to %high"
         //% strip.defl=strip
         //% icon="\uf080"
         //% parts="rgb"
@@ -85,7 +85,7 @@ namespace picobricks {
         /**
          * Shows a rainbow pattern on all LEDs
          */
-        //% blockId="rgb_set_strip_rainbow" block="%strip|show rainbow from %startHue|to %endHue"
+        //% blockId="showRainbow" block="%strip|show rainbow from %startHue|to %endHue"
         //% strip.defl=strip
         //% weight=85 blockGap=8
         //% parts="rgb"
@@ -150,7 +150,7 @@ namespace picobricks {
         /**
          * Set LED to a given color (First LED is 0)
          */
-        //% blockId="rgb_set_pixel_color" block="%strip|set pixel color at %pixeloffset|to %rgb=rgb_colors"
+        //% blockId="setPixelColor" block="%strip|set pixel color at %pixeloffset|to %rgb=rgb_colors"
         //% strip.defl=strip
         //% blockGap=8
         //% weight=80
@@ -164,7 +164,7 @@ namespace picobricks {
         /**
          * Sets the number of pixels in a matrix shaped strip
          */
-        //% blockId=rgb_set_matrix_width block="%strip|set matrix width %width"
+        //% blockId=setMatrixWidth block="%strip|set matrix width %width"
         //% strip.defl=strip
         //% blockGap=8
         //% weight=5
