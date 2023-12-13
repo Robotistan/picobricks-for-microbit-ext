@@ -39,7 +39,7 @@ basic.forever(function () {
 })
 
 //show text on OLED
-picobricks.init(60)
+picobricks.oledinit(60)
 basic.forever(function () {
     picobricks.showString(
     0,
