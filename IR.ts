@@ -1,4 +1,4 @@
-const enum irButtonList {
+const enum IrButton {
     //% block="1"
     Number_1 = 162,
     //% block="2"
@@ -43,15 +43,15 @@ const enum irButtonList {
     Any = -1,
 }
 
-const enum irButtonAction {
+const enum IrButtonAction {
     //% block="pressed"
     Pressed = 0,
     //% block="released"
     Released = 1,
 }
 
-namespace picobricks {
-    let irState: irState;
+namespace PicoBricks {
+    let irState: IrState;
 
     const IR_REPEAT = 256;
     const IR_INCOMPLETE = 257;
@@ -59,7 +59,7 @@ namespace picobricks {
 
     const REPEAT_TIMEOUT_MS = 120;
 
-    interface irState {
+    interface IrState {
         hasNewDatagram: boolean;
         bitsReceived: uint8;
         addressSectionBits: uint16;
@@ -68,16 +68,16 @@ namespace picobricks {
         loword: uint16;
         activeCommand: number;
         repeatTimeout: number;
-        onIrButtonPressed: irButtonHandler[];
-        onIrButtonReleased: irButtonHandler[];
+        onIrButtonPressed: IrButtonHandler[];
+        onIrButtonReleased: IrButtonHandler[];
         onIrDatagram: () => void;
     }
-    class irButtonHandler {
-        irButton: irButtonList;
+    class IrButtonHandler {
+        irButton: IrButton;
         onEvent: () => void;
 
         constructor(
-            irButton: irButtonList,
+            irButton: IrButton,
             onEvent: () => void
         ) {
             this.irButton = irButton;
@@ -150,19 +150,19 @@ namespace picobricks {
         if (irEvent === IR_DATAGRAM) {
             irState.hasNewDatagram = true;
             if (irState.onIrDatagram) {
-                background.schedule(irState.onIrDatagram, background.thread.UserCallback, background.irMode.Once, 0);
+                background.schedule(irState.onIrDatagram, background.Thread.UserCallback, background.Mode.Once, 0);
             }
             const newCommand = irState.commandSectionBits >> 8;
             if (newCommand !== irState.activeCommand) {
                 if (irState.activeCommand >= 0) {
-                    const releasedHandler = irState.onIrButtonReleased.find(h => h.irButton === irState.activeCommand || irButtonList.Any === h.irButton);
+                    const releasedHandler = irState.onIrButtonReleased.find(h => h.irButton === irState.activeCommand || IrButton.Any === h.irButton);
                     if (releasedHandler) {
-                        background.schedule(releasedHandler.onEvent, background.thread.UserCallback, background.irMode.Once, 0);
+                        background.schedule(releasedHandler.onEvent, background.Thread.UserCallback, background.Mode.Once, 0);
                     }
                 }
-                const pressedHandler = irState.onIrButtonPressed.find(h => h.irButton === newCommand || irButtonList.Any === h.irButton);
+                const pressedHandler = irState.onIrButtonPressed.find(h => h.irButton === newCommand || IrButton.Any === h.irButton);
                 if (pressedHandler) {
-                    background.schedule(pressedHandler.onEvent, background.thread.UserCallback, background.irMode.Once, 0);
+                    background.schedule(pressedHandler.onEvent, background.Thread.UserCallback, background.Mode.Once, 0);
                 }
                 irState.activeCommand = newCommand;
             }
@@ -190,17 +190,15 @@ namespace picobricks {
 
     /**
      * Connect IR receiver
-     * @param pin describe parameter here, eg: DigitalPin.P15
      */
     //% subcategory="IR Receiver"
-    //% blockId=connectIrReceiver
     //% block="connect IR receiver at pin %pin"
     //% weight=90
     export function connectIrReceiver(pin: DigitalPin): void {
         initIrState();
 
         enableIrMarkSpaceDetection(pin);
-        background.schedule(notifyIrEvents, background.thread.Priority, background.irMode.Repeat, REPEAT_TIMEOUT_MS);
+        background.schedule(notifyIrEvents, background.Thread.Priority, background.Mode.Repeat, REPEAT_TIMEOUT_MS);
     }
 
     function notifyIrEvents() {
@@ -208,9 +206,9 @@ namespace picobricks {
         } else {
             const now = input.runningTime();
             if (now > irState.repeatTimeout) {
-                const handler = irState.onIrButtonReleased.find(h => h.irButton === irState.activeCommand || irButtonList.Any === h.irButton);
+                const handler = irState.onIrButtonReleased.find(h => h.irButton === irState.activeCommand || IrButton.Any === h.irButton);
                 if (handler) {
-                    background.schedule(handler.onEvent, background.thread.UserCallback, background.irMode.Once, 0);
+                    background.schedule(handler.onEvent, background.Thread.UserCallback, background.Mode.Once, 0);
                 }
                 irState.bitsReceived = 0;
                 irState.activeCommand = -1;
@@ -222,19 +220,19 @@ namespace picobricks {
      * When the selected IR controller button is pressed
      */
     //% subcategory="IR Receiver"
-    //% blockId=onIrButton
+    //% blockId=IrButton
     //% block="on IR button | %button | %action"
     //% button.fieldEditor="gridpicker"
     //% button.fieldOptions.columns=3
     //% button.fieldOptions.tooltips="false"
     //% weight=80
-    export function onIrButton(button: irButtonList, action: irButtonAction, handler: () => void) {
+    export function onIrButton(button: IrButton, action: IrButtonAction, handler: () => void) {
         initIrState();
-        if (action === irButtonAction.Pressed) {
-            irState.onIrButtonPressed.push(new irButtonHandler(button, handler));
+        if (action === IrButtonAction.Pressed) {
+            irState.onIrButtonPressed.push(new IrButtonHandler(button, handler));
         }
         else {
-            irState.onIrButtonReleased.push(new irButtonHandler(button, handler));
+            irState.onIrButtonReleased.push(new IrButtonHandler(button, handler));
         }
     }
 
@@ -242,10 +240,10 @@ namespace picobricks {
      * Value of the selected IR Controller button
      */
     //% subcategory="IR Receiver"
-    //% blockId=selectIrButton
-    //% block="select ir button"
-    //% weight=20
-    export function selectIrButton(): string {
+    //% blockId=makerbit_infrared_ir_button_pressed
+    //% block="IR button"
+    //% weight=50
+    export function irButton(): string {
         basic.pause(0); 
         if ((irState.commandSectionBits >> 8) == 162)
             return "1"
@@ -290,7 +288,7 @@ namespace picobricks {
      */
     //% subcategory="IR Receiver"
     //% blockId=wasIrDataReceived
-    //% block="ir data was received"
+    //% block="IR data was received"
     //% weight=70
     export function wasIrDataReceived(): boolean {
         basic.pause(0); 
@@ -311,9 +309,9 @@ namespace picobricks {
     //% button.fieldEditor="gridpicker"
     //% button.fieldOptions.columns=3
     //% button.fieldOptions.tooltips="false"
-    //% block="ir button code %button"
+    //% block="IR button code %button"
     //% weight=60
-    export function irButtonCode(button: irButtonList): number {
+    export function irButtonCode(button: IrButton): number {
         basic.pause(0); 
         return button as number;
     }
@@ -333,12 +331,12 @@ namespace picobricks {
     }
 
     export namespace background {
-        export enum thread {
+        export enum Thread {
             Priority = 0,
             UserCallback = 1,
         }
 
-        export enum irMode {
+        export enum Mode {
             Repeat,
             Once,
         }
@@ -347,17 +345,17 @@ namespace picobricks {
             _newJobs: Job[] = undefined;
             _jobsToRemove: number[] = undefined;
             _pause: number = 100;
-            _type: thread;
+            _type: Thread;
 
-            constructor(type: thread) {
+            constructor(type: Thread) {
                 this._type = type;
                 this._newJobs = [];
                 this._jobsToRemove = [];
                 control.runInParallel(() => this.loop());
             }
 
-            push(task: () => void, delay: number, mode: irMode): number {
-                if (delay > 0 && delay < this._pause && mode === irMode.Repeat) {
+            push(task: () => void, delay: number, mode: Mode): number {
+                if (delay > 0 && delay < this._pause && mode === Mode.Repeat) {
                     this._pause = Math.floor(delay);
                 }
                 const job = new Job(task, delay, mode);
@@ -393,7 +391,7 @@ namespace picobricks {
                         }
                     });
                     this._jobsToRemove = []
-                    if (this._type === thread.Priority) {
+                    if (this._type === Thread.Priority) {
                         for (let i = _jobs.length - 1; i >= 0; i--) {
                             if (_jobs[i].run(delta)) {
                                 this._jobsToRemove.push(_jobs[i].id)
@@ -416,9 +414,9 @@ namespace picobricks {
             func: () => void;
             delay: number;
             remaining: number;
-            mode: irMode;
+            mode: Mode;
 
-            constructor(func: () => void, delay: number, mode: irMode) {
+            constructor(func: () => void, delay: number, mode: Mode) {
                 this.id = randint(0, 2147483647)
                 this.func = func;
                 this.delay = delay;
@@ -437,11 +435,11 @@ namespace picobricks {
                 }
 
                 switch (this.mode) {
-                    case irMode.Once:
+                    case Mode.Once:
                         this.func();
                         basic.pause(0);
                         return true;
-                    case irMode.Repeat:
+                    case Mode.Repeat:
                         this.func();
                         this.remaining = this.delay;
                         basic.pause(0);
@@ -452,8 +450,8 @@ namespace picobricks {
 
         const queues: Executor[] = [];
 
-        export function schedule(func: () => void, type: thread,
-            mode: irMode,
+        export function schedule(func: () => void, type: Thread,
+            mode: Mode,
             delay: number,
         ): number {
             if (!func || delay < 0) return 0;
@@ -465,7 +463,7 @@ namespace picobricks {
             return queues[type].push(func, delay, mode);
         }
 
-        export function remove(type: thread, jobId: number): void {
+        export function remove(type: Thread, jobId: number): void {
             if (queues[type]) {
                 queues[type].cancel(jobId);
             }
