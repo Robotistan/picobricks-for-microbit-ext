@@ -35,7 +35,7 @@ picobricks.connectIrReceiver(DigitalPin.P15)
 //scroll temperature value on the micro:bit screen 
 picobricks.shtcInit()
 basic.forever(function () {
-    basic.showNumber(picobricks.temperature(tempTypeList.celcius))
+    basic.showNumber(picobricks.temperature(tempTypeList.celsius))
 })
 
 //show text on OLED
