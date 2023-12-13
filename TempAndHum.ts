@@ -25,6 +25,7 @@ namespace picobricks {
     /**
      * Get temperature from SHTC-3 temperature and humidity sensor.
      */
+    //% blockId=temperature
     //% block="temperature value"
     //% subcategory="Temp & Hum"
     export function temperature(): number {
@@ -42,6 +43,7 @@ namespace picobricks {
     /**
      * Get humidity percentage from SHTC-3 temperature and humidity sensor.
      */
+    //% blockId=humidity
     //% block="humidity value"
     //% subcategory="Temp & Hum"
     export function humidity(): number {
@@ -60,9 +62,10 @@ namespace picobricks {
     /**
      * Read ID of the SHTC-3 temperature and humidity sensor.
      */
+    //% blockId=readShtcId
     //% block="temperature & humidity id"
     //% subcategory="Temp & Hum"
-    export function readSensorId(): number {
+    export function readShtcId(): number {
         let read_value = i2cread16(SHTC3_DEFAULT_ADDR, SHTC3_READID)
         return read_value
     }
@@ -70,6 +73,7 @@ namespace picobricks {
     /**
      * Initialize SHTC-3 temperature and humidity sensor.
      */
+    //% blockId=shtcInit
     //% block="initialize temperature & humidity sensor"
     //% subcategory="Temp & Hum"
     export function shtcInit(): void {
