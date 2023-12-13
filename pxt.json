@@ -1,13 +1,12 @@
 {
     "name": "PicoBricks",
-    "description": "",
+    "description": "Picobricks for Micro:Bit",
     "license": "MIT",
     "dependencies": {
         "core": "*",
         "ws2812b": "github:microsoft/pxt-ws2812b#v0.1.2"
     },
     "files": [
-        "main.blocks",
         "README.md",
         "RGB-WS2812B.ts",
         "Gesture.ts",
