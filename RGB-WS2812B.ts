@@ -291,7 +291,7 @@ namespace picobricks {
         /**
          * Shift LEDs forward and clear with zeros. You need to call “show” to make the changes visible
          */
-        //% blockId="rgb_shift" block="%strip|shift pixels by %offset" blockGap=8
+        //% blockId="shift" block="%strip|shift pixels by %offset" blockGap=8
         //% strip.defl=strip
         //% weight=40
         //% parts="rgb"
@@ -305,7 +305,7 @@ namespace picobricks {
         /**
          * Rotate LEDs forward. You need to call “show” to make the changes visible
          */
-        //% blockId="rgb_rotate" block="%strip|rotate pixels by %offset" blockGap=8
+        //% blockId="rotate" block="%strip|rotate pixels by %offset" blockGap=8
         //% strip.defl=strip
         //% weight=39
         //% parts="rgb"
@@ -328,7 +328,7 @@ namespace picobricks {
         /**
          * Estimates the electrical current consumed by the current light configuration
          */
-        //% weight=9 blockId=rgb_power block="%strip|power (mA)"
+        //% weight=9 blockId=power block="%strip|power (mA)"
         //% strip.defl=strip
         //% subcategory="RGB Leds"
         power(): number {
@@ -445,7 +445,7 @@ namespace picobricks {
      * Converts RED,GREEN,BLUE channels into a RGB color
      */
     //% weight=1
-    //% blockId="rgb_rgb" block="red %red|green %green|blue %blue"
+    //% blockId="rgb" block="red %red|green %green|blue %blue"
     //% subcategory="RGB Leds"
     export function rgb(red: number, green: number, blue: number): number {
         return packRGB(red, green, blue);
@@ -480,7 +480,7 @@ namespace picobricks {
     /**
      * Converts a hue saturation luminosity value into a RGB Color
      */
-    //% blockId=rgbHSL block="hue %h|saturation %s|luminosity %l"
+    //% blockId=hsl block="hue %h|saturation %s|luminosity %l"
     //% subcategory="RGB Leds"
     export function hsl(h: number, s: number, l: number): number {
         h = Math.round(h);
