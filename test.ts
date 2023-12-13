@@ -11,9 +11,9 @@ basic.forever(function () {
 })
 
 //scroll button state on the micro:bit screen (0 or 1)
-basic.forever(function () {
-    basic.showNumber(picobricks.buttonRead())
-})
+//basic.forever(function () {
+//    basic.showNumber(picobricks.buttonRead())
+//})
 
 //set 90 degree angle to servo 1 motor
 basic.forever(function () {
