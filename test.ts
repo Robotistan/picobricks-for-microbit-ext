@@ -5,7 +5,7 @@ basic.forever(function () {
 })
 
 //read color and scroll on the micro:bit screen
-picobricks.initGesture(sensorinit.color)
+picobricks.initGesture(gestureinit.color)
 basic.forever(function () {
     basic.showString(picobricks.readColor())
 })
