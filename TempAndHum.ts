@@ -1,4 +1,4 @@
-enum tempTypeList {
+enum tempList {
     celsius = 1,
     fahrenheit = 2
 }
@@ -31,9 +31,9 @@ namespace picobricks {
      * Get temperature from SHTC-3 temperature and humidity sensor.
      */
     //% blockId=temperature
-    //% block="temperature value %tempTypeList"
+    //% block="temperature value %tempList"
     //% subcategory="Temp & Hum"
-    export function temperature(tempType: tempTypeList): number {
+    export function temperature(tempType: tempList): number {
         pins.i2cWriteNumber(SHTC3_DEFAULT_ADDR, SHTC3_NORMAL_MEAS_TFIRST, NumberFormat.UInt16BE, false)
         basic.pause(13)
         read_buf = pins.i2cReadBuffer(SHTC3_DEFAULT_ADDR, 2, false)
