@@ -33,10 +33,10 @@ picobricks.onIrButton(irButtonList.Number_1, irButtonAction.Pressed, function ()
 picobricks.connectIrReceiver(DigitalPin.P15)
 
 //scroll temperature value on the micro:bit screen 
-picobricks.shtcInit()
-basic.forever(function () {
-    basic.showNumber(picobricks.temperature(tempTypeList.celsius))
-})
+//picobricks.shtcInit()
+//basic.forever(function () {
+//    basic.showNumber(picobricks.temperature(tempTypeList.celsius))
+//})
 
 //show text on OLED
 picobricks.oledinit(60)
