@@ -9,6 +9,7 @@ namespace picobricks {
      /**
      * Read light sensor value (Integer)
      */
+    //% blockId=ldrRead
     //% block="light sensor value"
     //% subcategory="Others"
     export function ldrRead(): number {
@@ -18,6 +19,7 @@ namespace picobricks {
     /**
      * Read the button state (1-0)
      */
+    //% blockId=buttonRead
     //% block="button state"
     //% subcategory="Others"
     export function buttonRead(): number {
@@ -27,6 +29,7 @@ namespace picobricks {
     /**
      * Relay on or off
      */
+    //% blockId=relay
     //% block="set relay to %set_relay"
     //% subcategory="Others"
     export function relay(state: set_relay): void {
@@ -36,6 +39,7 @@ namespace picobricks {
     /**
      * Read potentiometer value (Integer)
      */
+    //% blockId=potRead
     //% block="pot value"
     //% subcategory="Others"
     export function potRead(): number {
@@ -45,6 +49,7 @@ namespace picobricks {
     /**
      * Read motion sensor value (1-0)
      */
+    //% blockId=pirRead
     //% block="motion sensor state"
     //% subcategory="Others"
     export function pirRead(): number {
@@ -56,6 +61,7 @@ namespace picobricks {
      * @param pin1 describe parameter here, eg: DigitalPin.P2
      * @param pin2 describe parameter here, eg: DigitalPin.P1
      */
+    //% blockId=hcsrRead
     //% block="ultrasonic distance sensor value with trig pin at %pin1 and echo pin at %pin2"
     //% subcategory="Others"
     export function hcsrRead(pin1: DigitalPin, pin2: DigitalPin): number {
@@ -78,6 +84,7 @@ namespace picobricks {
     /**
      * Read soil sensor value (Integer) on selected analog pin
      */
+    //% blockId=soilRead
     //% block="soil sensor value with analog pin at %pin1"
     //% subcategory="Others"
     export function soilRead(pin1: AnalogPin): number {
@@ -89,6 +96,7 @@ namespace picobricks {
     /**
      * Read gas sensor  value (Integer) on selected analog pin (Integer)
      */
+    //% blockId=mq2Read
     //% block="gas sensor value with analog pin at %pin1"
     //% subcategory="Others"
     export function mq2Read(pin1: AnalogPin): number {
