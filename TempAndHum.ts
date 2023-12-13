@@ -1,3 +1,8 @@
+enum tempTypeList {
+    celsius = 1,
+    fahrenheit = 2
+}
+
 namespace picobricks {
     const SHTC3_DEFAULT_ADDR = 0x70;
     const SHTC3_NORMAL_MEAS_TFIRST_STRETCH = 0x7CA2;
@@ -26,9 +31,9 @@ namespace picobricks {
      * Get temperature from SHTC-3 temperature and humidity sensor.
      */
     //% blockId=temperature
-    //% block="temperature value"
+    //% block="temperature value %tempType"
     //% subcategory="Temp & Hum"
-    export function temperature(): number {
+    export function temperature(tempType: tempTypeList): number {
         pins.i2cWriteNumber(SHTC3_DEFAULT_ADDR, SHTC3_NORMAL_MEAS_TFIRST, NumberFormat.UInt16BE, false)
         basic.pause(13)
         read_buf = pins.i2cReadBuffer(SHTC3_DEFAULT_ADDR, 2, false)
@@ -37,7 +42,10 @@ namespace picobricks {
         val = ((4375 * val) >> 14) - 4500;
         let temperature = val / 100.0
         
-        return temperature
+        if (tempType == 1)
+            return temperature
+        else
+            return (temperature * 9) / 5 + 32;
     }
 
     /**
