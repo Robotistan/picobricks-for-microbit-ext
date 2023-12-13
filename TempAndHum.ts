@@ -77,6 +77,14 @@ namespace picobricks {
         let read_value = i2cread16(SHTC3_DEFAULT_ADDR, SHTC3_READID)
         return read_value
     }
+
+    //% blockId=test
+    //% block="test"
+    //% subcategory="Temp & Hum"
+    export function test(): number {
+        let read_value = i2cread16(SHTC3_DEFAULT_ADDR, SHTC3_READID)
+        return read_value
+    }
     
     /**
      * Initialize SHTC-3 temperature and humidity sensor.
