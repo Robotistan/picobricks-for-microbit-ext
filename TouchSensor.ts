@@ -1,28 +1,28 @@
-enum notes {
-    lowDo = 131,
-    lowRe = 147,
-    lowMi = 165,
-    lowFa = 175,
-    lowSol = 196,
-    lowLa = 220,
-    lowSi = 247,
-    middleDo = 262,
-    middleRe = 294,
-    middleMi = 330,
-    middleFa = 349,
-    middleSol = 392,
-    middleLa = 440,
-    middleSi = 494,
-    highDo = 523,
-    highRe = 587,
-    highMi = 659,
-    highFa = 698,
-    highSol = 784,
-    highLa = 880,
-    highSi = 988
+enum Notes {
+    Low_Do = 131,
+    Low_Re = 147,
+    Low_Mi = 165,
+    Low_Fa = 175,
+    Low_Sol = 196,
+    Low_La = 220,
+    Low_Si = 247,
+    Middle_Do = 262,
+    Middle_Re = 294,
+    Middle_Mi = 330,
+    Middle_Fa = 349,
+    Middle_Sol = 392,
+    Middle_La = 440,
+    Middle_Si = 494,
+    High_Do = 523,
+    High_Re = 587,
+    High_Mi = 659,
+    High_Fa = 698,
+    High_Sol = 784,
+    High_La = 880,
+    High_Si = 988
 }
 
-namespace picobricks {
+namespace PicoBricks {
     const CHIP_ADDRESS = 0x37;
     const PROX_STAT = 0xAE;
     const CTRL_CMD = 0x86;
@@ -137,7 +137,7 @@ namespace picobricks {
     let noteDuration = 0;
 
     function configureMB(): void {
-        //pins.i2cWriteNumber(CHIP_ADDRESS, 0x8F, NumberFormat.UInt8BE, false)
+       // pins.i2cWriteNumber(CHIP_ADDRESS, 0x8F, NumberFormat.UInt8BE, false)
         //let val = pins.i2cReadNumber(CHIP_ADDRESS, NumberFormat.UInt8BE)
         //control.waitMicros(2000);
         // WAKE UP
@@ -490,16 +490,16 @@ namespace picobricks {
      */
     //% blockId="playPiano" block="play piano"
     //% subcategory="Touch Sensor-Piano"
-    export function playPiano(): void {
+    export function play(): void {
         readSensorStatus()
     }
 
     /**
      * Play the selected note when the selected button is pressed
      */
-    //% block="play %pianoKeyAddresses and %notes"
+    //% block="play %PianoKeyAddresses and %Notes"
     //% subcategory="Touch Sensor-Piano"
-    export function userPiano(button: pianoKeyAddresses, tone: notes): void {
+    export function user_Piano(button: PianoKeyAddresses, tone: Notes): void {
         let val = 0;
 
         pins.i2cWriteNumber(CHIP_ADDRESS, PROX_STAT, NumberFormat.UInt8BE)
@@ -562,10 +562,9 @@ namespace picobricks {
     /**
      * Check if Touch Sensor & Piano buttons successfully pressed
      */
-    //% blockId=keyIsPressed
     //% block="key %key|is pressed"
     //% subcategory="Touch Sensor-Piano"
-    export function keyIsPressed(key: pianoKeyAddresses): boolean {
+    export function keyIsPressed(key: PianoKeyAddresses): boolean {
         let val = 0;
 
         pins.i2cWriteNumber(CHIP_ADDRESS, PROX_STAT, NumberFormat.UInt8BE)
@@ -623,19 +622,19 @@ namespace picobricks {
 
         return false;
     }
-    export enum pianoKeyAddresses {
-        //% block="X"
-        X = 1,
-        //% block="Y"
-        Y = 2,
+    export enum PianoKeyAddresses {
+        //% block="Touch_A"
+        Touch_A = 1,
+        //% block="Touch_B"
+        Touch_B = 2,
         //% block="Up"
-        up = 3,
+        Up = 3,
         //% block="Down"
-        down = 4,
+        Down = 4,
         //% block="Left"
-        left = 5,
+        Left = 5,
         //% block="Right"
-        right = 6,
+        Right = 6,
         //% block="C1"
         C1 = 7,
         //% block="D"
