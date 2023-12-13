@@ -31,7 +31,7 @@ namespace picobricks {
      * Get temperature from SHTC-3 temperature and humidity sensor.
      */
     //% blockId=temperature
-    //% block="temperature value %tempType"
+    //% block="temperature value %tempTypeList"
     //% subcategory="Temp & Hum"
     export function temperature(tempType: tempTypeList): number {
         pins.i2cWriteNumber(SHTC3_DEFAULT_ADDR, SHTC3_NORMAL_MEAS_TFIRST, NumberFormat.UInt16BE, false)
