@@ -34,7 +34,7 @@ namespace picobricks {
         /**
          * Show all LEDs to a given color (0-255 R,G,B)
          */
-        //% blockId=showColor block="%strip|show color %rgb=rgb_colors"
+        //% blockId=showColor block="%strip|show color %rgb=rgbcolors"
         //% strip.defl=strip
         //% weight=85 blockGap=8
         //% parts="rgb"
@@ -46,7 +46,7 @@ namespace picobricks {
         }
 
         /**
-         * Displays a vertical bar graph based on the “value” and “high” value. İf “high” is 0,the chart gets adjusted automatically
+         * Displays a vertical bar graph based on the "value" and "high" value. İf "high" is 0,the chart gets adjusted automatically
          */
         //% weight=84
         //% blockId=showBarGraph block="%strip|show bar graph of %value|up to %high"
@@ -74,7 +74,7 @@ namespace picobricks {
                 for (let i = 0; i < n; ++i) {
                     if (i <= v) {
                         const b = Math.idiv(i * 255, n1);
-                        this.setPixelColor(i, picobricks.rgbColor(b, 0, 255 - b));
+                        this.setPixelColor(i, picobricks.sendrgb(b, 0, 255 - b));
                     }
                     else this.setPixelColor(i, 0);
                 }
@@ -150,7 +150,7 @@ namespace picobricks {
         /**
          * Set LED to a given color (First LED is 0)
          */
-        //% blockId=setPixelColor block="%strip|set pixel color at %pixeloffset|to %rgb=rgb_colors"
+        //% blockId=setPixelColor block="%strip|set pixel color at %pixeloffset|to %rgb=rgbcolors"
         //% strip.defl=strip
         //% blockGap=8
         //% weight=80
@@ -175,9 +175,9 @@ namespace picobricks {
         }
 
         /**
-         * Set LED to a given color in a matrix shaped strip you need to call “show” to make the changes visible
+         * Set LED to a given color in a matrix shaped strip you need to call "show" to make the changes visible
          */
-        //% blockId=setMatrixColor block="%strip|set matrix color at x %x|y %y|to %rgb=rgb_colors"
+        //% blockId=setMatrixColor block="%strip|set matrix color at x %x|y %y|to %rgb=rgbcolors"
         //% strip.defl=strip
         //% weight=4
         //% parts="rgb"
@@ -289,7 +289,7 @@ namespace picobricks {
         }
 
         /**
-         * Shift LEDs forward and clear with zeros. You need to call “show” to make the changes visible
+         * Shift LEDs forward and clear with zeros. You need to call "show" to make the changes visible
          */
         //% blockId=shift block="%strip|shift pixels by %offset" blockGap=8
         //% strip.defl=strip
@@ -303,9 +303,9 @@ namespace picobricks {
         }
 
         /**
-         * Rotate LEDs forward. You need to call “show” to make the changes visible
+         * Rotate LEDs forward. You need to call "show" to make the changes visible
          */
-        //% blockId="rotate" block="%strip|rotate pixels by %offset" blockGap=8
+        //% blockId=rotate block="%strip|rotate pixels by %offset" blockGap=8
         //% strip.defl=strip
         //% weight=39
         //% parts="rgb"
@@ -445,9 +445,9 @@ namespace picobricks {
      * Converts RED,GREEN,BLUE channels into a RGB color
      */
     //% weight=1
-    //% blockId=rgbColor block="red %red|green %green|blue %blue"
+    //% blockId=sendrgb block="red %red|green %green|blue %blue"
     //% subcategory="RGB Leds"
-    export function rgbColor(red: number, green: number, blue: number): number {
+    export function sendrgb(red: number, green: number, blue: number): number {
         return packRGB(red, green, blue);
     }
 
@@ -455,9 +455,9 @@ namespace picobricks {
      * Gets the RGB value off a know color
      */
     //% weight=2 blockGap=8
-    //% blockId=colors block="%color"
+    //% blockId=rgbcolors block="%color"
     //% subcategory="RGB Leds"
-    export function colors(color: rgbColors): number {
+    export function rgbcolors(color: rgbColors): number {
         return color;
     }
 
