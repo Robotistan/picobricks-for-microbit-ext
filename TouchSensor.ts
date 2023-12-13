@@ -494,12 +494,6 @@ namespace picobricks {
         readSensorStatus()
     }
 
-    //% blockId="test" block="test"
-    //% subcategory="Touch Sensor-Piano"
-    export function test(): void {
-        readSensorStatus()
-    }
-
     /**
      * Play the selected note when the selected button is pressed
      */
