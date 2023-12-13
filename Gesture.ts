@@ -1,5 +1,5 @@
 
-enum sensorinit {
+enum gestureinit {
     //% block=none
     none = 0,
     //% block=proximity
@@ -159,14 +159,15 @@ namespace picobricks {
         return hue * 60 / 100;
     }
 
-    let currentMode = sensorinit.none
+    let currentMode = gestureinit.none
 
     /**
      * Initialize the selected gesture module feature
      */
+    //% blockId=initGesture
     //% block="gesture sensor init |%sensor"
     //% subcategory="Gesture"
-    export function initGesture(sensor: sensorinit): void {
+    export function initGesture(sensor: gestureinit): void {
         i2cwrite(ADDR, APDS9960_ATIME, 252) // default inte time 4x2.78ms
         i2cwrite(ADDR, APDS9960_CONTROL, 0x03) // todo: make gain adjustable
         i2cwrite(ADDR, APDS9960_ENABLE, 0x00) // put everything off
@@ -176,16 +177,16 @@ namespace picobricks {
         gestureRuns = false
 
         switch (sensor) {
-            case sensorinit.proximity:
-                currentMode = sensorinit.proximity
+            case gestureinit.proximity:
+                currentMode = gestureinit.proximity
                 proximityInit()
                 break;
-            case sensorinit.gesture:
-                currentMode = sensorinit.gesture
+            case gestureinit.gesture:
+                currentMode = gestureinit.gesture
                 gestureInit()
                 break;
-            case sensorinit.color:
-                currentMode = sensorinit.color
+            case gestureinit.color:
+                currentMode = gestureinit.color
                 colorInit()
                 break;
             default:
@@ -205,6 +206,7 @@ namespace picobricks {
     /**
      * Read the gesture sensor ID
      */
+    //% blockId=gestureId
     //% block="gesture sensor id"
     //% subcategory="Gesture"
     export function gestureId(): number {
@@ -215,10 +217,11 @@ namespace picobricks {
     /**
      * Read the Hue value
      */
+    //% blockId=readHue
     //% block="gesture sensor hue value"
     //% subcategory="Gesture"
     export function readHue(): number {
-        if (!(currentMode == sensorinit.color)) {
+        if (!(currentMode == gestureinit.color)) {
             return 0
         }
         let tmp = i2cread(ADDR, APDS9960_STATUS) & 0x1;
@@ -242,6 +245,7 @@ namespace picobricks {
     /**
      * Read the color
      */
+    //% blockId=readColor
     //% block="gesture sensor color"
     //% subcategory="Gesture"
     export function readColor(): string {
@@ -267,10 +271,11 @@ namespace picobricks {
     /**
      * Read the red color (0-255) value from the gesture sensor 
      */
+    //% blockId=readRedColor
     //% block="gesture sensor red color value"
     //% subcategory="Gesture"
     export function readRedColor(): number {
-        if (!(currentMode == sensorinit.color)) {
+        if (!(currentMode == gestureinit.color)) {
             return 0
         }
         let tmp = i2cread(ADDR, APDS9960_STATUS) & 0x1;
@@ -285,10 +290,11 @@ namespace picobricks {
     /**
      * Read the green color (0-255) value from the gesture sensor
      */
+    //% blockId=readGreenColor
     //% block="gesture sensor green color value"
     //% subcategory="Gesture"
     export function readGreenColor(): number {
-        if (!(currentMode == sensorinit.color)) {
+        if (!(currentMode == gestureinit.color)) {
             return 0
         }
         let tmp = i2cread(ADDR, APDS9960_STATUS) & 0x1;
@@ -303,10 +309,11 @@ namespace picobricks {
     /**
      * Read the blue color (0-255) value from the action module
      */
+    //% blockId=readBlueColor
     //% block="gesture sensor blue color value"
     //% subcategory="Gesture"
     export function readBlueColor(): number {
-        if (!(currentMode == sensorinit.color)) {
+        if (!(currentMode == gestureinit.color)) {
             return 0
         }
         let tmp = i2cread(ADDR, APDS9960_STATUS) & 0x1;
@@ -321,10 +328,11 @@ namespace picobricks {
     /**
      * Read the light value 
      */
+    //% blockId=brightness
     //% block="gesture sensor brightness"
     //% subcategory="Gesture"
     export function brightness(): number {
-        if (!(currentMode == sensorinit.color)) {
+        if (!(currentMode == gestureinit.color)) {
             return 0
         }
         let tmp = i2cread(ADDR, APDS9960_STATUS) & 0x1;
@@ -339,10 +347,11 @@ namespace picobricks {
     /**
      * Read the proximity value 
      */
+    //% blockId=readProximity
     //% block="gesture sensor proximity value"
     //% subcategory="Gesture"
     export function readProximity(): number {
-        if (!(currentMode == sensorinit.proximity)) {
+        if (!(currentMode == gestureinit.proximity)) {
             return 0
         }
         let tmp = i2cread(ADDR, APDS9960_STATUS) & 0x2;
@@ -802,7 +811,7 @@ namespace picobricks {
             return motion;
         }
         read(): number {
-            if (!(currentMode == sensorinit.gesture)) {
+            if (!(currentMode == gestureinit.gesture)) {
                 return 0
             }
             let result = gestureType.none;
@@ -851,7 +860,8 @@ namespace picobricks {
     /**
      * When the sensor detects the set value
      */
-    //% blockId="onGesture" block="onGesture |%gesture"
+    //% blockId=onGesture
+    //% blockId="onGesture" block="on gesture |%gesture"
     //% subcategory="Gesture"
     export function onGesture(gesture: gestureType, handler: () => void) {
         control.onEvent(3100, gesture, handler);
