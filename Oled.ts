@@ -176,7 +176,7 @@ namespace picobricks {
      * @param y is Y alis, eg: 0
      * @param color is dot color, eg: 1
      */
-    //% blockId="OLED12864_I2C_PIXEL" block="set pixel at x %x|y %y|color %color"
+    //% blockId=pixel block="set pixel at x %x|y %y|color %color"
     //% weight=70 blockGap=8
     //% parts=OLED12864_I2C trackArgs=0
     //% subcategory="OLED"
@@ -207,7 +207,7 @@ namespace picobricks {
      * @param s is the text will be show, eg: 'Hello!'
      * @param color is string color, eg: 1
      */
-    //% blockId="OLED12864_I2C_SHOWSTRING" block="show string at x %x|y %y|text %s|color %color"
+    //% blockId=showString block="show string at x %x|y %y|text %s|color %color"
     //% weight=80 blockGap=8
     //% parts=OLED12864_I2C trackArgs=0
     //% subcategory="OLED"
@@ -245,7 +245,7 @@ namespace picobricks {
      * @param num is the number will be show, eg: 12
      * @param color is number color, eg: 1
      */
-    //% blockId="OLED12864_I2C_NUMBER" block="show a Number at x %x|y %y|number %num|color %color"
+    //% blockId=showNumber block="show a Number at x %x|y %y|number %num|color %color"
     //% weight=80 blockGap=8
     //% parts=OLED12864_I2C trackArgs=0
     //% subcategory="OLED"
@@ -259,7 +259,7 @@ namespace picobricks {
      * @param y is Y alis, eg: 0
      * @param len is the length of line, eg: 10
      */
-    //% blockId="OLED12864_I2C_HLINE" block="draw a horizontal line at x %x|y %y|length %len"
+    //% blockId=hline block="draw a horizontal line at x %x|y %y|length %len"
     //% weight=71 blockGap=8
     //% parts=OLED12864_I2C trackArgs=0
     //% subcategory="OLED"
@@ -274,7 +274,7 @@ namespace picobricks {
      * @param y is Y alis, eg: 0
      * @param len is the length of line, eg: 10
      */
-    //% blockId="OLED12864_I2C_VLINE" block="draw a vertical line at x %x|y %y|length %len"
+    //% blockId=vline block="draw a vertical line at x %x|y %y|length %len"
     //% weight=72 blockGap=8
     //% parts=OLED12864_I2C trackArgs=0
     //% subcategory="OLED"
@@ -291,7 +291,7 @@ namespace picobricks {
      * @param y2 is Y alis, eg: 30
      * @param color is line color, eg: 1
      */
-    //% blockId="OLED12864_I2C_RECT" block="draw a rectangle at x1 %x1|y1 %y1|x2 %x2|y2 %y2|color %color"
+    //% blockId=rect block="draw a rectangle at x1 %x1|y1 %y1|x2 %x2|y2 %y2|color %color"
     //% weight=73 blockGap=8
     //% parts=OLED12864_I2C trackArgs=0
     //% subcategory="OLED"
@@ -310,7 +310,7 @@ namespace picobricks {
      * invert display
      * @param d true: invert / false: normal, eg: true
      */
-    //% blockId="OLED12864_I2C_INVERT" block="invert display %d"
+    //% blockId=invert block="invert display %d"
     //% weight=65 blockGap=8
     //% parts=OLED12864_I2C trackArgs=0
     //% subcategory="OLED"
@@ -322,7 +322,7 @@ namespace picobricks {
     /**
      * draw / redraw screen
      */
-    //% blockId="OLED12864_I2C_DRAW" block="draw"
+    //% blockId=draw block="draw"
     //% weight=64 blockGap=8
     //% parts=OLED12864_I2C trackArgs=0
     //% subcategory="OLED"
@@ -334,11 +334,11 @@ namespace picobricks {
     /**
      * clear screen
      */
-    //% blockId="OLED12864_I2C_CLEAR" block="clear"
+    //% blockId=oledclear block="clear"
     //% weight=63 blockGap=8
     //% parts=OLED12864_I2C trackArgs=0
     //% subcategory="OLED"
-    export function clear() {
+    export function oledclear() {
         _screen.fill(0)
         _screen[0] = 0x40
         draw()
@@ -347,22 +347,22 @@ namespace picobricks {
     /**
      * turn on screen
      */
-    //% blockId="OLED12864_I2C_ON" block="turn on"
+    //% blockId=oledon block="turn on"
     //% weight=62 blockGap=8
     //% parts=OLED12864_I2C trackArgs=0
     //% subcategory="OLED"
-    export function on() {
+    export function oledon() {
         cmd1(0xAF)
     }
 
     /**
      * turn off screen
      */
-    //% blockId="OLED12864_I2C_OFF" block="turn off"
+    //% blockId=oledoff block="turn off"
     //% weight=61 blockGap=8
     //% parts=OLED12864_I2C trackArgs=0
     //% subcategory="OLED"
-    export function off() {
+    export function oledoff() {
         cmd1(0xAE)
     }
 
@@ -370,11 +370,11 @@ namespace picobricks {
      * zoom mode
      * @param d true zoom / false normal, eg: true
      */
-    //% blockId="OLED12864_I2C_ZOOM" block="zoom %d"
+    //% blockId=oledzoom block="zoom %d"
     //% weight=60 blockGap=8
     //% parts=OLED12864_I2C trackArgs=0
     //% subcategory="OLED"
-    export function zoom(d: boolean = true) {
+    export function oledzoom(d: boolean = true) {
         _ZOOM = (d) ? 1 : 0
         cmd2(0xd6, _ZOOM)
     }
@@ -383,11 +383,11 @@ namespace picobricks {
      * OLED initialize
      * @param addr is i2c addr, eg: 60
      */
-    //% blockId="OLED12864_I2C_init" block="init OLED with addr %addr"
+    //% blockId=oledinit block="init OLED with addr %addr"
     //% weight=100 blockGap=8
     //% parts=OLED12864_I2C trackArgs=0
     //% subcategory="OLED"
-    export function init(addr: number) {
+    export function oledinit(addr: number) {
         _I2CAddr = addr;
         cmd1(0xAE)       // SSD1306_DISPLAYOFF
         cmd1(0xA4)       // SSD1306_DISPLAYALLON_RESUME
@@ -408,7 +408,7 @@ namespace picobricks {
         cmd1(0xA6)       // SSD1306_NORMALDISPLAY
         cmd2(0xD6, 1)    // zoom on
         cmd1(0xAF)       // SSD1306_DISPLAYON
-        clear()
+        oledclear()
         _ZOOM = 1
     }
 }
