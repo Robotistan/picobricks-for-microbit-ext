@@ -1,29 +1,29 @@
 
-enum SENSORINIT {
-    //% block=None
-    None = 0,
-    //% block=Proximity
-    Proximity = 1,
-    //% block=Gesture
-    Gesture = 2,
-    //% block=Color
-    Color = 3
-}
-
-enum GESTURE_TYPE {
+enum gestureinit {
     //% block=none
-    None = 0,
-    //% block=right
-    Right = 1,
-    //% block=left
-    Left = 2,
-    //% block=up
-    Up = 3,
-    //% block=down
-    Down = 4,
+    none = 0,
+    //% block=proximity
+    proximity = 1,
+    //% block=gesture
+    gesture = 2,
+    //% block=color
+    color = 3
 }
 
-namespace PicoBricks {
+enum gestureType {
+    //% block=none
+    none = 0,
+    //% block=right
+    right = 1,
+    //% block=left
+    left = 2,
+    //% block=up
+    up = 3,
+    //% block=down
+    down = 4,
+}
+
+namespace picobricks {
     const ADDR = 0x39
     const APDS9960_RAM = 0x00
     const APDS9960_ENABLE = 0x80
@@ -159,14 +159,15 @@ namespace PicoBricks {
         return hue * 60 / 100;
     }
 
-    let currentMode = SENSORINIT.None
+    let currentMode = gestureinit.none
 
     /**
-     * Initialize the selected action module feature
+     * Initialize the selected gesture module feature
      */
-    //% block="apds9960 init |%sensor"
-    //% subcategory="Action"
-    export function initGesture(sensor: SENSORINIT): void {
+    //% blockId=initGesture
+    //% block="gesture sensor init |%sensor"
+    //% subcategory="Gesture"
+    export function initGesture(sensor: gestureinit): void {
         i2cwrite(ADDR, APDS9960_ATIME, 252) // default inte time 4x2.78ms
         i2cwrite(ADDR, APDS9960_CONTROL, 0x03) // todo: make gain adjustable
         i2cwrite(ADDR, APDS9960_ENABLE, 0x00) // put everything off
@@ -176,16 +177,16 @@ namespace PicoBricks {
         gestureRuns = false
 
         switch (sensor) {
-            case SENSORINIT.Proximity:
-                currentMode = SENSORINIT.Proximity
+            case gestureinit.proximity:
+                currentMode = gestureinit.proximity
                 proximityInit()
                 break;
-            case SENSORINIT.Gesture:
-                currentMode = SENSORINIT.Gesture
+            case gestureinit.gesture:
+                currentMode = gestureinit.gesture
                 gestureInit()
                 break;
-            case SENSORINIT.Color:
-                currentMode = SENSORINIT.Color
+            case gestureinit.color:
+                currentMode = gestureinit.color
                 colorInit()
                 break;
             default:
@@ -203,11 +204,12 @@ namespace PicoBricks {
     }
 
     /**
-     * Read the APDS ID
+     * Read the gesture sensor ID
      */
-    //% block="apds9960 ID"
-    //% subcategory="Action"
-    export function readId(): number {
+    //% blockId=gestureId
+    //% block="gesture sensor id"
+    //% subcategory="Gesture"
+    export function gestureId(): number {
         let chipid = i2cread(ADDR, APDS9960_ID);
         return chipid;
     }
@@ -215,10 +217,11 @@ namespace PicoBricks {
     /**
      * Read the Hue value
      */
-    //% block="apds9960 Get Hue"
-    //% subcategory="Action"
+    //% blockId=readHue
+    //% block="gesture sensor hue value"
+    //% subcategory="Gesture"
     export function readHue(): number {
-        if (!(currentMode == SENSORINIT.Color)) {
+        if (!(currentMode == gestureinit.color)) {
             return 0
         }
         let tmp = i2cread(ADDR, APDS9960_STATUS) & 0x1;
@@ -240,10 +243,11 @@ namespace PicoBricks {
     }
 
     /**
-     * Read the color (0-255) value from the action module 
+     * Read the color
      */
-    //% block="apds9960 Get Color"
-    //% subcategory="Action"
+    //% blockId=readColor
+    //% block="gesture sensor color"
+    //% subcategory="Gesture"
     export function readColor(): string {
         let tmp = i2cread(ADDR, APDS9960_STATUS) & 0x1;
         while (!tmp) {
@@ -265,12 +269,13 @@ namespace PicoBricks {
     }
 
     /**
-     * Read the red color (0-255) value from the action module 
+     * Read the red color (0-255) value from the gesture sensor 
      */
-    //% block="apds9960 Get Red Color"
-    //% subcategory="Action"
+    //% blockId=readRedColor
+    //% block="gesture sensor red color value"
+    //% subcategory="Gesture"
     export function readRedColor(): number {
-        if (!(currentMode == SENSORINIT.Color)) {
+        if (!(currentMode == gestureinit.color)) {
             return 0
         }
         let tmp = i2cread(ADDR, APDS9960_STATUS) & 0x1;
@@ -283,12 +288,13 @@ namespace PicoBricks {
     }
 
     /**
-     * Read the green color (0-255) value from the action module
+     * Read the green color (0-255) value from the gesture sensor
      */
-    //% block="apds9960 Get Green Color"
-    //% subcategory="Action"
+    //% blockId=readGreenColor
+    //% block="gesture sensor green color value"
+    //% subcategory="Gesture"
     export function readGreenColor(): number {
-        if (!(currentMode == SENSORINIT.Color)) {
+        if (!(currentMode == gestureinit.color)) {
             return 0
         }
         let tmp = i2cread(ADDR, APDS9960_STATUS) & 0x1;
@@ -303,10 +309,11 @@ namespace PicoBricks {
     /**
      * Read the blue color (0-255) value from the action module
      */
-    //% block="apds9960 Get Blue Color"
-    //% subcategory="Action"
+    //% blockId=readBlueColor
+    //% block="gesture sensor blue color value"
+    //% subcategory="Gesture"
     export function readBlueColor(): number {
-        if (!(currentMode == SENSORINIT.Color)) {
+        if (!(currentMode == gestureinit.color)) {
             return 0
         }
         let tmp = i2cread(ADDR, APDS9960_STATUS) & 0x1;
@@ -321,10 +328,11 @@ namespace PicoBricks {
     /**
      * Read the light value 
      */
-    //% block="apds9960 Get Clear"
-    //% subcategory="Action"
-    export function readClear(): number {
-        if (!(currentMode == SENSORINIT.Color)) {
+    //% blockId=brightness
+    //% block="gesture sensor brightness"
+    //% subcategory="Gesture"
+    export function brightness(): number {
+        if (!(currentMode == gestureinit.color)) {
             return 0
         }
         let tmp = i2cread(ADDR, APDS9960_STATUS) & 0x1;
@@ -339,10 +347,11 @@ namespace PicoBricks {
     /**
      * Read the proximity value 
      */
-    //% block="apds9960 Get Proximity"
-    //% subcategory="Action"
+    //% blockId=readProximity
+    //% block="gesture sensor proximity value"
+    //% subcategory="Gesture"
     export function readProximity(): number {
-        if (!(currentMode == SENSORINIT.Proximity)) {
+        if (!(currentMode == gestureinit.proximity)) {
             return 0
         }
         let tmp = i2cread(ADDR, APDS9960_STATUS) & 0x2;
@@ -354,19 +363,19 @@ namespace PicoBricks {
         return p
     }
 
-    enum DIR {
-        DIR_NONE,
-        DIR_LEFT,
-        DIR_RIGHT,
-        DIR_UP,
-        DIR_DOWN,
-        DIR_ALL
+    enum direction {
+        none,
+        left,
+        right,
+        up,
+        down,
+        all
     }
-    enum STATE {
-        NA_STATE,
-        NEAR_STATE,
-        FAR_STATE,
-        ALL_STATE
+    enum state {
+        na,
+        near,
+        far,
+        all
     }
 
     export class gesture_data_type {
@@ -383,7 +392,7 @@ namespace PicoBricks {
     let gesture_data = new gesture_data_type;
     let data_buf: Buffer = pins.createBuffer(128);
 
-    export class APDS9960class {
+    export class apds9960class {
         gesture_ud_delta: number;
         gesture_lr_delta: number;
         gesture_ud_count: number;
@@ -517,7 +526,7 @@ namespace PicoBricks {
             this.gesture_near_count = 0;
             this.gesture_far_count = 0;
             this.gesture_state = 0;
-            this.gesture_motion = DIR.DIR_NONE;
+            this.gesture_motion = direction.none;
         }
 
         setGestureMode(mode: number) {
@@ -678,9 +687,9 @@ namespace PicoBricks {
                     }
                     if ((this.gesture_near_count >= 10) && (this.gesture_far_count >= 2)) {
                         if ((ud_delta == 0) && (lr_delta == 0)) {
-                            this.gesture_state = STATE.NEAR_STATE;
+                            this.gesture_state = state.near;
                         } else if ((ud_delta != 0) && (lr_delta != 0)) {
-                            this.gesture_state = STATE.FAR_STATE;
+                            this.gesture_state = state.far;
                         }
                         return true;
                     }
@@ -703,36 +712,36 @@ namespace PicoBricks {
         }
         decodeGesture(): boolean {
             if ((this.gesture_ud_count == -1) && (this.gesture_lr_count == 0)) {
-                this.gesture_motion = DIR.DIR_UP;
+                this.gesture_motion = direction.up;
             } else if ((this.gesture_ud_count == 1) && (this.gesture_lr_count == 0)) {
-                this.gesture_motion = DIR.DIR_DOWN;
+                this.gesture_motion = direction.down;
             } else if ((this.gesture_ud_count == 0) && (this.gesture_lr_count == 1)) {
-                this.gesture_motion = DIR.DIR_RIGHT;
+                this.gesture_motion = direction.right;
             } else if ((this.gesture_ud_count == 0) && (this.gesture_lr_count == -1)) {
-                this.gesture_motion = DIR.DIR_LEFT;
+                this.gesture_motion = direction.left;
             } else if ((this.gesture_ud_count == -1) && (this.gesture_lr_count == 1)) {
                 if (Math.abs(this.gesture_ud_delta) > Math.abs(this.gesture_lr_delta)) {
-                    this.gesture_motion = DIR.DIR_UP;
+                    this.gesture_motion = direction.up;
                 } else {
-                    this.gesture_motion = DIR.DIR_RIGHT;
+                    this.gesture_motion = direction.right;
                 }
             } else if ((this.gesture_ud_count == 1) && (this.gesture_lr_count == -1)) {
                 if (Math.abs(this.gesture_ud_delta) > Math.abs(this.gesture_lr_delta)) {
-                    this.gesture_motion = DIR.DIR_DOWN;
+                    this.gesture_motion = direction.down;
                 } else {
-                    this.gesture_motion = DIR.DIR_LEFT;
+                    this.gesture_motion = direction.left;
                 }
             } else if ((this.gesture_ud_count == -1) && (this.gesture_lr_count == -1)) {
                 if (Math.abs(this.gesture_ud_delta) > Math.abs(this.gesture_lr_delta)) {
-                    this.gesture_motion = DIR.DIR_UP;
+                    this.gesture_motion = direction.up;
                 } else {
-                    this.gesture_motion = DIR.DIR_LEFT;
+                    this.gesture_motion = direction.left;
                 }
             } else if ((this.gesture_ud_count == 1) && (this.gesture_lr_count == 1)) {
                 if (Math.abs(this.gesture_ud_delta) > Math.abs(this.gesture_lr_delta)) {
-                    this.gesture_motion = DIR.DIR_DOWN;
+                    this.gesture_motion = direction.down;
                 } else {
-                    this.gesture_motion = DIR.DIR_RIGHT;
+                    this.gesture_motion = direction.right;
                 }
             } else {
                 return false;
@@ -754,7 +763,7 @@ namespace PicoBricks {
             gesture_data.r_data = pins.createBuffer(32);
 
             if (!this.isGestureAvailable() || !(this.getMode() & 0b01000001)) {
-                return DIR.DIR_NONE;
+                return direction.none;
             }
             while (1) {
                 basic.pause(30);
@@ -802,22 +811,22 @@ namespace PicoBricks {
             return motion;
         }
         read(): number {
-            if (!(currentMode == SENSORINIT.Gesture)) {
+            if (!(currentMode == gestureinit.gesture)) {
                 return 0
             }
-            let result = GESTURE_TYPE.None;
+            let result = gestureType.none;
             switch (this.readGesture()) {
-                case DIR.DIR_UP:
-                    result = GESTURE_TYPE.Up;
+                case direction.up:
+                    result = gestureType.up;
                     break;
-                case DIR.DIR_DOWN:
-                    result = GESTURE_TYPE.Down;
+                case direction.down:
+                    result = gestureType.down;
                     break;
-                case DIR.DIR_LEFT:
-                    result = GESTURE_TYPE.Left;
+                case direction.left:
+                    result = gestureType.left;
                     break;
-                case DIR.DIR_RIGHT:
-                    result = GESTURE_TYPE.Right;
+                case direction.right:
+                    result = gestureType.right;
                     break;
                 default:
             }
@@ -831,12 +840,12 @@ namespace PicoBricks {
     let gestureRuns = false
     function gestureInit() {
         gestureRuns = true
-        let apds9960 = new APDS9960class();
+        let apds9960 = new apds9960class();
         apds9960.pads9960_init();
         apds9960.enableGestureSensor(false);
         basic.pause(100);
         control.inBackground(() => {
-            let prevGst = GESTURE_TYPE.None;
+            let prevGst = gestureType.none;
             while (gestureRuns) {
                 let gst = apds9960.read();
                 if (gst != prevGst) {
@@ -851,9 +860,10 @@ namespace PicoBricks {
     /**
      * When the sensor detects the set value
      */
-    //% blockId="gesture_listener_block" block="onGesture |%gesture"
-    //% subcategory="Action"
-    export function onGesture(gesture: GESTURE_TYPE, handler: () => void) {
+    //% blockId=onGesture
+    //% blockId="onGesture" block="on gesture |%gesture"
+    //% subcategory="Gesture"
+    export function onGesture(gesture: gestureType, handler: () => void) {
         control.onEvent(3100, gesture, handler);
     }
 }
