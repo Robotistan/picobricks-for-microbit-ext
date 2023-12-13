@@ -27,10 +27,7 @@ basic.forever(function () {
 })
 
 //draw smile icon on micro:bit when the selected IR controller button is pressed
-picobricks.onIrButton(irButtonList.Number_1, irButtonAction.Pressed, function () {
-    basic.showIcon(IconNames.Heart)
-})
-picobricks.connectIrReceiver(DigitalPin.P15)
+
 
 //scroll temperature value on the micro:bit screen 
 picobricks.shtcInit()
