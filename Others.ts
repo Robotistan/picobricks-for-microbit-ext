@@ -1,4 +1,4 @@
-namespace PicoBricks {
+namespace picobricks {
     let result = 0;
 
     export enum set_relay {
@@ -9,16 +9,18 @@ namespace PicoBricks {
      /**
      * Read light sensor value (Integer)
      */
-    //% block="light sensor read"
+    //% blockId=ldrRead
+    //% block="light sensor value"
     //% subcategory="Others"
     export function ldrRead(): number {
         return pins.analogReadPin(AnalogPin.P0);
     }
 
     /**
-     * Read the button value (1-0)
+     * Read the button state (1-0)
      */
-    //% block="button read"
+    //% blockId=buttonRead
+    //% block="button state"
     //% subcategory="Others"
     export function buttonRead(): number {
         return pins.digitalReadPin(DigitalPin.P2);
@@ -27,6 +29,7 @@ namespace PicoBricks {
     /**
      * Relay on or off
      */
+    //% blockId=relay
     //% block="set relay to %set_relay"
     //% subcategory="Others"
     export function relay(state: set_relay): void {
@@ -36,16 +39,18 @@ namespace PicoBricks {
     /**
      * Read potentiometer value (Integer)
      */
-    //% block="pot read"
+    //% blockId=potRead
+    //% block="pot value"
     //% subcategory="Others"
     export function potRead(): number {
         return pins.analogReadPin(AnalogPin.P1);
     }
 
     /**
-     * Read motion sensor value (Integer)
+     * Read motion sensor value (1-0)
      */
-    //% block="motion sensor read"
+    //% blockId=pirRead
+    //% block="motion sensor state"
     //% subcategory="Others"
     export function pirRead(): number {
         return pins.digitalReadPin(DigitalPin.P13);
@@ -53,8 +58,11 @@ namespace PicoBricks {
 
     /**
      * Read ultrasonic distance sensor (HC-SR04) value (Integer) on selected trig and echo pin 
+     * @param pin1 describe parameter here, eg: DigitalPin.P2
+     * @param pin2 describe parameter here, eg: DigitalPin.P1
      */
-    //% block="read ultrasonic distance sensor with trig pin at %pin1 and echo pin at %pin2"
+    //% blockId=hcsrRead
+    //% block="ultrasonic distance sensor value with trig pin at %pin1 and echo pin at %pin2"
     //% subcategory="Others"
     export function hcsrRead(pin1: DigitalPin, pin2: DigitalPin): number {
         let trigpin = pin1
@@ -76,7 +84,8 @@ namespace PicoBricks {
     /**
      * Read soil sensor value (Integer) on selected analog pin
      */
-    //% block="read soil sensor with analog pin at %pin1"
+    //% blockId=soilRead
+    //% block="soil sensor value with analog pin at %pin1"
     //% subcategory="Others"
     export function soilRead(pin1: AnalogPin): number {
         let analogpin = pin1
@@ -87,7 +96,8 @@ namespace PicoBricks {
     /**
      * Read gas sensor  value (Integer) on selected analog pin (Integer)
      */
-    //% block="read gas sensor with analog pin at %pin1"
+    //% blockId=mq2Read
+    //% block="gas sensor value with analog pin at %pin1"
     //% subcategory="Others"
     export function mq2Read(pin1: AnalogPin): number {
         let analogpin = pin1
