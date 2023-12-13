@@ -1,18 +1,18 @@
 enum dcMotorType {
-    DC1 = 1,
-    DC2 = 2
+    dc1 = 1,
+    dc2 = 2
 }
 
 enum servoMotorType {
-    Servo1 = 3,
-    Servo2 = 4,
-    Servo3 = 5,
-    Servo4 = 6
+    servo1 = 3,
+    servo2 = 4,
+    servo3 = 5,
+    servo4 = 6
 }
 
 enum directionType {
-    Forward = 0,
-    Backward = 1
+    forward = 0,
+    backward = 1
 }
 
 //% weight=10 color=#067565 block="PicoBricks" icon="\uf135"
@@ -22,7 +22,8 @@ namespace picobricks {
     /**
      * It brings the selected servo motor to the set angle
      */
-    //% blockId="servomotor" block="servo motor %servoMotorType and angle %angle"
+    //% blockId=servomotor 
+    //% block="servo motor %servoMotorType and angle %angle"
     //% angle.min=0 angle.max=180
     //% subcategory="Motor Driver"
     export function servomotor(Servo_type: servoMotorType, angle: number): void {
@@ -37,6 +38,7 @@ namespace picobricks {
     /**
      * It runs the selected DC motor forward or reverse at the set speed and direction
      */
+    //% blockId=dcmotor
     //% block="dc motor %dcMotorType and speed %speed and direction %direction"
     //% speed.min=0 speed.max=100
     //% subcategory="Motor Driver"
