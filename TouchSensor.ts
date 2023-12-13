@@ -490,7 +490,7 @@ namespace picobricks {
      */
     //% blockId="playPiano" block="play piano"
     //% subcategory="Touch Sensor-Piano"
-    export function play(): void {
+    export function playPiano(): void {
         readSensorStatus()
     }
 
@@ -562,6 +562,7 @@ namespace picobricks {
     /**
      * Check if Touch Sensor & Piano buttons successfully pressed
      */
+    //% blockId=keyIsPressed
     //% block="key %key|is pressed"
     //% subcategory="Touch Sensor-Piano"
     export function keyIsPressed(key: pianoKeyAddresses): boolean {
@@ -624,17 +625,17 @@ namespace picobricks {
     }
     export enum pianoKeyAddresses {
         //% block="X"
-        Touch_A = 1,
+        X = 1,
         //% block="Y"
-        Touch_B = 2,
+        Y = 2,
         //% block="Up"
-        Up = 3,
+        up = 3,
         //% block="Down"
-        Down = 4,
+        down = 4,
         //% block="Left"
-        Left = 5,
+        left = 5,
         //% block="Right"
-        Right = 6,
+        right = 6,
         //% block="C1"
         C1 = 7,
         //% block="D"
