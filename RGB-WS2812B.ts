@@ -1,4 +1,4 @@
-enum rgbColors {
+enum rgbColorsList {
     //% block=red
     Red = 0xFF0000,
     //% block=orange
@@ -57,7 +57,7 @@ namespace picobricks {
         showBarGraph(value: number, high: number): void {
             if (high <= 0) {
                 this.clear();
-                this.setPixelColor(0, rgbColors.Yellow);
+                this.setPixelColor(0, rgbColorsList.Yellow);
                 this.show();
                 return;
             }
@@ -74,7 +74,7 @@ namespace picobricks {
                 for (let i = 0; i < n; ++i) {
                     if (i <= v) {
                         const b = Math.idiv(i * 255, n1);
-                        this.setPixelColor(i, picobricks.sendrgb(b, 0, 255 - b));
+                        this.setPixelColor(i, picobricks.rgb(b, 0, 255 - b));
                     }
                     else this.setPixelColor(i, 0);
                 }
@@ -445,9 +445,9 @@ namespace picobricks {
      * Converts RED,GREEN,BLUE channels into a RGB color
      */
     //% weight=1
-    //% blockId=sendrgb block="red %red|green %green|blue %blue"
+    //% blockId="rgb_rgb" block="red %red|green %green|blue %blue"
     //% subcategory="RGB Leds"
-    export function sendrgb(red: number, green: number, blue: number): number {
+    export function rgb(red: number, green: number, blue: number): number {
         return packRGB(red, green, blue);
     }
 
@@ -457,7 +457,7 @@ namespace picobricks {
     //% weight=2 blockGap=8
     //% blockId=rgbcolors block="%color"
     //% subcategory="RGB Leds"
-    export function rgbcolors(color: rgbColors): number {
+    export function rgbcolors(color: rgbColorsList): number {
         return color;
     }
 
