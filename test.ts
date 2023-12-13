@@ -1,7 +1,7 @@
 //show red color all rgb leds
 let strip = picobricks.create(DigitalPin.P8, 3)
 basic.forever(function () {
-    strip.showColor(picobricks.colors(rgbColors.Red))
+    strip.showColor(picobricks.rgbcolors(rgbColorsList.Red))
 })
 
 //read color and scroll on the micro:bit screen
