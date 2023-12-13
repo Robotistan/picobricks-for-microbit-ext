@@ -177,7 +177,7 @@ namespace picobricks {
         /**
          * Set LED to a given color in a matrix shaped strip you need to call “show” to make the changes visible
          */
-        //% blockId="rgb_set_matrix_color" block="%strip|set matrix color at x %x|y %y|to %rgb=rgb_colors"
+        //% blockId="setMatrixColor" block="%strip|set matrix color at x %x|y %y|to %rgb=rgb_colors"
         //% strip.defl=strip
         //% weight=4
         //% parts="rgb"
@@ -196,7 +196,7 @@ namespace picobricks {
         /**
          * Send all the changes to the stript
          */
-        //% blockId="rgb_show" block="%strip|show" blockGap=8
+        //% blockId="show" block="%strip|show" blockGap=8
         //% strip.defl=strip
         //% weight=79
         //% parts="rgb"
@@ -210,7 +210,7 @@ namespace picobricks {
         /**
          * Turn off all LEDs
          */
-        //% blockId="rgb_clear" block="%strip|clear"
+        //% blockId="clear" block="%strip|clear"
         //% strip.defl=strip
         //% weight=76
         //% parts="rgb"
@@ -220,7 +220,7 @@ namespace picobricks {
             this.show();
         }
 
-        //% blockId="rgb_length" block="%strip|length" blockGap=8
+        //% blockId="length" block="%strip|length" blockGap=8
         //% strip.defl=strip
         //% weight=60
         //% subcategory="RGB Leds"
@@ -231,7 +231,7 @@ namespace picobricks {
         /**
          * Apply brightness to current colors using a quadratic easing function
          */
-        //% blockId="rgb_set_brightness" block="%strip|set brightness %brightness" blockGap=8
+        //% blockId="setBrightness" block="%strip|set brightness %brightness" blockGap=8
         //% strip.defl=strip
         //% weight=59
         //% parts="rgb" 
@@ -243,7 +243,7 @@ namespace picobricks {
         /**
          * Converts a hue saturation luminosity value into a RGB Color
          */
-        //% blockId="rgb_each_brightness" block="%strip|ease brightness" blockGap=8
+        //% blockId="easeBrightness" block="%strip|ease brightness" blockGap=8
         //% strip.defl=strip
         //% weight=58
         //% parts="rgb" 
@@ -270,7 +270,7 @@ namespace picobricks {
          * Number of LEDs range
          */
         //% weight=89
-        //% blockId="rgb_range" block="%strip|range from %start|with %length|leds"
+        //% blockId="range" block="%strip|range from %start|with %length|leds"
         //% strip.defl=strip
         //% parts="rgb"
         //% blockSetVariable=range
