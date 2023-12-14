@@ -42,7 +42,7 @@ basic.forever(function () {
     strip.showColor(picobricks.rgbcolors(rgbColorsList.Red))
 })
 ```
-l
+
 * Gesture Brick : This brick is your ticket to transforming mundane routines into an extraordinary experience. Let's show something to sensor and name of color scrolls on Micro:Bit screen.
  Read color and scroll on the Micro:Bit screen.
 
