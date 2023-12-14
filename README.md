@@ -20,24 +20,40 @@ Picobricks for Micro:Bit teaches kids and adults coding, electronics basics and 
 
 ## Examples
 
-Show red color all rgb leds.
+* Oled Screen Brick : This is the area where you will show the degrees you measured in Picobricks for Micro:Bit. Let's write Hello on screen.                  
+
+```blocks
+picobricks.oledinit(60)
+basic.forever(function () {
+    picobricks.showString(
+        0,
+        0,
+        "Hello!",
+        1
+    )
+})
+```
+
+* RGB LED Brick : Here is the RGB LED bricks where notifiations are full of colorful explosions and at the same time it has a party atmosphere! Let's color red to all LEDS.
 
 ```blocks
 let strip = picobricks.create(DigitalPin.P8, 3)
 basic.forever(function () {
-    strip.showColor(picobricks.colors(rgbColors.Red))
+    strip.showColor(picobricks.rgbcolors(rgbColorsList.Red))
+})
 ```
-
-Read color and scroll on the Micro:Bit screen.
+l
+* Gesture Brick : This brick is your ticket to transforming mundane routines into an extraordinary experience. Let's show something to sensor and name of color scrolls on Micro:Bit screen.
+ Read color and scroll on the Micro:Bit screen.
 
 ```blocks
-picobricks.initGesture(sensorinit.color)
+picobricks.initGesture(gestureinit.color)
 basic.forever(function () {
     basic.showString(picobricks.readColor())
 })
 ```
 
-Scroll button state on the Micro:Bit screen. (0 or 1)
+* Button And Potentiometer Brick : Simple button can actually be the key to great power. Let's press button and result scrolls on Micro:Bit Screen. (0 or 1)
 
 ```blocks
 basic.forever(function () {
@@ -45,24 +61,24 @@ basic.forever(function () {
 })
 ```
 
-Set 90 degree angle to servo 1 motor.
+* Motor Driver Brick : This brick is not just a motor driver but also a tool to push the limits of your imagination and enjoy directing movement. Let's set 90 degree angle to servo 1 motor.
 
 ```blocks
 basic.forever(function () {
-    picobricks.servomotor(servoMotorType.Servo1, 90)
+    picobricks.servomotor(servoMotorType.servo1, 90)
 })
 ```
 
-Play piano.
+* Piano And Gaming Brick : This brick designed of offer makers an interactive and exciting world. Let's play piano.
 
 ```blocks
 picobricks.touchInit()
 basic.forever(function () {
-    picobricks.play()
+    picobricks.playPiano()
 })
 ```
 
-Draw smile icon on Micro:Bit when the selected IR controller button is pressed.
+* Wireless Brick : This brick allows you create new and exciting experiences by using wireless communication. Draw smile icon on Micro:Bit when the selected IR controller button is pressed.
 
 ```blocks
 picobricks.onIrButton(irButtonList.Number_1, irButtonAction.Pressed, function () {
@@ -71,28 +87,16 @@ picobricks.onIrButton(irButtonList.Number_1, irButtonAction.Pressed, function ()
 picobricks.connectIrReceiver(DigitalPin.P15)
 ```
 
-Scroll temperature value on the Micro:Bit screen.
+* Temperature And Humidity Brick : This brick is designed to measure and monitor temperature and humidity levels. Let's scroll temperature value on the Micro:Bit screen.
 
 ```blocks
 picobricks.shtcInit()
 basic.forever(function () {
-    basic.showNumber(picobricks.temperature())
+    basic.showNumber(picobricks.temperature(tempList.celsius))
 })
 ```
 
-Show text on OLED.
 
-```blocks
-picobricks.init(60)
-basic.forever(function () {
-    picobricks.showString(
-    0,
-    0,
-    "Hello!",
-    1
-    )
-})
-```
 
 ## Meta
 
