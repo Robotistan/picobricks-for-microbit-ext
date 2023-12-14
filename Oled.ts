@@ -245,7 +245,7 @@ namespace picobricks {
      * @param num is the number will be show, eg: 12
      * @param color is number color, eg: 1
      */
-    //% blockId=showNumber block="show a Number at x %x|y %y|number %num|color %color"
+    //% blockId=showNumber block="show a number at x %x|y %y|number %num|color %color"
     //% weight=80 blockGap=8
     //% parts=OLED12864_I2C trackArgs=0
     //% subcategory="OLED"
@@ -383,7 +383,7 @@ namespace picobricks {
      * OLED initialize
      * @param addr is i2c addr, eg: 60
      */
-    //% blockId=oledinit block="init OLED with addr %addr"
+    //% blockId=oledinit block="init oled with addr %addr"
     //% weight=100 blockGap=8
     //% parts=OLED12864_I2C trackArgs=0
     //% subcategory="OLED"
