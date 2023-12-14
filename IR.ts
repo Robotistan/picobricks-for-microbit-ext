@@ -193,7 +193,7 @@ namespace picobricks {
      * @param pin describe parameter here, eg: DigitalPin.P15
      */
     //% blockId=connectIrReceiver
-    //% block="connect IR receiver at pin %pin"
+    //% block="connect ir receiver at pin %pin"
     //% subcategory="IR Receiver"
     //% weight=90
     export function connectIrReceiver(pin: DigitalPin): void {
@@ -223,7 +223,7 @@ namespace picobricks {
      */
     //% subcategory="IR Receiver"
     //% blockId=onIrButton
-    //% block="on IR button | %button | %action"
+    //% block="on ir button | %button | %action"
     //% button.fieldEditor="gridpicker"
     //% button.fieldOptions.columns=3
     //% button.fieldOptions.tooltips="false"
