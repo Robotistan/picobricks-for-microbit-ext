@@ -20,7 +20,7 @@ Picobricks for Micro:Bit teaches kids and adults coding, electronics basics and 
 
 ## Examples
 
-* Oled Screen Brick : This is the area where you will show the degrees you measured in Picobricks for Micro:Bit. Let's write Hello on screen.                  
+* Oled Screen Brick : This is the area where you will show the degrees which you measured in Picobricks for Micro:Bit or any words. Let's write Hello on oled screen.                  
 
 ```blocks
 picobricks.oledinit(60)
