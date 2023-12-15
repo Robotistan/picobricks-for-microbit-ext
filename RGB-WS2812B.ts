@@ -1,3 +1,6 @@
+// GitHub Source: https://github.com/microsoft/pxt-neopixel
+// Minor changes made by: Robotistan
+
 enum rgbColorsList {
     //% block=red
     Red = 0xFF0000,
