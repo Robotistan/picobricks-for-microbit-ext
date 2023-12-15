@@ -1,3 +1,6 @@
+// GitHub Source: https://github.com/makecode-extensions/OLED12864_I2C
+// Minor changes made by: Robotistan
+
 namespace picobricks {
     let font: number[] = [];
     font[0] = 0x0022d422;
