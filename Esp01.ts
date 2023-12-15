@@ -1,3 +1,6 @@
+// GitHub Source: https://github.com/cytrontechnologies/pxt-esp8266
+// Minor changes made by: Robotistan
+
 namespace picobricks {
     let rxData = ""
     let espinit = false
