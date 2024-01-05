@@ -22,6 +22,16 @@ enum notes {
     highSi = 988
 }
 
+enum volumeStatus {
+    passive = 0,
+    active = 1
+}
+
+enum toneStatus {
+    passive = 0,
+    active = 1
+}
+
 namespace picobricks {
     const CHIP_ADDRESS = 0x37;
     const PROX_STAT = 0xAE;
@@ -133,7 +143,7 @@ namespace picobricks {
     let buff2 = pins.createBuffer(2);
     let buff5 = pins.createBuffer(5);
     let tone = 0;
-    let volume = 0;
+    let volume = 1;
     let noteDuration = 0;
 
     function configureMB(): void {
@@ -341,7 +351,22 @@ namespace picobricks {
         control.waitMicros(200000);
     }
 
-    function readSensorStatus(): void {
+    /**
+     * Touch sensor init
+     */
+    //% blockId="touchInit" block="touch sensor init"
+    //% subcategory="Touch Sensor-Piano"
+    export function touchInit(): void {
+        configureMB()
+        
+    }
+
+    /**
+     * Play Piano
+     */
+    //% blockId="playPiano" block="play piano volume buttons %volumeStatus and tone buttons %toneStatus"
+    //% subcategory="Touch Sensor-Piano"
+    export function playPiano(volumeButtons: volumeStatus, toneButtons: toneStatus): void {
         let proximityCounter = 0;
         let proximityStatus = 0;
         let val = 0;
@@ -356,61 +381,55 @@ namespace picobricks {
         rec_buf[1] = buff[0]
         rec_buf[2] = buff[1]
         ////////////////////DisplaySensorStatus
-        if ((rec_buf[0] & 0x01) != 0){
+        if ((rec_buf[0] & 0x01) != 0) {
             if (++proximityCounter > 30) {
                 proximityStatus = 1
                 proximityCounter = 0
             }
         }
-        else{
+        else {
             proximityCounter = 0;
             proximityStatus = 0;
         }
 
-        if ((rec_buf[1] & 0x02) != 0) { // A button
-            music.play(music.stringPlayable("B4 A4 G4 A4 C5 0 D5 C5 B4 C5 E5 0 F5 E5 D5 E5 B5 A5 G5 A5 B5 A5 G5 A5 C6 0 A5 C6 GS5 AS5 B5 A5 G5 A5 GS5 AS5 B5 A5 G5 A5 GS5 AS5 B5 A5 G5 F5 E5 0", 400), music.PlaybackMode.UntilDone)
-        }
-        if ((rec_buf[1] & 0x04) != 0) { // B button
-            music.play(music.stringPlayable("B4 A4 G4 A4 C5 0 D5 C5 B4 C5 E5 0 F5 E5 D5 E5 B5 A5 G5 A5 B5 A5 G5 A5 C6 0 A5 C6 GS5 AS5 B5 A5 G5 A5 GS5 AS5 B5 A5 G5 A5 GS5 AS5 B5 A5 G5 F5 E5 0", 400), music.PlaybackMode.InBackground)
-        }
-        if ((rec_buf[1] & 0x80) != 0) { // left button
+        if (((rec_buf[1] & 0x80) != 0) && (toneButtons == 1)) { // left button
             music.playTone(NOTE_D4, noteDuration)
             tone -= 1
         }
-        if ((rec_buf[1] & 0x20) != 0) { // right button
+        if (((rec_buf[1] & 0x20) != 0) && (toneButtons == 1)) { // right button
             music.playTone(NOTE_D4, noteDuration)
             tone += 1
         }
-        if ((rec_buf[1] & 0x10) != 0) { // top button
+        if (((rec_buf[1] & 0x10) != 0) && (volumeButtons == 1)) { // top button
             music.playTone(NOTE_D4, noteDuration)
             volume += 1
         }
-        if ((rec_buf[1] & 0x40) != 0) { // down button
+        if (((rec_buf[1] & 0x40) != 0) && (volumeButtons == 1)) { // down button
             music.playTone(NOTE_D4, noteDuration)
             volume -= 1
         }
 
-        if(tone <= 0)
+        if (tone <= 0)
             tone = 0
-        if(tone >= 1)
-            tone =1
+        if (tone >= 1)
+            tone = 1
 
         if (volume <= 0)
             volume = 0
         if (volume >= 1)
             volume = 1
 
-        if(volume == 0)
+        if (volume == 0)
             music.setVolume(100)
         if (volume == 1)
             music.setVolume(255)
 
 
         if ((rec_buf[1] & 0x08) != 0) { //C
-            if (tone == 0){
+            if (tone == 0) {
                 music.playTone(NOTE_C4, noteDuration)
             }
-            else if (tone == 1){
+            else if (tone == 1) {
                 music.playTone(NOTE_C5, noteDuration)
             }
         }
@@ -425,14 +444,14 @@ namespace picobricks {
         if ((rec_buf[2] & 0x20) != 0) { //E
             if (tone == 0) {
                 music.playTone(NOTE_E4, noteDuration)
-            } 
+            }
             else if (tone == 1) {
                 music.playTone(NOTE_E5, noteDuration)
             }
         }
         if ((rec_buf[2] & 0x10) != 0) { //F
             if (tone == 0) {
-                music.playTone(NOTE_F4, noteDuration)   
+                music.playTone(NOTE_F4, noteDuration)
             }
             else if (tone == 1) {
                 music.playTone(NOTE_F5, noteDuration)
@@ -440,23 +459,23 @@ namespace picobricks {
         }
         if ((rec_buf[2] & 0x08) != 0) { //G
             if (tone == 0) {
-                music.playTone(NOTE_G4, noteDuration) 
-            } 
+                music.playTone(NOTE_G4, noteDuration)
+            }
             else if (tone == 1) {
                 music.playTone(NOTE_G5, noteDuration)
             }
         }
         if ((rec_buf[2] & 0x04) != 0) { //A
             if (tone == 0) {
-                music.playTone(NOTE_A4, noteDuration) 
-            }  
+                music.playTone(NOTE_A4, noteDuration)
+            }
             else if (tone == 1) {
                 music.playTone(NOTE_A5, noteDuration)
             }
         }
         if ((rec_buf[2] & 0x02) != 0) { //B
             if (tone == 0) {
-                music.playTone(NOTE_B4, noteDuration)   
+                music.playTone(NOTE_B4, noteDuration)
             }
             else if (tone == 1) {
                 music.playTone(NOTE_B5, noteDuration)
@@ -464,7 +483,7 @@ namespace picobricks {
         }
         if ((rec_buf[2] & 0x01) != 0) { //C
             if (tone == 0) {
-                music.playTone(NOTE_C5, noteDuration)  
+                music.playTone(NOTE_C5, noteDuration)
             }
             else if (tone == 1) {
                 music.playTone(NOTE_C6, noteDuration)
@@ -476,28 +495,9 @@ namespace picobricks {
     }
 
     /**
-     * Touch sensor init
-     */
-    //% blockId="touchInit" block="touch sensor init"
-    //% subcategory="Touch Sensor-Piano"
-    export function touchInit(): void {
-        configureMB()
-        
-    }
-
-    /**
-     * Play Piano
-     */
-    //% blockId="playPiano" block="play piano"
-    //% subcategory="Touch Sensor-Piano"
-    export function playPiano(): void {
-        readSensorStatus()
-    }
-
-    /**
      * Play the selected note when the selected button is pressed
      */
-    //% block="play %pianoKeyAddresses and %notes"
+    //% blockId="userPiano" block="play %pianoKeyAddresses and %notes"
     //% subcategory="Touch Sensor-Piano"
     export function userPiano(button: pianoKeyAddresses, tone: notes): void {
         let val = 0;
