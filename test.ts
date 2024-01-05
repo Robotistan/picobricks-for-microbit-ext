@@ -23,7 +23,7 @@ basic.forever(function () {
 //play piano
 picobricks.touchInit()
 basic.forever(function () {
-    picobricks.playPiano()
+    
 })
 
 //draw smile icon on micro:bit when the selected IR controller button is pressed
