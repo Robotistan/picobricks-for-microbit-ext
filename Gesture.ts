@@ -829,6 +829,8 @@ namespace picobricks {
                     result = gestureType.right;
                     break;
                 default:
+                    result = gestureType.none;
+                    break;
             }
             return result;
         }
