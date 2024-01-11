@@ -21,10 +21,10 @@ basic.forever(function () {
 })
 
 //play piano
-//picobricks.touchInit()
-//basic.forever(function () {
-//    
-//})
+picobricks.touchInit()
+basic.forever(function () {
+    picobricks.playPiano(volumeStatus.passive, toneStatus.passive)
+})
 
 //draw smile icon on micro:bit when the selected IR controller button is pressed
 picobricks.onIrButton(irButtonList.Number_1, irButtonAction.Pressed, function () {
