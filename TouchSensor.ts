@@ -623,6 +623,7 @@ namespace picobricks {
 
         return false;
     }
+    
     export enum pianoKeyAddresses {
         //% block="X"
         X = 1,
@@ -652,5 +653,69 @@ namespace picobricks {
         B = 13,
         //% block="C2"
         C2 = 14
+    }
+
+    /**
+     * Value of touch sensor buttons
+     */
+    //% blockId=keyValue
+    //% block="key %key|value"
+    //% subcategory="Touch Sensor-Piano"
+    export function keyValue(key: pianoKeyAddresses): number {
+        let val = 0;
+
+        pins.i2cWriteNumber(CHIP_ADDRESS, PROX_STAT, NumberFormat.UInt8BE)
+        val = pins.i2cReadNumber(CHIP_ADDRESS, NumberFormat.UInt8BE)
+
+        pins.i2cWriteNumber(CHIP_ADDRESS, BUTTON_STATUS, NumberFormat.UInt8BE)
+        buff = pins.i2cReadBuffer(CHIP_ADDRESS, 2, false)
+
+        rec_buf[0] = val
+        rec_buf[1] = buff[0]
+        rec_buf[2] = buff[1]
+
+        if (((rec_buf[1] & 0x02) != 0) && (key == 1)) { // A button
+            return 1;
+        }
+        if (((rec_buf[1] & 0x04) != 0) && (key == 2)) { // B button
+            return 1;
+        }
+        if (((rec_buf[1] & 0x80) != 0) && (key == 5)) { // left button
+            return 1;
+        }
+        if (((rec_buf[1] & 0x20) != 0) && (key == 6)) { // right button
+            return 1;
+        }
+        if (((rec_buf[1] & 0x10) != 0) && (key == 3)) { // top button
+            return 1;
+        }
+        if (((rec_buf[1] & 0x40) != 0) && (key == 4)) { // down button
+            return 1;
+        }
+        if (((rec_buf[1] & 0x08) != 0) && (key == 7)) { //Left C
+            return 1;
+        }
+        if (((rec_buf[2] & 0x40) != 0) && (key == 8)) { //D
+            return 1;
+        }
+        if (((rec_buf[2] & 0x20) != 0) && (key == 9)) { //E
+            return 1;
+        }
+        if (((rec_buf[2] & 0x10) != 0) && (key == 10)) { //F
+            return 1;
+        }
+        if (((rec_buf[2] & 0x08) != 0) && (key == 11)) { //G
+            return 1;
+        }
+        if (((rec_buf[2] & 0x04) != 0) && (key == 12)) { //A
+            return 1;
+        }
+        if (((rec_buf[2] & 0x02) != 0) && (key == 13)) { //B
+            return 1;
+        }
+        if (((rec_buf[2] & 0x01) != 0) && (key == 14)) { //Right C
+            return 1;
+        }
+        return 0;
     }
 }
