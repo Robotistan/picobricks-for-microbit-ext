@@ -425,7 +425,7 @@ namespace picobricks {
      * Select number of pin and number of LEDs
      * @param pin describe parameter here, eg: DigitalPin.P8
      */
-    //% blockId=create block="rgb at pin %pin|with %numleds|leds as %mode"
+    //% blockId=create block="rgb at pin %pin|with %numleds|leds"
     //% weight=90 blockGap=8
     //% parts="rgb"
     //% trackArgs=0,2
