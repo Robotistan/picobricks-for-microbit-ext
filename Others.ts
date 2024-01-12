@@ -78,10 +78,13 @@ namespace picobricks {
         let duration = pins.pulseIn(echopin, PulseValue.High, 29000)
         let cm = (duration / 2) / 29.1
 
-        if(cm > 0)
+        if((cm <= 0) || (cm >= 480)){
+            return result
+        }
+        else{
+            result = cm;
             return cm
-        else 
-            return 0
+        }
     }
 
     /**
