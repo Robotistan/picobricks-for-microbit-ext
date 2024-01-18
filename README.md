@@ -74,7 +74,7 @@ basic.forever(function () {
 ```blocks
 picobricks.touchInit()
 basic.forever(function () {
-    picobricks.playPiano()
+    picobricks.playPiano(volumeStatus.passive, toneStatus.passive)
 })
 ```
 
