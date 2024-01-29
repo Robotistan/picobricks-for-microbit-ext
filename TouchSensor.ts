@@ -400,7 +400,7 @@ namespace picobricks {
             music.playTone(NOTE_D4, noteDuration)
             tone += 1
         }
-        if (((rec_buf[1] & 0x10) != 0) && (volumeButtons == 1)) { // top button
+        if (((rec_buf[1] & 0x10) != 0) && (volumeButtons == 1)) { // up button
             music.playTone(NOTE_D4, noteDuration)
             volume += 1
         }
