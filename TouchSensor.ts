@@ -362,7 +362,7 @@ namespace picobricks {
     }
 
     /**
-     * Play Piano
+     * Touch any notes on touch sensor brick and start to play piano
      */
     //% blockId="playPiano" block="play piano volume buttons %volumeStatus and tone buttons %toneStatus"
     //% subcategory="Touch Sensor-Piano"
