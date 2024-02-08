@@ -89,6 +89,7 @@ namespace picobricks {
 
     /**
      * Read soil sensor value (Integer) on selected analog pin
+     * @param pin describe parameter here, eg: DigitalPin.P2
      */
     //% blockId=soilRead
     //% block="soil sensor value with analog pin at %pin1"
