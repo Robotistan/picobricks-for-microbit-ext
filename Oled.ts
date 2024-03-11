@@ -318,11 +318,11 @@ namespace picobricks {
      * invert display
      * @param d true: invert / false: normal, eg: true
      */
-    //% blockId=invert block="invert display %d"
+    //% blockId=oledInvert block="invert display %d"
     //% weight=65 blockGap=8
     //% parts=OLED12864_I2C trackArgs=0
     //% subcategory="OLED"
-    export function invert(d: boolean = true) {
+    export function oledInvert(d: boolean = true) {
         let n = (d) ? 0xA7 : 0xA6
         cmd1(n)
     }
