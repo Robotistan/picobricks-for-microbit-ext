@@ -1,26 +1,26 @@
 
-enum gestureInitType {
+enum GestureInitType {
     //% block=none
-    none = 0,
+    None = 0,
     //% block=proximity
-    proximity = 1,
+    Proximity = 1,
     //% block=gesture
-    gesture = 2,
+    Gesture = 2,
     //% block=color
-    color = 3
+    Color = 3
 }
 
-enum gestureType {
+enum GestureType {
     //% block=none
-    none = 0,
+    None = 0,
     //% block=right
-    right = 1,
+    Right = 1,
     //% block=left
-    left = 2,
+    Left = 2,
     //% block=up
-    up = 3,
+    Up = 3,
     //% block=down
-    down = 4,
+    Down = 4,
 }
 
 namespace picobricks {
@@ -159,7 +159,7 @@ namespace picobricks {
         return hue * 60 / 100;
     }
 
-    let currentMode = gestureInitType.none
+    let currentMode = GestureInitType.None
 
     /**
      * Initialize the selected gesture module feature
@@ -167,7 +167,7 @@ namespace picobricks {
     //% blockId=initGesture
     //% block="gesture sensor init |%sensor"
     //% subcategory="Gesture"
-    export function initGesture(sensor: gestureInitType): void {
+    export function initGesture(sensor: GestureInitType): void {
         i2cwrite(ADDR, APDS9960_ATIME, 252) // default inte time 4x2.78ms
         i2cwrite(ADDR, APDS9960_CONTROL, 0x03) // todo: make gain adjustable
         i2cwrite(ADDR, APDS9960_ENABLE, 0x00) // put everything off
@@ -177,16 +177,16 @@ namespace picobricks {
         gestureRuns = false
 
         switch (sensor) {
-            case gestureInitType.proximity:
-                currentMode = gestureInitType.proximity
+            case GestureInitType.Proximity:
+                currentMode = GestureInitType.Proximity
                 proximityInit()
                 break;
-            case gestureInitType.gesture:
-                currentMode = gestureInitType.gesture
+            case GestureInitType.Gesture:
+                currentMode = GestureInitType.Gesture
                 gestureInit()
                 break;
-            case gestureInitType.color:
-                currentMode = gestureInitType.color
+            case GestureInitType.Color:
+                currentMode = GestureInitType.Color
                 colorInit()
                 break;
             default:
@@ -221,7 +221,7 @@ namespace picobricks {
     //% block="gesture sensor hue value"
     //% subcategory="Gesture"
     export function readHue(): number {
-        if (!(currentMode == gestureInitType.color)) {
+        if (!(currentMode == GestureInitType.Color)) {
             return 0
         }
         let tmp = i2cread(ADDR, APDS9960_STATUS) & 0x1;
@@ -275,7 +275,7 @@ namespace picobricks {
     //% block="gesture sensor red color value"
     //% subcategory="Gesture"
     export function readRedColor(): number {
-        if (!(currentMode == gestureInitType.color)) {
+        if (!(currentMode == GestureInitType.Color)) {
             return 0
         }
         let tmp = i2cread(ADDR, APDS9960_STATUS) & 0x1;
@@ -294,7 +294,7 @@ namespace picobricks {
     //% block="gesture sensor green color value"
     //% subcategory="Gesture"
     export function readGreenColor(): number {
-        if (!(currentMode == gestureInitType.color)) {
+        if (!(currentMode == GestureInitType.Color)) {
             return 0
         }
         let tmp = i2cread(ADDR, APDS9960_STATUS) & 0x1;
@@ -313,7 +313,7 @@ namespace picobricks {
     //% block="gesture sensor blue color value"
     //% subcategory="Gesture"
     export function readBlueColor(): number {
-        if (!(currentMode == gestureInitType.color)) {
+        if (!(currentMode == GestureInitType.Color)) {
             return 0
         }
         let tmp = i2cread(ADDR, APDS9960_STATUS) & 0x1;
@@ -332,7 +332,7 @@ namespace picobricks {
     //% block="gesture sensor brightness"
     //% subcategory="Gesture"
     export function brightness(): number {
-        if (!(currentMode == gestureInitType.color)) {
+        if (!(currentMode == GestureInitType.Color)) {
             return 0
         }
         let tmp = i2cread(ADDR, APDS9960_STATUS) & 0x1;
@@ -351,7 +351,7 @@ namespace picobricks {
     //% block="gesture sensor proximity value"
     //% subcategory="Gesture"
     export function readProximity(): number {
-        if (!(currentMode == gestureInitType.proximity)) {
+        if (!(currentMode == GestureInitType.Proximity)) {
             return 0
         }
         let tmp = i2cread(ADDR, APDS9960_STATUS) & 0x2;
@@ -811,25 +811,25 @@ namespace picobricks {
             return motion;
         }
         read(): number {
-            if (!(currentMode == gestureInitType.gesture)) {
+            if (!(currentMode == GestureInitType.Gesture)) {
                 return 0
             }
-            let result = gestureType.none;
+            let result = GestureType.None;
             switch (this.readGesture()) {
                 case direction.up:
-                    result = gestureType.up;
+                    result = GestureType.Up;
                     break;
                 case direction.down:
-                    result = gestureType.down;
+                    result = GestureType.Down;
                     break;
                 case direction.left:
-                    result = gestureType.left;
+                    result = GestureType.Left;
                     break;
                 case direction.right:
-                    result = gestureType.right;
+                    result = GestureType.Right;
                     break;
                 default:
-                    result = gestureType.none;
+                    result = GestureType.None;
                     break;
             }
             return result;
@@ -847,7 +847,7 @@ namespace picobricks {
         apds9960.enableGestureSensor(false);
         basic.pause(100);
         control.inBackground(() => {
-            let prevGst = gestureType.none;
+            let prevGst = GestureType.None;
             while (gestureRuns) {
                 let gst = apds9960.read();
                 if (gst != prevGst) {
@@ -865,7 +865,7 @@ namespace picobricks {
     //% blockId=onGesture
     //% blockId="onGesture" block="on gesture |%gesture"
     //% subcategory="Gesture"
-    export function onGesture(gesture: gestureType, handler: () => void) {
+    export function onGesture(gesture: GestureType, handler: () => void) {
         control.onEvent(3100, gesture, handler);
     }
 }
