@@ -1,5 +1,5 @@
 
-enum gestureinit {
+enum gestureInitType {
     //% block=none
     none = 0,
     //% block=proximity
@@ -159,7 +159,7 @@ namespace picobricks {
         return hue * 60 / 100;
     }
 
-    let currentMode = gestureinit.none
+    let currentMode = gestureInitType.none
 
     /**
      * Initialize the selected gesture module feature
@@ -167,7 +167,7 @@ namespace picobricks {
     //% blockId=initGesture
     //% block="gesture sensor init |%sensor"
     //% subcategory="Gesture"
-    export function initGesture(sensor: gestureinit): void {
+    export function initGesture(sensor: gestureInitType): void {
         i2cwrite(ADDR, APDS9960_ATIME, 252) // default inte time 4x2.78ms
         i2cwrite(ADDR, APDS9960_CONTROL, 0x03) // todo: make gain adjustable
         i2cwrite(ADDR, APDS9960_ENABLE, 0x00) // put everything off
@@ -177,16 +177,16 @@ namespace picobricks {
         gestureRuns = false
 
         switch (sensor) {
-            case gestureinit.proximity:
-                currentMode = gestureinit.proximity
+            case gestureInitType.proximity:
+                currentMode = gestureInitType.proximity
                 proximityInit()
                 break;
-            case gestureinit.gesture:
-                currentMode = gestureinit.gesture
+            case gestureInitType.gesture:
+                currentMode = gestureInitType.gesture
                 gestureInit()
                 break;
-            case gestureinit.color:
-                currentMode = gestureinit.color
+            case gestureInitType.color:
+                currentMode = gestureInitType.color
                 colorInit()
                 break;
             default:
@@ -221,7 +221,7 @@ namespace picobricks {
     //% block="gesture sensor hue value"
     //% subcategory="Gesture"
     export function readHue(): number {
-        if (!(currentMode == gestureinit.color)) {
+        if (!(currentMode == gestureInitType.color)) {
             return 0
         }
         let tmp = i2cread(ADDR, APDS9960_STATUS) & 0x1;
@@ -275,7 +275,7 @@ namespace picobricks {
     //% block="gesture sensor red color value"
     //% subcategory="Gesture"
     export function readRedColor(): number {
-        if (!(currentMode == gestureinit.color)) {
+        if (!(currentMode == gestureInitType.color)) {
             return 0
         }
         let tmp = i2cread(ADDR, APDS9960_STATUS) & 0x1;
@@ -294,7 +294,7 @@ namespace picobricks {
     //% block="gesture sensor green color value"
     //% subcategory="Gesture"
     export function readGreenColor(): number {
-        if (!(currentMode == gestureinit.color)) {
+        if (!(currentMode == gestureInitType.color)) {
             return 0
         }
         let tmp = i2cread(ADDR, APDS9960_STATUS) & 0x1;
@@ -313,7 +313,7 @@ namespace picobricks {
     //% block="gesture sensor blue color value"
     //% subcategory="Gesture"
     export function readBlueColor(): number {
-        if (!(currentMode == gestureinit.color)) {
+        if (!(currentMode == gestureInitType.color)) {
             return 0
         }
         let tmp = i2cread(ADDR, APDS9960_STATUS) & 0x1;
@@ -332,7 +332,7 @@ namespace picobricks {
     //% block="gesture sensor brightness"
     //% subcategory="Gesture"
     export function brightness(): number {
-        if (!(currentMode == gestureinit.color)) {
+        if (!(currentMode == gestureInitType.color)) {
             return 0
         }
         let tmp = i2cread(ADDR, APDS9960_STATUS) & 0x1;
@@ -351,7 +351,7 @@ namespace picobricks {
     //% block="gesture sensor proximity value"
     //% subcategory="Gesture"
     export function readProximity(): number {
-        if (!(currentMode == gestureinit.proximity)) {
+        if (!(currentMode == gestureInitType.proximity)) {
             return 0
         }
         let tmp = i2cread(ADDR, APDS9960_STATUS) & 0x2;
@@ -811,7 +811,7 @@ namespace picobricks {
             return motion;
         }
         read(): number {
-            if (!(currentMode == gestureinit.gesture)) {
+            if (!(currentMode == gestureInitType.gesture)) {
                 return 0
             }
             let result = gestureType.none;
