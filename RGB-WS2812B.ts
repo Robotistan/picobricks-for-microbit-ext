@@ -228,11 +228,11 @@ namespace picobricks {
             this.show();
         }
 
-        //% blockId=length block="%strip|length" blockGap=8
+        //% blockId=ws2812_length block="%strip|length" blockGap=8
         //% strip.defl=strip
         //% weight=60
         //% subcategory="RGB Leds"
-        length() {
+        ws2812_length() {
             return this._length;
         }
 
