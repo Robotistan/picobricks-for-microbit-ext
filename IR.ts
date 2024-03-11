@@ -190,7 +190,7 @@ namespace picobricks {
 
     /**
      * Connect IR receiver
-     * @param pin describe parameter here, eg: DigitalPin.P15
+     * @param pin digital input pin where IR sensor is connected, eg: DigitalPin.P15
      */
     //% blockId=connectIrReceiver
     //% block="connect IR receiver at pin %pin"
