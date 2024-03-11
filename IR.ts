@@ -1,4 +1,4 @@
-const enum irButtonList {
+const enum IrButtonList {
     //% block="1"
     Number_1 = 162,
     //% block="2"
@@ -43,7 +43,7 @@ const enum irButtonList {
     Any = -1,
 }
 
-const enum irButtonAction {
+const enum IrButtonAction {
     //% block="pressed"
     Pressed = 0,
     //% block="released"
@@ -73,11 +73,11 @@ namespace picobricks {
         onIrDatagram: () => void;
     }
     class irButtonHandler {
-        irButton: irButtonList;
+        irButton: IrButtonList;
         onEvent: () => void;
 
         constructor(
-            irButton: irButtonList,
+            irButton: IrButtonList,
             onEvent: () => void
         ) {
             this.irButton = irButton;
@@ -155,12 +155,12 @@ namespace picobricks {
             const newCommand = irState.commandSectionBits >> 8;
             if (newCommand !== irState.activeCommand) {
                 if (irState.activeCommand >= 0) {
-                    const releasedHandler = irState.onIrButtonReleased.find(h => h.irButton === irState.activeCommand || irButtonList.Any === h.irButton);
+                    const releasedHandler = irState.onIrButtonReleased.find(h => h.irButton === irState.activeCommand || IrButtonList.Any === h.irButton);
                     if (releasedHandler) {
                         background.schedule(releasedHandler.onEvent, background.thread.UserCallback, background.irMode.Once, 0);
                     }
                 }
-                const pressedHandler = irState.onIrButtonPressed.find(h => h.irButton === newCommand || irButtonList.Any === h.irButton);
+                const pressedHandler = irState.onIrButtonPressed.find(h => h.irButton === newCommand || IrButtonList.Any === h.irButton);
                 if (pressedHandler) {
                     background.schedule(pressedHandler.onEvent, background.thread.UserCallback, background.irMode.Once, 0);
                 }
@@ -208,7 +208,7 @@ namespace picobricks {
         } else {
             const now = input.runningTime();
             if (now > irState.repeatTimeout) {
-                const handler = irState.onIrButtonReleased.find(h => h.irButton === irState.activeCommand || irButtonList.Any === h.irButton);
+                const handler = irState.onIrButtonReleased.find(h => h.irButton === irState.activeCommand || IrButtonList.Any === h.irButton);
                 if (handler) {
                     background.schedule(handler.onEvent, background.thread.UserCallback, background.irMode.Once, 0);
                 }
@@ -228,9 +228,9 @@ namespace picobricks {
     //% button.fieldOptions.columns=3
     //% button.fieldOptions.tooltips="false"
     //% weight=80
-    export function onIrButton(button: irButtonList, action: irButtonAction, handler: () => void) {
+    export function onIrButton(button: IrButtonList, action: IrButtonAction, handler: () => void) {
         initIrState();
-        if (action === irButtonAction.Pressed) {
+        if (action === IrButtonAction.Pressed) {
             irState.onIrButtonPressed.push(new irButtonHandler(button, handler));
         }
         else {
@@ -313,7 +313,7 @@ namespace picobricks {
     //% button.fieldOptions.tooltips="false"
     //% block="IR button code %button"
     //% weight=60
-    export function irButtonCode(button: irButtonList): number {
+    export function irButtonCode(button: IrButtonList): number {
         basic.pause(0); 
         return button as number;
     }
