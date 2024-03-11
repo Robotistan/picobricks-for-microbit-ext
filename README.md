@@ -47,7 +47,7 @@ basic.forever(function () {
  Read color and scroll on the Micro:Bit screen.
 
 ```blocks
-picobricks.initGesture(gestureinit.color)
+picobricks.initGesture(gestureInitType.color)
 basic.forever(function () {
     basic.showString(picobricks.readColor())
 })
