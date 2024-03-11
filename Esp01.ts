@@ -204,7 +204,7 @@ namespace picobricks {
     //% weight=30
     //% blockGap=8
     //% blockId=isThingspeakUploaded
-    //% block="thingspeak data uploaded"
+    //% block="ThingSpeak data uploaded"
     //% subcategory="Wi-Fi"
     export function isThingspeakUploaded(): boolean {
         return thingspeakUploaded
@@ -224,7 +224,7 @@ namespace picobricks {
      */
     //% weight=40
     //% blockId=uploadThingspeak
-    //% block="upload data to thingspeak|write API key %writeApiKey|field 1 %field1||field 2 %field2|field 3 %field3|field 4 %field4|field 5 %field5|field 6 %field6|field 7 %field7|field 8 %field8"
+    //% block="upload data to ThingSpeak|write API key %writeApiKey|field 1 %field1||field 2 %field2|field 3 %field3|field 4 %field4|field 5 %field5|field 6 %field6|field 7 %field7|field 8 %field8"
     //% subcategory="Wi-Fi"
     export function uploadThingspeak(writeApiKey: string,
         field1: number,
