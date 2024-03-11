@@ -58,8 +58,8 @@ namespace picobricks {
 
     /**
      * Read ultrasonic distance sensor (HC-SR04) value (Integer) on selected trig and echo pin 
-     * @param pin1 describe parameter here, eg: DigitalPin.P2
-     * @param pin2 describe parameter here, eg: DigitalPin.P1
+     * @param pin1 the pin number where trig pin is connected, eg: DigitalPin.P2
+     * @param pin2 the pin number where echo pin is connected, eg: DigitalPin.P1
      */
     //% blockId=hcsrRead
     //% block="ultrasonic distance sensor value with trig pin at %pin1 and echo pin at %pin2"
