@@ -307,7 +307,7 @@ namespace picobricks {
     }
 
     /**
-     * Read the blue color (0-255) value from the action module
+     * Read the blue color (0-255) value from the gesture sensor
      */
     //% blockId=readBlueColor
     //% block="gesture sensor blue color value"
