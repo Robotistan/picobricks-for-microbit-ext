@@ -232,7 +232,7 @@ namespace picobricks {
         //% strip.defl=strip
         //% weight=60
         //% subcategory="RGB Leds"
-        ws2812_length() {
+        length() {
             return this._length;
         }
 
