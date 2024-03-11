@@ -136,7 +136,7 @@ namespace picobricks {
      */
     //% weight=80
     //% blockId=isESPInitialized
-    //% block="wifi module initialized"
+    //% block="Wi-Fi module initialized"
     //% subcategory="Wi-Fi"
     export function isESPInitialized(): boolean {
         return espInitialized
@@ -150,7 +150,7 @@ namespace picobricks {
      */
     //% weight=70
     //% blockId=esp01init
-    //% block="initialize wifi module: tx %tx rx %rx baudrate %baudrate"
+    //% block="initialize Wi-Fi module: tx %tx rx %rx baudrate %baudrate"
     //% subcategory="Wi-Fi"
     export function esp01init(tx: SerialPin, rx: SerialPin, baudrate: BaudRate) {
         // Redirect the serial port.
@@ -170,7 +170,7 @@ namespace picobricks {
      */
     //% weight=50
     //% blockId=isWifiConnected
-    //% block="wifi connected"
+    //% block="Wi-Fi connected"
     //% subcategory="Wi-Fi"
     export function isWifiConnected(): boolean {
         sendCommand("AT+CIPSTATUS")
@@ -191,7 +191,7 @@ namespace picobricks {
      */
     //% weight=60
     //% blockId=connectWiFi
-    //% block="connect to WiFi: ssid %ssid password %password"
+    //% block="connect to Wi-Fi: ssid %ssid password %password"
     //% subcategory="Wi-Fi"
     export function connectWiFi(ssid: string, password: string) {
         sendCommand("AT+CWMODE=1", "OK")
@@ -204,7 +204,7 @@ namespace picobricks {
     //% weight=30
     //% blockGap=8
     //% blockId=isThingspeakUploaded
-    //% block="thingSpeak data uploaded"
+    //% block="thingspeak data uploaded"
     //% subcategory="Wi-Fi"
     export function isThingspeakUploaded(): boolean {
         return thingspeakUploaded
