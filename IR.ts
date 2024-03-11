@@ -193,7 +193,7 @@ namespace picobricks {
      * @param pin describe parameter here, eg: DigitalPin.P15
      */
     //% blockId=connectIrReceiver
-    //% block="connect ir receiver at pin %pin"
+    //% block="connect IR receiver at pin %pin"
     //% subcategory="IR Receiver"
     //% weight=90
     export function connectIrReceiver(pin: DigitalPin): void {
@@ -223,7 +223,7 @@ namespace picobricks {
      */
     //% subcategory="IR Receiver"
     //% blockId=onIrButton
-    //% block="on ir button | %button | %action"
+    //% block="on IR button | %button | %action"
     //% button.fieldEditor="gridpicker"
     //% button.fieldOptions.columns=3
     //% button.fieldOptions.tooltips="false"
@@ -243,7 +243,7 @@ namespace picobricks {
      */
     //% subcategory="IR Receiver"
     //% blockId=selectIrButton
-    //% block="select ir button"
+    //% block="select IR button"
     //% weight=20
     export function selectIrButton(): string {
         basic.pause(0); 
@@ -290,7 +290,7 @@ namespace picobricks {
      */
     //% subcategory="IR Receiver"
     //% blockId=wasIrDataReceived
-    //% block="ir data was received"
+    //% block="IR data was received"
     //% weight=70
     export function wasIrDataReceived(): boolean {
         basic.pause(0); 
@@ -311,7 +311,7 @@ namespace picobricks {
     //% button.fieldEditor="gridpicker"
     //% button.fieldOptions.columns=3
     //% button.fieldOptions.tooltips="false"
-    //% block="ir button code %button"
+    //% block="IR button code %button"
     //% weight=60
     export function irButtonCode(button: irButtonList): number {
         basic.pause(0); 
