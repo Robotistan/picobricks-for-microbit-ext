@@ -362,7 +362,9 @@ namespace picobricks {
     }
 
     /**
-     * Touch any notes on touch sensor brick and start to play piano
+     * Touch any notes on touch sensor brick and start to play piano,
+     * set "volume buttons" to 1 to enable volume control with "up","down" buttons,
+     * set "tone buttons" to 1 to enable tone switch with "left","right" buttons
      */
     //% blockId="playPiano" block="play piano volume buttons %volumeStatus and tone buttons %toneStatus"
     //% subcategory="Touch Sensor-Piano"
