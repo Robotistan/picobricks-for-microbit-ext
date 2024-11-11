@@ -9,7 +9,7 @@
 namespace picobricks {
     const THINGSPEAK_API_URL = "api.thingspeak.com"
     
-    let thingspeakUploaded = false
+    let ThingSpeakUploaded = false
     let espInitialized = false
     let rxData = ""
 
@@ -204,15 +204,15 @@ namespace picobricks {
      */
     //% weight=30
     //% blockGap=8
-    //% blockId=isThingspeakUploaded
+    //% blockId=isThingSpeakUploaded
     //% block="ThingSpeak data uploaded"
     //% subcategory="Wi-Fi"
-    export function isThingspeakUploaded(): boolean {
-        return thingspeakUploaded
+    export function isThingSpeakUploaded(): boolean {
+        return thingSpeakUploaded
     }
 
     /**
-     * Upload data to ThingSpeak (Data can only be updated to Thingspeak every 15 seconds).
+     * Upload data to ThingSpeak (Data can only be updated to ThingSpeak every 15 seconds).
      * @param writeApiKey ThingSpeak Write API Key.
      * @param field1 Data for Field 1.
      * @param field2 Data for Field 2.
@@ -224,10 +224,10 @@ namespace picobricks {
      * @param field8 Data for Field 8.
      */
     //% weight=40
-    //% blockId=uploadThingspeak
+    //% blockId=uploadThingSpeak
     //% block="upload data to ThingSpeak|write API key %writeApiKey|field 1 %field1||field 2 %field2|field 3 %field3|field 4 %field4|field 5 %field5|field 6 %field6|field 7 %field7|field 8 %field8"
     //% subcategory="Wi-Fi"
-    export function uploadThingspeak(writeApiKey: string,
+    export function uploadThingSpeak(writeApiKey: string,
         field1: number,
         field2: number = null,
         field3: number = null,
@@ -237,7 +237,7 @@ namespace picobricks {
         field7: number = null,
         field8: number = null) {
 
-        thingspeakUploaded = false
+        ThingSpeakUploaded = false
         if (isWifiConnected() == false) return
 
         if (sendCommand("AT+CIPSTART=\"TCP\",\"" + THINGSPEAK_API_URL + "\",80", "OK", 10000) == false) return
@@ -264,7 +264,7 @@ namespace picobricks {
 
         if (uploadCount == 0) return
 
-        thingspeakUploaded = true
+        ThingSpeakUploaded = true
         return
     }
 }
