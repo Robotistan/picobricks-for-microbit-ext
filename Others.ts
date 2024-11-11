@@ -62,7 +62,7 @@ namespace picobricks {
      * @param pin2 the pin number where echo pin is connected, eg: DigitalPin.P1
      */
     //% blockId=hcsrRead
-    //% block="ultrasonic distance sensor value with trig pin at %pin1 and echo pin at %pin2"
+    //% block="distance in cm with trig pin at %pin1 and echo pin at %pin2"
     //% subcategory="Others"
     export function hcsrRead(pin1: DigitalPin, pin2: DigitalPin): number {
         let trigpin = pin1
@@ -88,11 +88,11 @@ namespace picobricks {
     }
 
     /**
-     * Read soil sensor value (Integer) on selected analog pin
+     * Read soil moisture (Integer) on selected analog pin
      * @param pin describe parameter here, eg: DigitalPin.P2
      */
     //% blockId=soilRead
-    //% block="soil sensor value with analog pin at %pin1"
+    //% block="soil moisture with analog pin at %pin1"
     //% subcategory="Others"
     export function soilRead(pin1: AnalogPin): number {
         let analogpin = pin1
@@ -101,7 +101,7 @@ namespace picobricks {
     }
 
     /**
-     * Read gas sensor  value (Integer) on selected analog pin (Integer)
+     * Read gas sensor value (Integer) on selected analog pin (Integer)
      */
     //% blockId=mq2Read
     //% block="gas sensor value with analog pin at %pin1"
