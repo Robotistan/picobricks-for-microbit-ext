@@ -1,7 +1,7 @@
 # Picobricks for Micro:Bit
 
 Picobricks for Micro:Bit teaches kids and adults coding, electronics basics and advanced technology while providing a fun and fascinating experience filled with project. 
-[Click Here to Explore PicoBricks for micro:bit](https://picobricks.com/pages/kickstarter)
+[Click Here to Explore PicoBricks for micro:bit](https://picobricks.com/collections/micro-bit-kits)
 
 ## Blocks
 
@@ -39,7 +39,7 @@ basic.forever(function () {
 ```blocks
 let strip = picobricks.create(DigitalPin.P8, 3)
 basic.forever(function () {
-    strip.showColor(picobricks.rgbcolors(rgbColorsList.Red))
+    strip.showColor(picobricks.rgbcolors(PicoBricksRgbColorsList.Red))
 })
 ```
 
@@ -47,7 +47,7 @@ basic.forever(function () {
  Read color and scroll on the Micro:Bit screen.
 
 ```blocks
-picobricks.initGesture(gestureInitType.color)
+picobricks.initGesture(PicoBricksGestureInitType.Color)
 basic.forever(function () {
     basic.showString(picobricks.readColor())
 })
@@ -65,7 +65,7 @@ basic.forever(function () {
 
 ```blocks
 basic.forever(function () {
-    picobricks.servomotor(servoMotorType.servo1, 90)
+    picobricks.servomotor(PicoBricksServoMotorType.Servo1, 90)
 })
 ```
 
@@ -74,14 +74,14 @@ basic.forever(function () {
 ```blocks
 picobricks.touchInit()
 basic.forever(function () {
-    picobricks.playPiano(volumeStatus.passive, toneStatus.passive)
+    picobricks.playPiano(PicoBricksVolumeStatus.Passive, PicoBricksToneStatus.Passive)
 })
 ```
 
 * Wireless Brick : This brick allows you create new and exciting experiences by using wireless communication. Draw smile icon on Micro:Bit when the selected IR controller button is pressed.
 
 ```blocks
-picobricks.onIrButton(irButtonList.Number_1, irButtonAction.Pressed, function () {
+picobricks.onIrButton(PicoBricksIrButtonList.Number_1, PicoBricksIrButtonAction.Pressed, function () {
     basic.showIcon(IconNames.Heart)
 })
 picobricks.connectIrReceiver(DigitalPin.P15)
@@ -92,10 +92,13 @@ picobricks.connectIrReceiver(DigitalPin.P15)
 ```blocks
 picobricks.shtcInit()
 basic.forever(function () {
-    basic.showNumber(picobricks.temperature(tempList.celsius))
+    basic.showNumber(picobricks.temperature(PicoBricksTempList.Celsius))
 })
 ```
 
+## Further Education Material and Tutorials
+
+TO DO: rbt ist linkleri
 
 
 ## Meta
