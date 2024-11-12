@@ -192,7 +192,7 @@ namespace picobricks {
      * Connect IR receiver
      * @param pin digital input pin where IR sensor is connected, eg: DigitalPin.P15
      */
-    //% blockId=connectIrReceiver
+    //% blockId=picoBricksConnectIrReceiver
     //% block="connect IR receiver at pin %pin"
     //% subcategory="IR Receiver"
     //% weight=90
@@ -222,7 +222,7 @@ namespace picobricks {
      * When the selected IR controller button is pressed
      */
     //% subcategory="IR Receiver"
-    //% blockId=onIrButton
+    //% blockId=picoBricksOnIrButton
     //% block="on IR button | %button | %action"
     //% button.fieldEditor="gridpicker"
     //% button.fieldOptions.columns=3
@@ -242,7 +242,7 @@ namespace picobricks {
      * Value of the selected IR Controller button
      */
     //% subcategory="IR Receiver"
-    //% blockId=selectIrButton
+    //% blockId=picoBricksSelectIrButton
     //% block="select IR button"
     //% weight=20
     export function selectIrButton(): string {
@@ -289,7 +289,7 @@ namespace picobricks {
      * Returns the value (True or False) when any button on the IR remote control is pressed
      */
     //% subcategory="IR Receiver"
-    //% blockId=wasIrDataReceived
+    //% blockId=picoBricksWasIrDataReceived
     //% block="IR data was received"
     //% weight=70
     export function wasIrDataReceived(): boolean {
@@ -307,7 +307,7 @@ namespace picobricks {
      * Code of the selected IR controller button
      */
     //% subcategory="IR Receiver"
-    //% blockId=irButtonCode
+    //% blockId=picoBricksIrButtonCode
     //% button.fieldEditor="gridpicker"
     //% button.fieldOptions.columns=3
     //% button.fieldOptions.tooltips="false"
