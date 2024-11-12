@@ -1,11 +1,11 @@
 //show red color all rgb leds
 let strip = picobricks.create(DigitalPin.P8, 3)
 basic.forever(function () {
-    strip.showColor(picobricks.rgbcolors(rgbColorsList.Red))
+    strip.showColor(picobricks.rgbcolors(PicoBricksRgbColorsList.Red))
 })
 
 //read color and scroll on the micro:bit screen
-picobricks.initGesture(gestureInitType.color)
+picobricks.initGesture(PicoBricksGestureInitType.Color)
 basic.forever(function () {
     basic.showString(picobricks.readColor())
 })
@@ -17,17 +17,17 @@ basic.forever(function () {
 
 //set 90 degree angle to servo 1 motor
 basic.forever(function () {
-    picobricks.servomotor(servoMotorType.servo1, 90)
+    picobricks.servomotor(PicoBricksServoMotorType.Servo1, 90)
 })
 
 //play piano
 picobricks.touchInit()
 basic.forever(function () {
-    picobricks.playPiano(volumeStatus.passive, toneStatus.passive)
+    picobricks.playPiano(PicoBricksVolumeStatus.passive, PicoBricksToneStatus.passive)
 })
 
 //draw smile icon on micro:bit when the selected IR controller button is pressed
-picobricks.onIrButton(irButtonList.Number_1, irButtonAction.Pressed, function () {
+picobricks.onIrButton(PicoBricksIrButtonList.Number_1, PicoBricksIrButtonAction.Pressed, function () {
     basic.showIcon(IconNames.Heart)
 })
 picobricks.connectIrReceiver(DigitalPin.P15)
@@ -35,7 +35,7 @@ picobricks.connectIrReceiver(DigitalPin.P15)
 //scroll temperature value on the micro:bit screen 
 picobricks.shtcInit()
 basic.forever(function () {
-    basic.showNumber(picobricks.temperature(tempList.celsius))
+    basic.showNumber(picobricks.temperature(PicoBricksTempList.Celsius))
 })
 
 //show text on OLED
