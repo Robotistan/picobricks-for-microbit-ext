@@ -63,7 +63,7 @@ namespace picobricks {
      * @param timeout Timeout in milliseconds.
      */
     //% blockHidden=true
-    //% blockId=picoBricksResponse
+    //% blockId=picoBricksGetResponse
     export function getResponse(response: string, timeout: number = 100): string {
         let responseLine = ""
         let timestamp = input.runningTime()
