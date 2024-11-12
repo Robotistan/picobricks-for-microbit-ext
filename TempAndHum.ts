@@ -30,7 +30,7 @@ namespace picobricks {
     /**
      * Get temperature from SHTC-3 temperature and humidity sensor.
      */
-    //% blockId=temperature
+    //% blockId=picoBricksTemperature
     //% block="temperature value %PicoBricksTempList"
     //% subcategory="Temp & Hum"
     export function temperature(tempType: PicoBricksTempList): number {
@@ -51,7 +51,7 @@ namespace picobricks {
     /**
      * Get humidity percentage from SHTC-3 temperature and humidity sensor.
      */
-    //% blockId=humidity
+    //% blockId=picoBricksHumidity
     //% block="humidity value"
     //% subcategory="Temp & Hum"
     export function humidity(): number {
@@ -70,7 +70,7 @@ namespace picobricks {
     /**
      * Read ID of the SHTC-3 temperature and humidity sensor.
      */
-    //% blockId=readShtcId
+    //% blockId=picoBricksReadShtcId
     //% block="temperature & humidity id"
     //% subcategory="Temp & Hum"
     export function readShtcId(): number {
@@ -81,7 +81,7 @@ namespace picobricks {
     /**
      * Initialize SHTC-3 temperature and humidity sensor.
      */
-    //% blockId=shtcInit
+    //% blockId=picoBricksShtcInit
     //% block="initialize temperature & humidity sensor"
     //% subcategory="Temp & Hum"
     export function shtcInit(): void {
