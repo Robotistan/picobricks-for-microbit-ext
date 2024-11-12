@@ -208,7 +208,7 @@ namespace picobricks {
     //% block="ThingSpeak data uploaded"
     //% subcategory="Wi-Fi"
     export function isThingSpeakUploaded(): boolean {
-        return thingSpeakUploaded
+        return ThingSpeakUploaded
     }
 
     /**
