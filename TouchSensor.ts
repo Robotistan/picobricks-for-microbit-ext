@@ -1,35 +1,35 @@
-enum notes {
-    lowDo = 131,
-    lowRe = 147,
-    lowMi = 165,
-    lowFa = 175,
-    lowSol = 196,
-    lowLa = 220,
-    lowSi = 247,
-    middleDo = 262,
-    middleRe = 294,
-    middleMi = 330,
-    middleFa = 349,
-    middleSol = 392,
-    middleLa = 440,
-    middleSi = 494,
-    highDo = 523,
-    highRe = 587,
-    highMi = 659,
-    highFa = 698,
-    highSol = 784,
-    highLa = 880,
-    highSi = 988
+enum PicoBricksNotes {
+    LowDo = 131,
+    LowRe = 147,
+    LowMi = 165,
+    LowFa = 175,
+    LowSol = 196,
+    LowLa = 220,
+    LowSi = 247,
+    MiddleDo = 262,
+    MiddleRe = 294,
+    MiddleMi = 330,
+    MiddleFa = 349,
+    MiddleSol = 392,
+    MiddleLa = 440,
+    MiddleSi = 494,
+    HighDo = 523,
+    HighRe = 587,
+    HighMi = 659,
+    HighFa = 698,
+    HighSol = 784,
+    HighLa = 880,
+    HighSi = 988
 }
 
-enum volumeStatus {
-    passive = 0,
-    active = 1
+enum PicoBricksVolumeStatus {
+    Passive = 0,
+    Active = 1
 }
 
-enum toneStatus {
-    passive = 0,
-    active = 1
+enum PicoBricksToneStatus {
+    Passive = 0,
+    Active = 1
 }
 
 namespace picobricks {
@@ -362,13 +362,13 @@ namespace picobricks {
     }
 
     /**
-     * Touch any notes on touch sensor brick and start to play piano,
+     * Touch any PicoBricksNotes on touch sensor brick and start to play piano,
      * set "volume buttons" to 1 to enable volume control with "up","down" buttons,
      * set "tone buttons" to 1 to enable tone switch with "left","right" buttons
      */
-    //% blockId="playPiano" block="play piano volume buttons %volumeStatus and tone buttons %toneStatus"
+    //% blockId="playPiano" block="play piano volume buttons %PicoBricksVolumeStatus and tone buttons %PicoBricksToneStatus"
     //% subcategory="Touch Sensor-Piano"
-    export function playPiano(volumeButtons: volumeStatus, toneButtons: toneStatus): void {
+    export function playPiano(volumeButtons: PicoBricksVolumeStatus, toneButtons: PicoBricksToneStatus): void {
         let proximityCounter = 0;
         let proximityStatus = 0;
         let val = 0;
@@ -499,9 +499,9 @@ namespace picobricks {
     /**
      * Play the selected note when the selected button is pressed
      */
-    //% blockId="userPiano" block="play %pianoKeyAddresses and %notes"
+    //% blockId="userPiano" block="play %pianoKeyAddresses and %PicoBricksNotes"
     //% subcategory="Touch Sensor-Piano"
-    export function userPiano(button: pianoKeyAddresses, tone: notes): void {
+    export function userPiano(button: pianoKeyAddresses, tone: PicoBricksNotes): void {
         let val = 0;
 
         pins.i2cWriteNumber(CHIP_ADDRESS, PROX_STAT, NumberFormat.UInt8BE)
