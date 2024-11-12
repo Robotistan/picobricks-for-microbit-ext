@@ -1,9 +1,9 @@
 namespace picobricks {
     let result = 0;
 
-    export enum set_relay {
-        low = 0,
-        high = 1
+    export enum PicoBricksSetRelay {
+        Low = 0,
+        High = 1
     }
 
      /**
@@ -30,9 +30,9 @@ namespace picobricks {
      * Relay on or off
      */
     //% blockId=relay
-    //% block="set relay to %set_relay"
+    //% block="set relay to %PicoBricksSetRelay"
     //% subcategory="Others"
-    export function relay(state: set_relay): void {
+    export function relay(state: PicoBricksSetRelay): void {
         pins.digitalWritePin(DigitalPin.P16, state)
     }
 
