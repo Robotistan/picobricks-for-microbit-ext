@@ -9,7 +9,7 @@ namespace picobricks {
      /**
      * Read light sensor value (Integer)
      */
-    //% blockId=ldrRead
+    //% blockId=picoBricksLdrRead
     //% block="light sensor value"
     //% subcategory="Others"
     export function ldrRead(): number {
@@ -19,7 +19,7 @@ namespace picobricks {
     /**
      * Read the button state (1-0)
      */
-    //% blockId=buttonRead
+    //% blockId=picoBricksButtonRead
     //% block="button state"
     //% subcategory="Others"
     export function buttonRead(): number {
@@ -29,7 +29,7 @@ namespace picobricks {
     /**
      * Relay on or off
      */
-    //% blockId=relay
+    //% blockId=picoBricksRelay
     //% block="set relay to %PicoBricksSetRelay"
     //% subcategory="Others"
     export function relay(state: PicoBricksSetRelay): void {
@@ -39,7 +39,7 @@ namespace picobricks {
     /**
      * Read potentiometer value (Integer)
      */
-    //% blockId=potRead
+    //% blockId=picoBricksPotRead
     //% block="pot value"
     //% subcategory="Others"
     export function potRead(): number {
@@ -49,7 +49,7 @@ namespace picobricks {
     /**
      * Read motion sensor value (1-0)
      */
-    //% blockId=pirRead
+    //% blockId=picoBricksPirRead
     //% block="motion sensor state"
     //% subcategory="Others"
     export function pirRead(): number {
@@ -61,7 +61,7 @@ namespace picobricks {
      * @param pin1 the pin number where trig pin is connected, eg: DigitalPin.P2
      * @param pin2 the pin number where echo pin is connected, eg: DigitalPin.P1
      */
-    //% blockId=hcsrRead
+    //% blockId=picoBricksHcsrRead
     //% block="distance in cm with trig pin at %pin1 and echo pin at %pin2"
     //% subcategory="Others"
     export function hcsrRead(pin1: DigitalPin, pin2: DigitalPin): number {
@@ -91,7 +91,7 @@ namespace picobricks {
      * Read soil moisture (Integer) on selected analog pin
      * @param pin describe parameter here, eg: DigitalPin.P2
      */
-    //% blockId=soilRead
+    //% blockId=picoBricksSoilRead
     //% block="soil moisture with analog pin at %pin1"
     //% subcategory="Others"
     export function soilRead(pin1: AnalogPin): number {
@@ -103,7 +103,7 @@ namespace picobricks {
     /**
      * Read gas sensor value (Integer) on selected analog pin (Integer)
      */
-    //% blockId=mq2Read
+    //% blockId=picoBricksMq2Read
     //% block="gas sensor value with analog pin at %pin1"
     //% subcategory="Others"
     export function mq2Read(pin1: AnalogPin): number {
