@@ -184,7 +184,7 @@ namespace picobricks {
      * @param y is Y alis, eg: 0
      * @param color is dot color, eg: 1
      */
-    //% blockId=pixel block="set pixel at x %x|y %y|color %color"
+    //% blockId=picoBricksPixel block="set pixel at x %x|y %y|color %color"
     //% weight=70 blockGap=8
     //% parts=OLED12864_I2C trackArgs=0
     //% subcategory="OLED"
@@ -215,7 +215,7 @@ namespace picobricks {
      * @param s is the text will be show, eg: 'Hello!'
      * @param color is string color, eg: 1
      */
-    //% blockId=showString block="show string at x %x|y %y|text %s|color %color"
+    //% blockId=picoBricksShowString block="show string at x %x|y %y|text %s|color %color"
     //% weight=80 blockGap=8
     //% parts=OLED12864_I2C trackArgs=0
     //% subcategory="OLED"
@@ -253,7 +253,7 @@ namespace picobricks {
      * @param num is the number will be show, eg: 12
      * @param color is number color, eg: 1
      */
-    //% blockId=showNumber block="show a number at x %x|y %y|number %num|color %color"
+    //% blockId=picoBricksShowNumber block="show a number at x %x|y %y|number %num|color %color"
     //% weight=80 blockGap=8
     //% parts=OLED12864_I2C trackArgs=0
     //% subcategory="OLED"
@@ -267,7 +267,7 @@ namespace picobricks {
      * @param y is Y alis, eg: 0
      * @param len is the length of line, eg: 10
      */
-    //% blockId=hline block="draw a horizontal line at x %x|y %y|length %len"
+    //% blockId=picoBricksHline block="draw a horizontal line at x %x|y %y|length %len"
     //% weight=71 blockGap=8
     //% parts=OLED12864_I2C trackArgs=0
     //% subcategory="OLED"
@@ -282,7 +282,7 @@ namespace picobricks {
      * @param y is Y alis, eg: 0
      * @param len is the length of line, eg: 10
      */
-    //% blockId=vline block="draw a vertical line at x %x|y %y|length %len"
+    //% blockId=picoBricksVline block="draw a vertical line at x %x|y %y|length %len"
     //% weight=72 blockGap=8
     //% parts=OLED12864_I2C trackArgs=0
     //% subcategory="OLED"
@@ -299,7 +299,7 @@ namespace picobricks {
      * @param y2 is Y alis, eg: 30
      * @param color is line color, eg: 1
      */
-    //% blockId=rect block="draw a rectangle at x1 %x1|y1 %y1|x2 %x2|y2 %y2|color %color"
+    //% blockId=picoBricksRect block="draw a rectangle at x1 %x1|y1 %y1|x2 %x2|y2 %y2|color %color"
     //% weight=73 blockGap=8
     //% parts=OLED12864_I2C trackArgs=0
     //% subcategory="OLED"
@@ -318,7 +318,7 @@ namespace picobricks {
      * invert display
      * @param d true: invert / false: normal, eg: true
      */
-    //% blockId=oledInvert block="invert display %d"
+    //% blockId=picoBricksOledInvert block="invert display %d"
     //% weight=65 blockGap=8
     //% parts=OLED12864_I2C trackArgs=0
     //% subcategory="OLED"
@@ -330,7 +330,7 @@ namespace picobricks {
     /**
      * draw / redraw screen
      */
-    //% blockId=draw block="draw"
+    //% blockId=picoBricksDraw block="draw"
     //% weight=64 blockGap=8
     //% parts=OLED12864_I2C trackArgs=0
     //% subcategory="OLED"
@@ -342,7 +342,7 @@ namespace picobricks {
     /**
      * clear screen
      */
-    //% blockId=oledclear block="clear"
+    //% blockId=picoBricksOledClear block="clear"
     //% weight=63 blockGap=8
     //% parts=OLED12864_I2C trackArgs=0
     //% subcategory="OLED"
@@ -355,7 +355,7 @@ namespace picobricks {
     /**
      * turn on screen
      */
-    //% blockId=oledon block="turn on"
+    //% blockId=picoBricksOledOn block="turn on"
     //% weight=62 blockGap=8
     //% parts=OLED12864_I2C trackArgs=0
     //% subcategory="OLED"
@@ -366,7 +366,7 @@ namespace picobricks {
     /**
      * turn off screen
      */
-    //% blockId=oledoff block="turn off"
+    //% blockId=picoBricksOledOff block="turn off"
     //% weight=61 blockGap=8
     //% parts=OLED12864_I2C trackArgs=0
     //% subcategory="OLED"
@@ -378,7 +378,7 @@ namespace picobricks {
      * zoom mode
      * @param d true zoom / false normal, eg: true
      */
-    //% blockId=oledzoom block="zoom %d"
+    //% blockId=picoBricksOledZoom block="zoom %d"
     //% weight=60 blockGap=8
     //% parts=OLED12864_I2C trackArgs=0
     //% subcategory="OLED"
@@ -391,7 +391,7 @@ namespace picobricks {
      * OLED initialize
      * @param addr is i2c addr, eg: 60
      */
-    //% blockId=oledinit block="init OLED with addr %addr"
+    //% blockId=picoBricksOledInit block="init OLED with addr %addr"
     //% weight=100 blockGap=8
     //% parts=OLED12864_I2C trackArgs=0
     //% subcategory="OLED"
