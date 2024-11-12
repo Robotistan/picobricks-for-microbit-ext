@@ -6,7 +6,7 @@
 //THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //Minor changes made by: Robotistan
 
-enum rgbColorsList {
+enum PicoBricksRgbColorsList {
     //% block=red
     Red = 0xFF0000,
     //% block=orange
@@ -65,7 +65,7 @@ namespace picobricks {
         showBarGraph(value: number, high: number): void {
             if (high <= 0) {
                 this.clear();
-                this.setPixelColor(0, rgbColorsList.Yellow);
+                this.setPixelColor(0, PicoBricksRgbColorsList.Yellow);
                 this.show();
                 return;
             }
@@ -465,7 +465,7 @@ namespace picobricks {
     //% weight=2 blockGap=8
     //% blockId=rgbcolors block="%color"
     //% subcategory="RGB Leds"
-    export function rgbcolors(color: rgbColorsList): number {
+    export function rgbcolors(color: PicoBricksRgbColorsList): number {
         return color;
     }
 
