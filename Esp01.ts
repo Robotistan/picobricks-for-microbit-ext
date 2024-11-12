@@ -21,7 +21,7 @@ namespace picobricks {
      * @param timeout Timeout in milliseconds.
      */
     //% blockHidden=true
-    //% blockId=sendCommand
+    //% blockId=picoBricksSendCommand
     export function sendCommand(command: string, expected_response: string = null, timeout: number = 100): boolean {
         basic.pause(10)
         serial.readString()
@@ -63,7 +63,7 @@ namespace picobricks {
      * @param timeout Timeout in milliseconds.
      */
     //% blockHidden=true
-    //% blockId=getResponse
+    //% blockId=picoBricksResponse
     export function getResponse(response: string, timeout: number = 100): string {
         let responseLine = ""
         let timestamp = input.runningTime()
@@ -94,7 +94,7 @@ namespace picobricks {
      * @param url The url that we want to format.
      */
     //% blockHidden=true
-    //% blockId=formatUrl
+    //% blockId=picoBricksFormatUrl
     export function formatUrl(url: string): string {
         url = url.replaceAll("%", "%25")
         url = url.replaceAll(" ", "%20")
@@ -136,7 +136,7 @@ namespace picobricks {
      * Return true if the ESP is already initialized.
      */
     //% weight=80
-    //% blockId=isESPInitialized
+    //% blockId=picoBricksIsESPInitialized
     //% block="Wi-Fi module initialized"
     //% subcategory="Wi-Fi"
     export function isESPInitialized(): boolean {
@@ -150,7 +150,7 @@ namespace picobricks {
      * @param baudrate UART baudrate. eg: BaudRate.BaudRate115200
      */
     //% weight=70
-    //% blockId=esp01init
+    //% blockId=picoBricksEsp01init
     //% block="initialize Wi-Fi module: tx %tx rx %rx baudrate %baudrate"
     //% subcategory="Wi-Fi"
     export function esp01init(tx: SerialPin, rx: SerialPin, baudrate: BaudRate) {
@@ -170,7 +170,7 @@ namespace picobricks {
      * Check if ESP is successfully Wi-Fi connected
      */
     //% weight=50
-    //% blockId=isWifiConnected
+    //% blockId=picoBricksIsWifiConnected
     //% block="Wi-Fi connected"
     //% subcategory="Wi-Fi"
     export function isWifiConnected(): boolean {
@@ -191,7 +191,7 @@ namespace picobricks {
      * @param password Your WiFi password.
      */
     //% weight=60
-    //% blockId=connectWiFi
+    //% blockId=picoBricksConnectWiFi
     //% block="connect to Wi-Fi: ssid %ssid password %password"
     //% subcategory="Wi-Fi"
     export function connectWiFi(ssid: string, password: string) {
@@ -204,7 +204,7 @@ namespace picobricks {
      */
     //% weight=30
     //% blockGap=8
-    //% blockId=isThingSpeakUploaded
+    //% blockId=picoBricksIsThingSpeakUploaded
     //% block="ThingSpeak data uploaded"
     //% subcategory="Wi-Fi"
     export function isThingSpeakUploaded(): boolean {
@@ -224,7 +224,7 @@ namespace picobricks {
      * @param field8 Data for Field 8.
      */
     //% weight=40
-    //% blockId=uploadThingSpeak
+    //% blockId=picoBricksUploadThingSpeak
     //% block="upload data to ThingSpeak|write API key %writeApiKey|field 1 %field1||field 2 %field2|field 3 %field3|field 4 %field4|field 5 %field5|field 6 %field6|field 7 %field7|field 8 %field8"
     //% subcategory="Wi-Fi"
     export function uploadThingSpeak(writeApiKey: string,
