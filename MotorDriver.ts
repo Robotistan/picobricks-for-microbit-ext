@@ -22,7 +22,7 @@ namespace picobricks {
     /**
      * It brings the selected servo motor to the set angle
      */
-    //% blockId=servomotor 
+    //% blockId=picoBricksServoMotor 
     //% block="servo motor %PicoBricksServoMotorType and angle %angle"
     //% angle.min=0 angle.max=180
     //% subcategory="Motor Driver"
@@ -38,7 +38,7 @@ namespace picobricks {
     /**
      * It runs the selected DC motor forward or reverse at the set speed and direction
      */
-    //% blockId=dcmotor
+    //% blockId=picoBricksDcMotor
     //% block="dc motor %PicoBricksDcMotorType and speed %speed and direction %direction"
     //% speed.min=0 speed.max=100
     //% subcategory="Motor Driver"
