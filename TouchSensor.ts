@@ -354,7 +354,7 @@ namespace picobricks {
     /**
      * Touch sensor init
      */
-    //% blockId="touchInit" block="touch sensor init"
+    //% blockId="picoBricksTouchInit" block="touch sensor init"
     //% subcategory="Touch Sensor-Piano"
     export function touchInit(): void {
         configureMB()
@@ -366,7 +366,7 @@ namespace picobricks {
      * set "volume buttons" to 1 to enable volume control with "up","down" buttons,
      * set "tone buttons" to 1 to enable tone switch with "left","right" buttons
      */
-    //% blockId="playPiano" block="play piano volume buttons %PicoBricksVolumeStatus and tone buttons %PicoBricksToneStatus"
+    //% blockId="picoBricksPlayPiano" block="play piano volume buttons %PicoBricksVolumeStatus and tone buttons %PicoBricksToneStatus"
     //% subcategory="Touch Sensor-Piano"
     export function playPiano(volumeButtons: PicoBricksVolumeStatus, toneButtons: PicoBricksToneStatus): void {
         let proximityCounter = 0;
@@ -499,7 +499,7 @@ namespace picobricks {
     /**
      * Play the selected note when the selected button is pressed
      */
-    //% blockId="userPiano" block="play %pianoKeyAddresses and %PicoBricksNotes"
+    //% blockId="picoBricksUserPiano" block="play %pianoKeyAddresses and %PicoBricksNotes"
     //% subcategory="Touch Sensor-Piano"
     export function userPiano(button: pianoKeyAddresses, tone: PicoBricksNotes): void {
         let val = 0;
@@ -564,7 +564,7 @@ namespace picobricks {
     /**
      * Check if Touch Sensor & Piano buttons successfully pressed
      */
-    //% blockId=keyIsPressed
+    //% blockId=picoBricksKeyIsPressed
     //% block="key %key|is pressed"
     //% subcategory="Touch Sensor-Piano"
     export function keyIsPressed(key: pianoKeyAddresses): boolean {
@@ -660,7 +660,7 @@ namespace picobricks {
     /**
      * Value of touch sensor buttons
      */
-    //% blockId=keyValue
+    //% blockId=picoBricksKeyValue
     //% block="key %key|value"
     //% subcategory="Touch Sensor-Piano"
     export function keyValue(key: pianoKeyAddresses): number {
