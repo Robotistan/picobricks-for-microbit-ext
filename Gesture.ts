@@ -164,7 +164,7 @@ namespace picobricks {
     /**
      * Initialize the selected gesture module feature
      */
-    //% blockId=initGesture
+    //% blockId=picoBricksInitGesture
     //% block="gesture sensor init |%sensor"
     //% subcategory="Gesture"
     export function initGesture(sensor: PicoBricksGestureInitType): void {
@@ -206,7 +206,7 @@ namespace picobricks {
     /**
      * Read the gesture sensor ID
      */
-    //% blockId=gestureId
+    //% blockId=picoBricksGestureId
     //% block="gesture sensor id"
     //% subcategory="Gesture"
     export function gestureId(): number {
@@ -217,7 +217,7 @@ namespace picobricks {
     /**
      * Read the Hue value
      */
-    //% blockId=readHue
+    //% blockId=picoBricksReadHue
     //% block="gesture sensor hue value"
     //% subcategory="Gesture"
     export function readHue(): number {
@@ -245,7 +245,7 @@ namespace picobricks {
     /**
      * Read the color
      */
-    //% blockId=readColor
+    //% blockId=picoBricksReadColor
     //% block="gesture sensor color"
     //% subcategory="Gesture"
     export function readColor(): string {
@@ -271,7 +271,7 @@ namespace picobricks {
     /**
      * Read the red color (0-255) value from the gesture sensor 
      */
-    //% blockId=readRedColor
+    //% blockId=picoBricksReadRedColor
     //% block="gesture sensor red color value"
     //% subcategory="Gesture"
     export function readRedColor(): number {
@@ -290,7 +290,7 @@ namespace picobricks {
     /**
      * Read the green color (0-255) value from the gesture sensor
      */
-    //% blockId=readGreenColor
+    //% blockId=picoBricksReadGreenColor
     //% block="gesture sensor green color value"
     //% subcategory="Gesture"
     export function readGreenColor(): number {
@@ -309,7 +309,7 @@ namespace picobricks {
     /**
      * Read the blue color (0-255) value from the gesture sensor
      */
-    //% blockId=readBlueColor
+    //% blockId=picoBricksReadBlueColor
     //% block="gesture sensor blue color value"
     //% subcategory="Gesture"
     export function readBlueColor(): number {
@@ -328,7 +328,7 @@ namespace picobricks {
     /**
      * Read the light value 
      */
-    //% blockId=brightness
+    //% blockId=picoBricksBrightness
     //% block="gesture sensor brightness"
     //% subcategory="Gesture"
     export function brightness(): number {
@@ -347,7 +347,7 @@ namespace picobricks {
     /**
      * Read the proximity value 
      */
-    //% blockId=readProximity
+    //% blockId=picoBricksReadProximity
     //% block="gesture sensor proximity value"
     //% subcategory="Gesture"
     export function readProximity(): number {
@@ -862,8 +862,8 @@ namespace picobricks {
     /**
      * When the sensor detects the set value
      */
-    //% blockId=onGesture
-    //% blockId="onGesture" block="on gesture |%gesture"
+    //% blockId=picoBricksOnGesture
+    //% blockId="picoBricksOnGesture" block="on gesture |%gesture"
     //% subcategory="Gesture"
     export function onGesture(gesture: PicoBricksGestureType, handler: () => void) {
         control.onEvent(3100, gesture, handler);
