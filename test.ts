@@ -17,7 +17,7 @@ basic.forever(function () {
 
 //set 90 degree angle to servo 1 motor
 basic.forever(function () {
-    picobricks.servomotor(PicoBricksServoMotorType.Servo1, 90)
+    picobricks.servoMotor(PicoBricksServoMotorType.Servo1, 90)
 })
 
 //play piano
