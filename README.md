@@ -65,7 +65,7 @@ basic.forever(function () {
 
 ```blocks
 basic.forever(function () {
-    picobricks.servomotor(PicoBricksServoMotorType.Servo1, 90)
+    picobricks.servoMotor(PicoBricksServoMotorType.Servo1, 90)
 })
 ```
 
