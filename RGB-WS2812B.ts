@@ -42,7 +42,7 @@ namespace picobricks {
         /**
          * Show all LEDs to a given color (0-255 R,G,B)
          */
-        //% blockId=picoBricksShowColor block="%strip|show color %rgb=rgbcolors"
+        //% blockId=picoBricksShowColor block="%strip|show color %rgb=picoBricksRgbColors"
         //% strip.defl=strip
         //% weight=85 blockGap=8
         //% parts="rgb"
@@ -158,7 +158,7 @@ namespace picobricks {
         /**
          * Set LED to a given color (First LED is 0)
          */
-        //% blockId=picoBricksSetPixelColor block="%strip|set pixel color at %pixeloffset|to %rgb=rgbcolors"
+        //% blockId=picoBricksSetPixelColor block="%strip|set pixel color at %pixeloffset|to %rgb=picoBricksRgbColors"
         //% strip.defl=strip
         //% blockGap=8
         //% weight=80
@@ -185,7 +185,7 @@ namespace picobricks {
         /**
          * Set LED to a given color in a matrix shaped strip you need to call "show" to make the changes visible
          */
-        //% blockId=picoBricksSetMatrixColor block="%strip|set matrix color at x %x|y %y|to %rgb=rgbcolors"
+        //% blockId=picoBricksSetMatrixColor block="%strip|set matrix color at x %x|y %y|to %rgb=picoBricksRgbColors"
         //% strip.defl=strip
         //% weight=4
         //% parts="rgb"
