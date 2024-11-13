@@ -26,7 +26,7 @@ namespace picobricks {
     //% block="servo motor %PicoBricksServoMotorType and angle %angle"
     //% angle.min=0 angle.max=180
     //% subcategory="Motor Driver"
-    export function servomotor(Servo_type: PicoBricksServoMotorType, angle: number): void {
+    export function servoMotor(Servo_type: PicoBricksServoMotorType, angle: number): void {
         pins.i2cWriteNumber(MOTOR_DRIVER_ADDRESS, 0x26, NumberFormat.UInt8BE, false)
         pins.i2cWriteNumber(MOTOR_DRIVER_ADDRESS, Servo_type, NumberFormat.UInt8BE, false)
         pins.i2cWriteNumber(MOTOR_DRIVER_ADDRESS, 0x00, NumberFormat.UInt8BE, false)
@@ -42,7 +42,7 @@ namespace picobricks {
     //% block="dc motor %PicoBricksDcMotorType and speed %speed and direction %direction"
     //% speed.min=0 speed.max=100
     //% subcategory="Motor Driver"
-    export function dcmotor(dc_type: PicoBricksDcMotorType, speed: number, direction: PicoBricksDirectionType): void {
+    export function dcMotor(dc_type: PicoBricksDcMotorType, speed: number, direction: PicoBricksDirectionType): void {
         let mspeed = Math.map(speed,0,100,0,255)
         pins.i2cWriteNumber(MOTOR_DRIVER_ADDRESS, 0x26, NumberFormat.UInt8BE, false)
         pins.i2cWriteNumber(MOTOR_DRIVER_ADDRESS, dc_type, NumberFormat.UInt8BE, false)
