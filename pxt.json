@@ -1,6 +1,6 @@
 {
     "name": "picobricks",
-    "version": "0.0.7",
+    "version": "0.1.0",
     "description": "PicoBricks for micro:bit",
     "license": "MIT",
     "dependencies": {
