@@ -68,11 +68,11 @@ namespace picobricks {
         loword: uint16;
         activeCommand: number;
         repeatTimeout: number;
-        onIrButtonPressed: irButtonHandler[];
-        onIrButtonReleased: irButtonHandler[];
+        onIrButtonPressed: IrButtonHandler[];
+        onIrButtonReleased: IrButtonHandler[];
         onIrDatagram: () => void;
     }
-    class irButtonHandler {
+    class IrButtonHandler {
         irButton: PicoBricksIrButtonList ;
         onEvent: () => void;
 
@@ -231,10 +231,10 @@ namespace picobricks {
     export function onIrButton(button: PicoBricksIrButtonList , action: PicoBricksIrButtonAction, handler: () => void) {
         initIrState();
         if (action === PicoBricksIrButtonAction.Pressed) {
-            irState.onIrButtonPressed.push(new irButtonHandler(button, handler));
+            irState.onIrButtonPressed.push(new IrButtonHandler(button, handler));
         }
         else {
-            irState.onIrButtonReleased.push(new irButtonHandler(button, handler));
+            irState.onIrButtonReleased.push(new IrButtonHandler(button, handler));
         }
     }
 
