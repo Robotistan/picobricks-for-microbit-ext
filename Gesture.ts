@@ -378,7 +378,7 @@ namespace picobricks {
         all
     }
 
-    export class gesture_data_type {
+    export class GestureDataType {
         u_data: Buffer;
         d_data: Buffer;
         l_data: Buffer;
@@ -389,10 +389,10 @@ namespace picobricks {
         out_threshold: number;
     }
 
-    let gesture_data = new gesture_data_type;
+    let gesture_data = new GestureDataType;
     let data_buf: Buffer = pins.createBuffer(128);
 
-    export class apds9960class {
+    export class Apds9960Class {
         gesture_ud_delta: number;
         gesture_lr_delta: number;
         gesture_ud_count: number;
@@ -842,7 +842,7 @@ namespace picobricks {
     let gestureRuns = false
     function gestureInit() {
         gestureRuns = true
-        let apds9960 = new apds9960class();
+        let apds9960 = new Apds9960Class();
         apds9960.pads9960_init();
         apds9960.enableGestureSensor(false);
         basic.pause(100);
