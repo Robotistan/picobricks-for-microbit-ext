@@ -96,9 +96,9 @@ basic.forever(function () {
 })
 ```
 
-## Further Education Material and Tutorials
+## Education Material and Tutorials
 
-TO DO: rbt ist linkleri
+[PicoBricks for Micro:Bit MakeCode Project Book](https://rbt.ist/makecodeprojectbook)
 
 
 ## Meta
