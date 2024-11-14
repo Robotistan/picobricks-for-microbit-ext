@@ -1,34 +1,59 @@
 enum PicoBricksNotes {
+    //% block=low_do
     LowDo = 131,
+    //% block=low_re
     LowRe = 147,
+    //% block=low_mi
     LowMi = 165,
+    //% block=low_fa
     LowFa = 175,
+    //% block=low_sol
     LowSol = 196,
+    //% block=low_la
     LowLa = 220,
+    //% block=low_si
     LowSi = 247,
+    //% block=middle_do
     MiddleDo = 262,
+    //% block=middle_re
     MiddleRe = 294,
+    //% block=middle_mi
     MiddleMi = 330,
+    //% block=middle_fa
     MiddleFa = 349,
+    //% block=middle_sol
     MiddleSol = 392,
+    //% block=middle_la
     MiddleLa = 440,
+    //% block=middle_si
     MiddleSi = 494,
+    //% block=high_do
     HighDo = 523,
+    //% block=high_re
     HighRe = 587,
+    //% block=high_mi
     HighMi = 659,
+    //% block=high_fa
     HighFa = 698,
+    //% block=high_sol
     HighSol = 784,
+    //% block=high_la
     HighLa = 880,
+    //% block=high_si
     HighSi = 988
 }
 
 enum PicoBricksVolumeStatus {
+    //% block=passive
     Passive = 0,
+    //% block=active
     Active = 1
 }
 
 enum PicoBricksToneStatus {
+    //% block=passive
     Passive = 0,
+    //% block=active
     Active = 1
 }
 
