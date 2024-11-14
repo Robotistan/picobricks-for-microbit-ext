@@ -224,7 +224,8 @@ namespace picobricks {
         let p = 0
         let ind = 0
         for (let n = 0; n < s.length; n++) {
-            p = font[s.charCodeAt(n)]
+            let charIndex = s.charCodeAt(n);
+            p = font.getNumber(NumberFormat.UInt8BE, 4 * charIndex);
             for (let i = 0; i < 5; i++) {
                 col = 0
                 for (let j = 0; j < 5; j++) {
