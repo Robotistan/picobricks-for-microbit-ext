@@ -1,17 +1,25 @@
 enum PicoBricksDcMotorType {
+    //% block=dc1
     Dc1 = 1,
+    //% block=dc2
     Dc2 = 2
 }
 
 enum PicoBricksServoMotorType {
+    //% block=servo1
     Servo1 = 3,
+    //% block=servo2
     Servo2 = 4,
+    //% block=servo3
     Servo3 = 5,
+    //% block=servo4
     Servo4 = 6
 }
 
 enum PicoBricksDirectionType {
+    //% block=forward
     Forward = 0,
+    //% block=backward
     Backward = 1
 }
 
