@@ -354,12 +354,13 @@ namespace picobricks {
         let line = pins.createBuffer(s.length+1);
         for (let n = 0; n < s.length; n++) {
             for (let i = 0; i < 6; i++) {
-            if (i === 5) {
-                line[1] = 0x00
-            } else {
-                let charIndex = c.charCodeAt(n)
-                p = font.getNumber(NumberFormat.UInt8BE, 5 * charIndex + i)
-                line[n+1] = p
+                if (i === 5) {
+                    line[n+1] = 0x00
+                } else {
+                    let charIndex = c.charCodeAt(n)
+                    p = font.getNumber(NumberFormat.UInt8BE, 5 * charIndex + i)
+                    line[n+1] = p
+                }
             }
         }
         set_pos(x * 5, y)
