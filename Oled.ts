@@ -351,7 +351,7 @@ namespace picobricks {
         let col = 0
         let p = 0
         let ind = 0
-        let line = pins.createBuffer(s.length+1);
+        let line = pins.createBuffer((6*s.length)+1);
         for (let n = 0; n < s.length; n++) {
             for (let i = 0; i < 6; i++) {
                 if (i === 5) {
