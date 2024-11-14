@@ -357,7 +357,7 @@ namespace picobricks {
                 if (i === 5) {
                     line[n+1] = 0x00
                 } else {
-                    let charIndex = c.charCodeAt(n)
+                    let charIndex = s.charCodeAt(n)
                     p = font.getNumber(NumberFormat.UInt8BE, 5 * charIndex + i)
                     line[n+1] = p
                 }
