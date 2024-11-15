@@ -266,7 +266,7 @@ namespace picobricks {
     0000000000`
 
     let _I2CAddr = 0;
-    let _screen = pins.createBuffer(1025);
+    let _screen = pins.createBuffer(128);
     let _buf2 = pins.createBuffer(2);
     let _buf3 = pins.createBuffer(3);
     let _buf4 = pins.createBuffer(4);
