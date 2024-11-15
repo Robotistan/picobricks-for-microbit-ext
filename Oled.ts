@@ -357,7 +357,6 @@ namespace picobricks {
         }
         set_pos(x * 5, y)
         line[0] = 0x40
-        console.log(line);
         pins.i2cWriteBuffer(_I2CAddr, line)
     }
 
