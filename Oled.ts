@@ -266,11 +266,10 @@ namespace picobricks {
     0000000000`
 
     let _I2CAddr = 0;
-    let _screen = pins.createBuffer(256);
+    let _screen = pins.createBuffer(1025);
     let _buf2 = pins.createBuffer(2);
     let _buf3 = pins.createBuffer(3);
     let _buf4 = pins.createBuffer(4);
-    let _ZOOM = 1;
 
     function cmd1(d: number) {
         let n = d % 256;
@@ -294,7 +293,7 @@ namespace picobricks {
 
     function set_pos(col: number = 0, page: number = 0) {
         cmd1(0xb0 | page) // page number
-        let c = col * (_ZOOM + 1)
+        let c = col * (2)
         cmd1(0x00 | (c % 16)) // lower start column address
         cmd1(0x10 | (c >> 4)) // upper start column address    
     }
@@ -319,21 +318,14 @@ namespace picobricks {
     export function pixel(x: number, y: number, color: number = 1) {
         let page = y >> 3
         let shift_page = y % 8
-        let ind = x * (_ZOOM + 1) + page * 128 + 1
+        let ind = x * (2) + page * 128 + 1
         let b = (color) ? (_screen[ind] | (1 << shift_page)) : clrbit(_screen[ind], shift_page)
         _screen[ind] = b
         set_pos(x, page)
-        if (_ZOOM) {
-            _screen[ind + 1] = b
-            _buf3[0] = 0x40
-            _buf3[1] = _buf3[2] = b
-            pins.i2cWriteBuffer(_I2CAddr, _buf3)
-        }
-        else {
-            _buf2[0] = 0x40
-            _buf2[1] = b
-            pins.i2cWriteBuffer(_I2CAddr, _buf2)
-        }
+        _screen[ind + 1] = b
+        _buf3[0] = 0x40
+        _buf3[1] = _buf3[2] = b
+        pins.i2cWriteBuffer(_I2CAddr, _buf3)
     }
 
     /**
@@ -355,16 +347,17 @@ namespace picobricks {
         for (let n = 0; n < s.length; n++) {
             for (let i = 0; i < 6; i++) {
                 if (i === 5) {
-                    line[n+i+1] = 0x00
+                    line[(n*6)+i+1] = 0x00
                 } else {
                     let charIndex = s.charCodeAt(n)
                     p = font.getNumber(NumberFormat.UInt8BE, 5 * charIndex + i)
-                    line[n+i+1] = p
+                    line[(n*6)+i+1] = p
                 }
             }
         }
         set_pos(x * 5, y)
         line[0] = 0x40
+        console.log(line);
         pins.i2cWriteBuffer(_I2CAddr, line)
     }
 
@@ -497,19 +490,6 @@ namespace picobricks {
     }
 
     /**
-     * zoom mode
-     * @param d true zoom / false normal, eg: true
-     */
-    //% blockId=picoBricksOledZoom block="zoom %d"
-    //% weight=60 blockGap=8
-    //% parts=OLED12864_I2C trackArgs=0
-    //% subcategory="OLED"
-    export function oledzoom(d: boolean = true) {
-        _ZOOM = (d) ? 1 : 0
-        cmd2(0xd6, _ZOOM)
-    }
-
-    /**
      * OLED initialize
      * @param addr is i2c addr, eg: 60
      */
@@ -539,6 +519,5 @@ namespace picobricks {
         cmd2(0xD6, 1)    // zoom on
         cmd1(0xAF)       // SSD1306_DISPLAYON
         oledclear()
-        _ZOOM = 1
     }
 }
