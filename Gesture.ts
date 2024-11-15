@@ -42,6 +42,7 @@ namespace picobricks {
     const APDS9960_BDATAL = 0x9A
     const APDS9960_BDATAH = 0x9B
     const APDS9960_PDATA = 0x9C
+    const APDS9960_GPENTH = 0xA0
     const APDS9960_GEXTH = 0xA1
     const APDS9960_GCONF1 = 0xA2
     const APDS9960_GCONF2 = 0xA3
