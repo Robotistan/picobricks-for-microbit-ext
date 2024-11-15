@@ -502,6 +502,72 @@ namespace picobricks {
             music.playTone(0, noteDuration)
         }
     }
+    
+/**
+     * Check if Touch Sensor & Piano buttons successfully pressed
+     */
+    //% blockId=picoBricksKeyIsPressed
+    //% block="key %key|is pressed"
+    //% subcategory="Touch Sensor-Piano"
+    export function keyIsPressed(key: pianoKeyAddresses): boolean {
+        let val = 0;
+
+        pins.i2cWriteNumber(CHIP_ADDRESS, PROX_STAT, NumberFormat.UInt8BE)
+        val = pins.i2cReadNumber(CHIP_ADDRESS, NumberFormat.UInt8BE)
+
+        pins.i2cWriteNumber(CHIP_ADDRESS, BUTTON_STATUS, NumberFormat.UInt8BE)
+        buff = pins.i2cReadBuffer(CHIP_ADDRESS, 2, false)
+
+        rec_buf[0] = val
+        rec_buf[1] = buff[0]
+        rec_buf[2] = buff[1]
+
+        if (((rec_buf[1] & 0x02) != 0) && (key == 1)) { // A button
+            return true;
+        }
+        if (((rec_buf[1] & 0x04) != 0) && (key == 2)) { // B button
+            return true;
+        }
+        if (((rec_buf[1] & 0x80) != 0) && (key == 5)) { // left button
+            return true;
+        }
+        if (((rec_buf[1] & 0x20) != 0) && (key == 6)) { // right button
+            return true;
+        }
+        if (((rec_buf[1] & 0x10) != 0) && (key == 3)) { // top button
+            return true;
+        }
+        if (((rec_buf[1] & 0x40) != 0) && (key == 4)) { // down button
+            return true;
+        }
+        if (((rec_buf[1] & 0x08) != 0) && (key == 7)) { //Left C
+            return true;
+        }
+        if (((rec_buf[2] & 0x40) != 0) && (key == 8)) { //D
+            return true;
+        }
+        if (((rec_buf[2] & 0x20) != 0) && (key == 9)) { //E
+            return true;
+        }
+        if (((rec_buf[2] & 0x10) != 0) && (key == 10)) { //F
+            return true;
+        }
+        if (((rec_buf[2] & 0x08) != 0) && (key == 11)) { //G
+            return true;
+        }
+        if (((rec_buf[2] & 0x04) != 0) && (key == 12)) { //A
+            return true;
+        }
+        if (((rec_buf[2] & 0x02) != 0) && (key == 13)) { //B
+            return true;
+        }
+        if (((rec_buf[2] & 0x01) != 0) && (key == 14)) { //Right C
+            return true;
+        }
+
+        return false;
+    }
+    
     export enum pianoKeyAddresses {
         //% block="X"
         X = 1,
