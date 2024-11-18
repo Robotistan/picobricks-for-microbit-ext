@@ -20,12 +20,6 @@ basic.forever(function () {
     picobricks.servoMotor(PicoBricksServoMotorType.Servo1, 90)
 })
 
-//play piano
-picobricks.touchInit()
-basic.forever(function () {
-    picobricks.playPiano(PicoBricksVolumeStatus.Passive, PicoBricksToneStatus.Passive)
-})
-
 //draw smile icon on micro:bit when the selected IR controller button is pressed
 picobricks.onIrButton(PicoBricksIrButtonList.Number_1, PicoBricksIrButtonAction.Pressed, function () {
     basic.showIcon(IconNames.Heart)
