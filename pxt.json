@@ -13,7 +13,6 @@
         "Gesture.ts",
         "Others.ts",
         "MotorDriver.ts",
-        "TouchSensor.ts",
         "Esp01.ts",
         "IR.ts",
         "TempAndHum.ts",
