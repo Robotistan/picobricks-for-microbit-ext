@@ -5,7 +5,7 @@ Picobricks for Micro:Bit teaches kids and adults coding, electronics basics and 
 
 ## Blocks
 
-* Piano And Gaming Brick : This touchpad module is designed to offer makers an interactive and ecciting world.
+* Piano And Gaming Brick : This touchpad module is designed to offer makers an interactive and exciting world. [Click here to explore Touch Sensor extension!](https://github.com/Robotistan/picobricks-for-microbit-touch-sensor-ext)
 * Micro:Bit Brick : It is a module that will enable Micro:Bit to connect to Picobricks more easily.
 * Oled Screen Brick ([source](https://github.com/makecode-extensions/OLED12864_I2C)) : This is the area where you will show the degrees you measured in Picobircks for Micro:Bit.
 * RGB LED Brick ([source](https://github.com/microsoft/pxt-neopixel)) : This bricks will allow you to turn routine notifications into a colorful show instead of receiving them in a boring way.
@@ -66,15 +66,6 @@ basic.forever(function () {
 ```blocks
 basic.forever(function () {
     picobricks.servoMotor(PicoBricksServoMotorType.Servo1, 90)
-})
-```
-
-* Piano And Gaming Brick : This brick designed of offer makers an interactive and exciting world. Let's play piano.
-
-```blocks
-picobricks.touchInit()
-basic.forever(function () {
-    picobricks.playPiano(PicoBricksVolumeStatus.Passive, PicoBricksToneStatus.Passive)
 })
 ```
 
