@@ -58,15 +58,15 @@ namespace picobricks {
 
     /**
      * Read ultrasonic distance sensor (HC-SR04) value (Integer) on selected trig and echo pin 
-     * @param pin1 the pin number where trig pin is connected, eg: DigitalPin.P2
-     * @param pin2 the pin number where echo pin is connected, eg: DigitalPin.P1
+     * @param pin2 the pin number where trig pin is connected, eg: DigitalPin.P2
+     * @param pin1 the pin number where echo pin is connected, eg: DigitalPin.P1
      */
     //% blockId=picoBricksHcsrRead
-    //% block="distance in cm with trig pin at %pin1 and echo pin at %pin2"
+    //% block="distance in cm with trig pin at %pin2 and echo pin at %pin1"
     //% subcategory="Others"
     export function hcsrRead(pin1: DigitalPin, pin2: DigitalPin): number {
-        let trigpin = pin1
-        let echopin = pin2
+        let trigpin = pin2
+        let echopin = pin1
 
         pins.setPull(trigpin, PinPullMode.PullNone);
         pins.digitalWritePin(trigpin, 0)
