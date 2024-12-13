@@ -1,6 +1,6 @@
 {
     "name": "picobricks",
-    "version": "0.1.80",
+    "version": "0.1.81",
     "description": "PicoBricks for micro:bit",
     "license": "MIT",
     "dependencies": {
@@ -16,6 +16,7 @@
         "Esp01.ts",
         "IR.ts",
         "TempAndHum.ts",
+        "TouchSensor.ts",
         "Oled.ts"
     ],
     "testFiles": [
