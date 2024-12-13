@@ -16,7 +16,8 @@ Picobricks for Micro:Bit teaches kids and adults coding, electronics basics and 
 * Wireless Brick ([source](https://github.com/cytrontechnologies/pxt-esp8266)) : This brick allows you to push the boundaries of the entertainment world with wifi.
 * Temperature And Humidity Brick : This brick is designed to measure and monitor temprature and humidity levels.
 * LDR (Light Sensor) Brick : This brick allows you to make projects by detecting the level of light around you.
-* Button And Potentiometer Brick : This brick aloows control of button and potentiometer.  
+* Button And Potentiometer Brick : This brick aloows control of button and potentiometer.
+* Piano And Gaming Brick : This touchpad module is designed to offer makers an interactive and ecciting world.
 
 ## Examples
 
@@ -84,6 +85,15 @@ picobricks.connectIrReceiver(DigitalPin.P15)
 picobricks.shtcInit()
 basic.forever(function () {
     basic.showNumber(picobricks.temperature(PicoBricksTempList.Celsius))
+})
+```
+
+* Piano And Gaming Brick : This brick designed of offer makers an interactive and exciting world. Let's play piano.
+
+```blocks
+picobricks.touchInit()
+basic.forever(function () {
+    picobricks.playPiano(PicoBricksVolumeStatus.Passive, PicoBricksToneStatus.Passive)
 })
 ```
 
