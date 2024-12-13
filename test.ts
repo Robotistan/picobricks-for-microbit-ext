@@ -32,6 +32,12 @@ basic.forever(function () {
     basic.showNumber(picobricks.temperature(PicoBricksTempList.Celsius))
 })
 
+//play piano
+picobricks.touchInit()
+basic.forever(function () {
+    picobricks.playPiano(PicoBricksVolumeStatus.Passive, PicoBricksToneStatus.Passive)
+})
+
 //show text on OLED
 picobricks.oledinit(60)
 basic.forever(function () {
